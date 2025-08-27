@@ -1,0 +1,1186 @@
+INFO - 2025-08-18 14:18:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 14:18:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 14:19:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 14:19:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 14:20:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 14:20:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 15:00:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 15:00:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 15:00:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 15:00:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 15:00:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 15:00:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 15:00:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 16:54:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 16:55:21 --> CodeIgniter\Filters\Exceptions\FilterException: "auth,admin" filter must have a matching alias defined.
+[Method: GET, Route: admin]
+in SYSTEMPATH\Filters\Filters.php on line 495.
+ 1 SYSTEMPATH\Filters\Filters.php(495): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('auth,admin')
+ 2 SYSTEMPATH\Filters\Filters.php(547): CodeIgniter\Filters\Filters->enableFilter('auth,admin', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(469): CodeIgniter\Filters\Filters->enableFilters([...], 'before')
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 17:06:41 --> CodeIgniter\Filters\Exceptions\FilterException: "admin" filter must have a matching alias defined.
+[Method: CLI, Route: routes]
+in SYSTEMPATH\Filters\Filters.php on line 495.
+ 1 SYSTEMPATH\Filters\Filters.php(495): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('admin')
+ 2 SYSTEMPATH\Filters\Filters.php(547): CodeIgniter\Filters\Filters->enableFilter('admin', 'before')
+ 3 SYSTEMPATH\Commands\Utilities\Routes\FilterFinder.php(59): CodeIgniter\Filters\Filters->enableFilters([...], 'before')
+ 4 SYSTEMPATH\Commands\Utilities\Routes\FilterCollector.php(79): CodeIgniter\Commands\Utilities\Routes\FilterFinder->find('admin')
+ 5 SYSTEMPATH\Commands\Utilities\Routes.php(113): CodeIgniter\Commands\Utilities\Routes\FilterCollector->get('GET', 'admin')
+ 6 SYSTEMPATH\CLI\Commands.php(70): CodeIgniter\Commands\Utilities\Routes->run([])
+ 7 SYSTEMPATH\CLI\Console.php(48): CodeIgniter\CLI\Commands->run('routes', [])
+ 8 SYSTEMPATH\Boot.php(351): CodeIgniter\CLI\Console->run()
+ 9 SYSTEMPATH\Boot.php(104): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+10 ROOTPATH\spark(84): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2025-08-18 17:07:03 --> CodeIgniter\Filters\Exceptions\FilterException: "admin" filter must have a matching alias defined.
+[Method: GET, Route: admin]
+in SYSTEMPATH\Filters\Filters.php on line 495.
+ 1 SYSTEMPATH\Filters\Filters.php(495): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('admin')
+ 2 SYSTEMPATH\Filters\Filters.php(547): CodeIgniter\Filters\Filters->enableFilter('admin', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(469): CodeIgniter\Filters\Filters->enableFilters([...], 'before')
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 17:07:06 --> CodeIgniter\Filters\Exceptions\FilterException: "admin" filter must have a matching alias defined.
+[Method: GET, Route: admin]
+in SYSTEMPATH\Filters\Filters.php on line 495.
+ 1 SYSTEMPATH\Filters\Filters.php(495): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('admin')
+ 2 SYSTEMPATH\Filters\Filters.php(547): CodeIgniter\Filters\Filters->enableFilter('admin', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(469): CodeIgniter\Filters\Filters->enableFilters([...], 'before')
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 17:27:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 17:32:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 17:32:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 17:32:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 17:32:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 17:32:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 17:33:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 18:13:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 18:13:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-08-18 18:13:18 --> mysqli_sql_exception: Unknown column 'user_id' in 'where clause' in C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\Notaris\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\Notaris\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\Notaris\system\BaseModel.php(714): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\Notaris\app\Controllers\Admin\Dashboard.php(16): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\Notaris\app\Controllers\Admin\Dashboard.php(43): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+#8 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+#9 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+#10 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\Notaris\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\Notaris\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\Notaris\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\Notaris\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-18 18:13:18 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'user_id' in 'where clause'
+[Method: GET, Route: admin]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `employees`
+WHERE `user_id` = :user_id:
+ LIMIT 1', [...], false)
+ 2 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(714): CodeIgniter\Model->doFirst()
+ 4 APPPATH\Controllers\Admin\Dashboard.php(16): CodeIgniter\BaseModel->first()
+ 5 APPPATH\Controllers\Admin\Dashboard.php(43): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 18:13:18 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'user_id' in 'where clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `employees`
+WHERE `user_id` = 13
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `employees`
+WHERE `user_id` = 13
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `employees`
+WHERE `user_id` = :user_id:
+ LIMIT 1', [...], false)
+ 4 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(714): CodeIgniter\Model->doFirst()
+ 6 APPPATH\Controllers\Admin\Dashboard.php(16): CodeIgniter\BaseModel->first()
+ 7 APPPATH\Controllers\Admin\Dashboard.php(43): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 18:13:18 --> [Caused by] mysqli_sql_exception: Unknown column 'user_id' in 'where clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `employees`
+WHERE `user_id` = 13
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `employees`
+WHERE `user_id` = 13
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `employees`
+WHERE `user_id` = 13
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `employees`
+WHERE `user_id` = :user_id:
+ LIMIT 1', [...], false)
+ 5 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(714): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Controllers\Admin\Dashboard.php(16): CodeIgniter\BaseModel->first()
+ 8 APPPATH\Controllers\Admin\Dashboard.php(43): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 18:25:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-08-18 18:25:34 --> mysqli_sql_exception: Unknown column 'kj.jam_mulai' in 'field list' in C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `b`.`id`...', 0)
+#1 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `b`.`id`...')
+#2 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `b`.`id`...')
+#3 C:\xampp\htdocs\Notaris\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `b`.`id`...', Array, false)
+#4 C:\xampp\htdocs\Notaris\app\Controllers\Admin\Dashboard.php(77): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+#6 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+#7 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\Notaris\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\Notaris\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\Notaris\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\Notaris\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2025-08-18 18:25:34 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'kj.jam_mulai' in 'field list'
+[Method: GET, Route: admin]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `b`.`id`, `b`.`status`, `b`.`created_at`, `u`.`nama` as `user_nama`, `u`.`email` as `user_email`, `kj`.`tanggal`, `kj`.`jam_mulai`, `kj`.`jam_selesai`
+FROM `booking` `b`
+LEFT JOIN `users` `u` ON `u`.`id`=`b`.`user_id`
+LEFT JOIN `konsultasi_jadwal` `kj` ON `kj`.`id`=`b`.`jadwal_id`
+WHERE `b`.`karyawan_id` = :b.karyawan_id:
+AND DATE(kj.tanggal) = :DATE(kj.tanggal):
+ORDER BY `kj`.`jam_mulai` ASC', [...], false)
+ 2 APPPATH\Controllers\Admin\Dashboard.php(77): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 18:25:34 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'kj.jam_mulai' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `b`.`id`, `b`.`status`, `b`.`created_at`, `u`.`nama` as `user_nama`, `u`.`email` as `user_email`, `kj`.`tanggal`, `kj`.`jam_mulai`, `kj`.`jam_selesai`
+FROM `booking` `b`
+LEFT JOIN `users` `u` ON `u`.`id`=`b`.`user_id`
+LEFT JOIN `konsultasi_jadwal` `kj` ON `kj`.`id`=`b`.`jadwal_id`
+WHERE `b`.`karyawan_id` = 4
+AND DATE(kj.tanggal) = \'2025-08-18\'
+ORDER BY `kj`.`jam_mulai` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `b`.`id`, `b`.`status`, `b`.`created_at`, `u`.`nama` as `user_nama`, `u`.`email` as `user_email`, `kj`.`tanggal`, `kj`.`jam_mulai`, `kj`.`jam_selesai`
+FROM `booking` `b`
+LEFT JOIN `users` `u` ON `u`.`id`=`b`.`user_id`
+LEFT JOIN `konsultasi_jadwal` `kj` ON `kj`.`id`=`b`.`jadwal_id`
+WHERE `b`.`karyawan_id` = 4
+AND DATE(kj.tanggal) = \'2025-08-18\'
+ORDER BY `kj`.`jam_mulai` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `b`.`id`, `b`.`status`, `b`.`created_at`, `u`.`nama` as `user_nama`, `u`.`email` as `user_email`, `kj`.`tanggal`, `kj`.`jam_mulai`, `kj`.`jam_selesai`
+FROM `booking` `b`
+LEFT JOIN `users` `u` ON `u`.`id`=`b`.`user_id`
+LEFT JOIN `konsultasi_jadwal` `kj` ON `kj`.`id`=`b`.`jadwal_id`
+WHERE `b`.`karyawan_id` = :b.karyawan_id:
+AND DATE(kj.tanggal) = :DATE(kj.tanggal):
+ORDER BY `kj`.`jam_mulai` ASC', [...], false)
+ 4 APPPATH\Controllers\Admin\Dashboard.php(77): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 18:25:34 --> [Caused by] mysqli_sql_exception: Unknown column 'kj.jam_mulai' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `b`.`id`, `b`.`status`, `b`.`created_at`, `u`.`nama` as `user_nama`, `u`.`email` as `user_email`, `kj`.`tanggal`, `kj`.`jam_mulai`, `kj`.`jam_selesai`
+FROM `booking` `b`
+LEFT JOIN `users` `u` ON `u`.`id`=`b`.`user_id`
+LEFT JOIN `konsultasi_jadwal` `kj` ON `kj`.`id`=`b`.`jadwal_id`
+WHERE `b`.`karyawan_id` = 4
+AND DATE(kj.tanggal) = \'2025-08-18\'
+ORDER BY `kj`.`jam_mulai` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `b`.`id`, `b`.`status`, `b`.`created_at`, `u`.`nama` as `user_nama`, `u`.`email` as `user_email`, `kj`.`tanggal`, `kj`.`jam_mulai`, `kj`.`jam_selesai`
+FROM `booking` `b`
+LEFT JOIN `users` `u` ON `u`.`id`=`b`.`user_id`
+LEFT JOIN `konsultasi_jadwal` `kj` ON `kj`.`id`=`b`.`jadwal_id`
+WHERE `b`.`karyawan_id` = 4
+AND DATE(kj.tanggal) = \'2025-08-18\'
+ORDER BY `kj`.`jam_mulai` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `b`.`id`, `b`.`status`, `b`.`created_at`, `u`.`nama` as `user_nama`, `u`.`email` as `user_email`, `kj`.`tanggal`, `kj`.`jam_mulai`, `kj`.`jam_selesai`
+FROM `booking` `b`
+LEFT JOIN `users` `u` ON `u`.`id`=`b`.`user_id`
+LEFT JOIN `konsultasi_jadwal` `kj` ON `kj`.`id`=`b`.`jadwal_id`
+WHERE `b`.`karyawan_id` = 4
+AND DATE(kj.tanggal) = \'2025-08-18\'
+ORDER BY `kj`.`jam_mulai` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `b`.`id`, `b`.`status`, `b`.`created_at`, `u`.`nama` as `user_nama`, `u`.`email` as `user_email`, `kj`.`tanggal`, `kj`.`jam_mulai`, `kj`.`jam_selesai`
+FROM `booking` `b`
+LEFT JOIN `users` `u` ON `u`.`id`=`b`.`user_id`
+LEFT JOIN `konsultasi_jadwal` `kj` ON `kj`.`id`=`b`.`jadwal_id`
+WHERE `b`.`karyawan_id` = :b.karyawan_id:
+AND DATE(kj.tanggal) = :DATE(kj.tanggal):
+ORDER BY `kj`.`jam_mulai` ASC', [...], false)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(77): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 18:26:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 18:44:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 18:44:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-08-18 18:44:54 --> mysqli_sql_exception: Unknown column 'jam_mulai' in 'order clause' in C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\Notaris\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\Notaris\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\Notaris\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(100, 0)
+#6 C:\xampp\htdocs\Notaris\app\Controllers\Admin\Dashboard.php(147): CodeIgniter\BaseModel->findAll(100)
+#7 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+#8 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+#9 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\Notaris\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\Notaris\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\Notaris\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\Notaris\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-18 18:44:54 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'jam_mulai' in 'order clause'
+[Method: GET, Route: admin/slot]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `konsultasi_jadwal`
+WHERE `karyawan_id` = :karyawan_id:
+ORDER BY `tanggal` ASC, `jam_mulai` ASC
+ LIMIT 100', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(100, 0)
+ 4 APPPATH\Controllers\Admin\Dashboard.php(147): CodeIgniter\BaseModel->findAll(100)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 18:44:54 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'jam_mulai' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `konsultasi_jadwal`
+WHERE `karyawan_id` = 7
+ORDER BY `tanggal` ASC, `jam_mulai` ASC
+ LIMIT 100')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `konsultasi_jadwal`
+WHERE `karyawan_id` = 7
+ORDER BY `tanggal` ASC, `jam_mulai` ASC
+ LIMIT 100')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `konsultasi_jadwal`
+WHERE `karyawan_id` = :karyawan_id:
+ORDER BY `tanggal` ASC, `jam_mulai` ASC
+ LIMIT 100', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(100, 0)
+ 6 APPPATH\Controllers\Admin\Dashboard.php(147): CodeIgniter\BaseModel->findAll(100)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 18:44:54 --> [Caused by] mysqli_sql_exception: Unknown column 'jam_mulai' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `konsultasi_jadwal`
+WHERE `karyawan_id` = 7
+ORDER BY `tanggal` ASC, `jam_mulai` ASC
+ LIMIT 100', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `konsultasi_jadwal`
+WHERE `karyawan_id` = 7
+ORDER BY `tanggal` ASC, `jam_mulai` ASC
+ LIMIT 100')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `konsultasi_jadwal`
+WHERE `karyawan_id` = 7
+ORDER BY `tanggal` ASC, `jam_mulai` ASC
+ LIMIT 100')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `konsultasi_jadwal`
+WHERE `karyawan_id` = :karyawan_id:
+ORDER BY `tanggal` ASC, `jam_mulai` ASC
+ LIMIT 100', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(100, 0)
+ 7 APPPATH\Controllers\Admin\Dashboard.php(147): CodeIgniter\BaseModel->findAll(100)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 18:50:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:14:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:15:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:15:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:15:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:15:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:16:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:16:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:16:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:16:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:17:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:17:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:17:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:17:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:17:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:18:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:21:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:51:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:51:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-08-18 19:51:36 --> mysqli_sql_exception: Unknown column 'updated_at' in 'field list' in C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `em...', 0)
+#1 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `em...')
+#2 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `em...')
+#3 C:\xampp\htdocs\Notaris\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `em...', Array, false)
+#4 C:\xampp\htdocs\Notaris\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\Notaris\system\BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\Notaris\system\Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\Notaris\app\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\Notaris\app\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+#9 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+#10 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+#11 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\Notaris\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\Notaris\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\Notaris\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 C:\xampp\htdocs\Notaris\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#16 {main}
+CRITICAL - 2025-08-18 19:51:36 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'updated_at' in 'field list'
+[Method: GET, Route: admin]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (:nama:, :email:, :created_at:, :updated_at:)', [...], false)
+ 2 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert([...])
+ 6 APPPATH\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 19:51:36 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:51:36\', \'2025-08-18 19:51:36\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:51:36\', \'2025-08-18 19:51:36\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (:nama:, :email:, :created_at:, :updated_at:)', [...], false)
+ 4 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 7 APPPATH\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert([...])
+ 8 APPPATH\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 19:51:36 --> [Caused by] mysqli_sql_exception: Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:51:36\', \'2025-08-18 19:51:36\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:51:36\', \'2025-08-18 19:51:36\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:51:36\', \'2025-08-18 19:51:36\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (:nama:, :email:, :created_at:, :updated_at:)', [...], false)
+ 5 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert([...])
+ 9 APPPATH\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+11 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+12 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+16 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 19:51:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-08-18 19:51:38 --> mysqli_sql_exception: Unknown column 'updated_at' in 'field list' in C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `em...', 0)
+#1 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `em...')
+#2 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `em...')
+#3 C:\xampp\htdocs\Notaris\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `em...', Array, false)
+#4 C:\xampp\htdocs\Notaris\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\Notaris\system\BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\Notaris\system\Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\Notaris\app\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\Notaris\app\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+#9 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+#10 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+#11 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\Notaris\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\Notaris\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\Notaris\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 C:\xampp\htdocs\Notaris\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#16 {main}
+CRITICAL - 2025-08-18 19:51:38 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'updated_at' in 'field list'
+[Method: GET, Route: admin]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (:nama:, :email:, :created_at:, :updated_at:)', [...], false)
+ 2 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert([...])
+ 6 APPPATH\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 19:51:38 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:51:38\', \'2025-08-18 19:51:38\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:51:38\', \'2025-08-18 19:51:38\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (:nama:, :email:, :created_at:, :updated_at:)', [...], false)
+ 4 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 7 APPPATH\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert([...])
+ 8 APPPATH\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 19:51:38 --> [Caused by] mysqli_sql_exception: Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:51:38\', \'2025-08-18 19:51:38\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:51:38\', \'2025-08-18 19:51:38\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:51:38\', \'2025-08-18 19:51:38\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (:nama:, :email:, :created_at:, :updated_at:)', [...], false)
+ 5 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert([...])
+ 9 APPPATH\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+11 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+12 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+16 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 19:52:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-08-18 19:52:14 --> mysqli_sql_exception: Unknown column 'updated_at' in 'field list' in C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `em...', 0)
+#1 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `em...')
+#2 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `em...')
+#3 C:\xampp\htdocs\Notaris\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `em...', Array, false)
+#4 C:\xampp\htdocs\Notaris\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\Notaris\system\BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\Notaris\system\Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\Notaris\app\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\Notaris\app\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+#9 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+#10 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+#11 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\Notaris\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\Notaris\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\Notaris\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 C:\xampp\htdocs\Notaris\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#16 {main}
+CRITICAL - 2025-08-18 19:52:14 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'updated_at' in 'field list'
+[Method: GET, Route: admin]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (:nama:, :email:, :created_at:, :updated_at:)', [...], false)
+ 2 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert([...])
+ 6 APPPATH\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 19:52:14 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:52:14\', \'2025-08-18 19:52:14\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:52:14\', \'2025-08-18 19:52:14\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (:nama:, :email:, :created_at:, :updated_at:)', [...], false)
+ 4 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 7 APPPATH\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert([...])
+ 8 APPPATH\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 19:52:14 --> [Caused by] mysqli_sql_exception: Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:52:14\', \'2025-08-18 19:52:14\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:52:14\', \'2025-08-18 19:52:14\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (\'Ainsley Beverly\', \'astridalifiah@gmail.com\', \'2025-08-18 19:52:14\', \'2025-08-18 19:52:14\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `employees` (`nama`, `email`, `created_at`, `updated_at`) VALUES (:nama:, :email:, :created_at:, :updated_at:)', [...], false)
+ 5 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Controllers\Admin\Dashboard.php(55): CodeIgniter\Model->insert([...])
+ 9 APPPATH\Controllers\Admin\Dashboard.php(65): App\Controllers\Admin\Dashboard->ensureEmployeeForUser(13)
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+11 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+12 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+16 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 19:55:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 19:55:43 --> ErrorException: Cannot declare class App\Controllers\Admin\Dashboard, because the name is already in use
+[Method: GET, Route: admin]
+in APPPATH\Views\admin\dashboard.php on line 9.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+INFO - 2025-08-18 19:55:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 19:55:48 --> ErrorException: Cannot declare class App\Controllers\Admin\Dashboard, because the name is already in use
+[Method: GET, Route: admin]
+in APPPATH\Views\admin\dashboard.php on line 9.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+INFO - 2025-08-18 19:57:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:57:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 19:57:28 --> ErrorException: Cannot declare class App\Controllers\Admin\Dashboard, because the name is already in use
+[Method: GET, Route: admin]
+in APPPATH\Views\admin\dashboard_admin.php on line 9.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+INFO - 2025-08-18 19:57:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 19:57:30 --> ErrorException: Cannot declare class App\Controllers\Admin\Dashboard, because the name is already in use
+[Method: GET, Route: admin]
+in APPPATH\Views\admin\dashboard_admin.php on line 9.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+INFO - 2025-08-18 19:57:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 19:57:32 --> ErrorException: Cannot declare class App\Controllers\Admin\Dashboard, because the name is already in use
+[Method: GET, Route: admin]
+in APPPATH\Views\admin\dashboard_admin.php on line 9.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+INFO - 2025-08-18 19:59:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 19:59:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:03:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:03:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:23:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:28:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:28:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:28:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:28:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:28:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:28:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:28:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:28:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:29:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:29:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:32:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:32:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-08-18 20:32:13 --> mysqli_sql_exception: Unknown column 'jadwal.id' in 'field list' in C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `jadwal`...', 0)
+#1 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `jadwal`...')
+#2 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `jadwal`...')
+#3 C:\xampp\htdocs\Notaris\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `jadwal`...', Array, false)
+#4 C:\xampp\htdocs\Notaris\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\Notaris\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\Notaris\app\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(933): App\Controllers\Layanan->index()
+#8 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+#9 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\Notaris\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\Notaris\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\Notaris\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\Notaris\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-18 20:32:13 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'jadwal.id' in 'field list'
+[Method: GET, Route: layanan]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = :jadwal.status:
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 20:32:13 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'jadwal.id' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = :jadwal.status:
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 20:32:13 --> [Caused by] mysqli_sql_exception: Unknown column 'jadwal.id' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = :jadwal.status:
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+ERROR - 2025-08-18 20:32:50 --> mysqli_sql_exception: Unknown column 'jadwal.jadwal_id' in 'field list' in C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `jadwal`...', 0)
+#1 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `jadwal`...')
+#2 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `jadwal`...')
+#3 C:\xampp\htdocs\Notaris\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `jadwal`...', Array, false)
+#4 C:\xampp\htdocs\Notaris\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\Notaris\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\Notaris\app\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(933): App\Controllers\Layanan->index()
+#8 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+#9 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\Notaris\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\Notaris\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\Notaris\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\Notaris\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-18 20:32:50 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'jadwal.jadwal_id' in 'field list'
+[Method: GET, Route: layanan]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `jadwal`.`jadwal_id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = :jadwal.status:
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 20:32:50 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'jadwal.jadwal_id' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `jadwal`.`jadwal_id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `jadwal`.`jadwal_id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `jadwal`.`jadwal_id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = :jadwal.status:
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 20:32:50 --> [Caused by] mysqli_sql_exception: Unknown column 'jadwal.jadwal_id' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `jadwal`.`jadwal_id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `jadwal`.`jadwal_id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `jadwal`.`jadwal_id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `jadwal`.`jadwal_id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = :jadwal.status:
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+ERROR - 2025-08-18 20:33:32 --> mysqli_sql_exception: Unknown column 'jadwal.tanggal' in 'field list' in C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `konsult...', 0)
+#1 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `konsult...')
+#2 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `konsult...')
+#3 C:\xampp\htdocs\Notaris\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `konsult...', Array, false)
+#4 C:\xampp\htdocs\Notaris\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\Notaris\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\Notaris\app\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(933): App\Controllers\Layanan->index()
+#8 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+#9 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\Notaris\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\Notaris\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\Notaris\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\Notaris\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-18 20:33:32 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'jadwal.tanggal' in 'field list'
+[Method: GET, Route: layanan]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `konsultasi_jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = :jadwal.status:
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 20:33:32 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'jadwal.tanggal' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `konsultasi_jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `konsultasi_jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `konsultasi_jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = :jadwal.status:
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 20:33:32 --> [Caused by] mysqli_sql_exception: Unknown column 'jadwal.tanggal' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `konsultasi_jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `konsultasi_jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `konsultasi_jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = \'available\'
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `konsultasi_jadwal`.`id`, `jadwal`.`tanggal`, `jadwal`.`jam`, `jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `jadwal`.`status` = :jadwal.status:
+ORDER BY `jadwal`.`tanggal` ASC, `jadwal`.`jam` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+ERROR - 2025-08-18 20:34:10 --> mysqli_sql_exception: Unknown column 'jadwal.employee_id' in 'on clause' in C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\Notaris\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `konsult...', 0)
+#1 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `konsult...')
+#2 C:\xampp\htdocs\Notaris\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `konsult...')
+#3 C:\xampp\htdocs\Notaris\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `konsult...', Array, false)
+#4 C:\xampp\htdocs\Notaris\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\Notaris\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\Notaris\app\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(933): App\Controllers\Layanan->index()
+#8 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+#9 C:\xampp\htdocs\Notaris\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\Notaris\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\Notaris\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\Notaris\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\Notaris\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-18 20:34:10 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'jadwal.employee_id' in 'on clause'
+[Method: GET, Route: layanan]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `konsultasi_jadwal`.`id`, `konsultasi_jadwal`.`tanggal`, `konsultasi_jadwal`.`jam`, `konsultasi_jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `konsultasi_jadwal`.`status` = :konsultasi_jadwal.status:
+ORDER BY `konsultasi_jadwal`.`tanggal` ASC, `konsultasi_jadwal`.`jam` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 20:34:10 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'jadwal.employee_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `konsultasi_jadwal`.`id`, `konsultasi_jadwal`.`tanggal`, `konsultasi_jadwal`.`jam`, `konsultasi_jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `konsultasi_jadwal`.`status` = \'available\'
+ORDER BY `konsultasi_jadwal`.`tanggal` ASC, `konsultasi_jadwal`.`jam` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `konsultasi_jadwal`.`id`, `konsultasi_jadwal`.`tanggal`, `konsultasi_jadwal`.`jam`, `konsultasi_jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `konsultasi_jadwal`.`status` = \'available\'
+ORDER BY `konsultasi_jadwal`.`tanggal` ASC, `konsultasi_jadwal`.`jam` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `konsultasi_jadwal`.`id`, `konsultasi_jadwal`.`tanggal`, `konsultasi_jadwal`.`jam`, `konsultasi_jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `konsultasi_jadwal`.`status` = :konsultasi_jadwal.status:
+ORDER BY `konsultasi_jadwal`.`tanggal` ASC, `konsultasi_jadwal`.`jam` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+CRITICAL - 2025-08-18 20:34:10 --> [Caused by] mysqli_sql_exception: Unknown column 'jadwal.employee_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `konsultasi_jadwal`.`id`, `konsultasi_jadwal`.`tanggal`, `konsultasi_jadwal`.`jam`, `konsultasi_jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `konsultasi_jadwal`.`status` = \'available\'
+ORDER BY `konsultasi_jadwal`.`tanggal` ASC, `konsultasi_jadwal`.`jam` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `konsultasi_jadwal`.`id`, `konsultasi_jadwal`.`tanggal`, `konsultasi_jadwal`.`jam`, `konsultasi_jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `konsultasi_jadwal`.`status` = \'available\'
+ORDER BY `konsultasi_jadwal`.`tanggal` ASC, `konsultasi_jadwal`.`jam` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `konsultasi_jadwal`.`id`, `konsultasi_jadwal`.`tanggal`, `konsultasi_jadwal`.`jam`, `konsultasi_jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `konsultasi_jadwal`.`status` = \'available\'
+ORDER BY `konsultasi_jadwal`.`tanggal` ASC, `konsultasi_jadwal`.`jam` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `konsultasi_jadwal`.`id`, `konsultasi_jadwal`.`tanggal`, `konsultasi_jadwal`.`jam`, `konsultasi_jadwal`.`status`, `employees`.`nama` as `pegawai`, `employees`.`id` as `employee_id`
+FROM `konsultasi_jadwal`
+LEFT JOIN `employees` ON `employees`.`id` = `jadwal`.`employee_id`
+WHERE `konsultasi_jadwal`.`status` = :konsultasi_jadwal.status:
+ORDER BY `konsultasi_jadwal`.`tanggal` ASC, `konsultasi_jadwal`.`jam` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Layanan.php(24): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Layanan->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Layanan))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 20:34:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:34:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:34:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:35:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 20:35:02 --> Error: Call to undefined method App\Libraries\EmployeeResolver::ensureForUser()
+[Method: GET, Route: auth/googleCallback]
+in APPPATH\Controllers\Auth.php on line 58.
+ 1 APPPATH\Controllers\Auth.php(252): App\Controllers\Auth->setUserSession([...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->googleCallback()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 20:39:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:39:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:39:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:39:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:39:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:44:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 20:44:30 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/dashboard_admin.php"
+[Method: GET, Route: admin]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/dashboard_admin.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('admin/dashboard_admin', [], true)
+ 3 APPPATH\Controllers\Admin\Dashboard.php(67): view('admin/dashboard_admin', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->index()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 20:45:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:45:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:50:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:50:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:50:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:50:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 20:52:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:00:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:00:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:00:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:02:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:03:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:03:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:03:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:03:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:06:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 21:06:40 --> ErrorException: Undefined variable $s
+[Method: GET, Route: admin/slot]
+in APPPATH\Views\admin\slot.php on line 75.
+ 1 APPPATH\Views\admin\slot.php(75): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $s', 'C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php', 75)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('admin/slot', [], true)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(146): view('admin/slot', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 21:06:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 21:06:53 --> ErrorException: Undefined variable $slot
+[Method: GET, Route: admin/slot]
+in APPPATH\Views\admin\slot.php on line 75.
+ 1 APPPATH\Views\admin\slot.php(75): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $slot', 'C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php', 75)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('admin/slot', [], true)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(146): view('admin/slot', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 21:08:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 21:08:55 --> ErrorException: Undefined variable $s
+[Method: GET, Route: admin/slot]
+in APPPATH\Views\admin\slot.php on line 75.
+ 1 APPPATH\Views\admin\slot.php(75): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $s', 'C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php', 75)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('admin/slot', [], true)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(146): view('admin/slot', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 21:09:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 21:09:37 --> ErrorException: Undefined variable $slot
+[Method: GET, Route: admin/slot]
+in APPPATH\Views\admin\slot.php on line 75.
+ 1 APPPATH\Views\admin\slot.php(75): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $slot', 'C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php', 75)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('admin/slot', [], true)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(146): view('admin/slot', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 21:10:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 21:10:06 --> ErrorException: Undefined variable $slot
+[Method: GET, Route: admin/slot]
+in APPPATH\Views\admin\slot.php on line 75.
+ 1 APPPATH\Views\admin\slot.php(75): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $slot', 'C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php', 75)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('admin/slot', [], true)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(146): view('admin/slot', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 21:10:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 21:10:39 --> ErrorException: Undefined variable $slot
+[Method: GET, Route: admin/slot]
+in APPPATH\Views\admin\slot.php on line 75.
+ 1 APPPATH\Views\admin\slot.php(75): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $slot', 'C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php', 75)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('admin/slot', [], true)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(146): view('admin/slot', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 21:10:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:10:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:10:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-18 21:10:51 --> ErrorException: Undefined variable $slot
+[Method: GET, Route: admin/slot]
+in APPPATH\Views\admin\slot.php on line 75.
+ 1 APPPATH\Views\admin\slot.php(75): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $slot', 'C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php', 75)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\Notaris\\app\\Views\\admin\\slot.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('admin/slot', [], true)
+ 5 APPPATH\Controllers\Admin\Dashboard.php(146): view('admin/slot', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Dashboard->slot()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\Notaris\\public\\index.php')
+INFO - 2025-08-18 21:12:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:14:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:15:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:15:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:15:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:15:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:15:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:15:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:15:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:16:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:16:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:16:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-18 21:16:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

@@ -1,0 +1,7 @@
+/vendor
+/.env
+/writable/debugbar
+/writable/cache/*
+!/writable/cache/index.html
+printf "/.env\n/vendor/\n/node_modules/\n/writable/*\n!/writable/index.html\n/public/uploads/*\n" >> .gitignore
+mkdir -p writable && echo "" > writable/index.html
