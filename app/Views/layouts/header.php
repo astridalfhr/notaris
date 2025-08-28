@@ -53,6 +53,10 @@
     integrity="sha512-1ycn6IcaQQ40/J6MdLecxB2FSWbYQd1Y15w7qvcu+oVQm8bX9rQx0vKYLbB+X9Xh8GKa9r3G5k3L1j4nY6J0A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-dymI62VZ9rKqgW7o0dXz1Oj0ZpNY0s5U1yW9rQHcZC5f2KOSgQ0V6o1kC5kG1dXHkDvYhN8N5Zrd1ZC2M1iQ3g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <!-- Tambah: v4-shims supaya kelas lama seperti `fa fa-users` tetap muncul -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/v4-shims.min.css"
     integrity="sha512-vV6D4XYw7m3g8q8QXwCkq8d7lK/1o0uQJt8dEg9ZrCkq8xw2mQ0Lk3fG9sPZbQoq5d0G6mKq3QS2m3lM0l2VhA=="

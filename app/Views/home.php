@@ -1,64 +1,67 @@
 <?= $this->extend('layouts/main') ?>
 <?= $this->section('content') ?>
-
 <?php
-// ======================= UTIL GAMBAR & TANGGAL =======================
-function pickPublicUrl(array $candidates): ?string
+function urlImageSmart(?string $val, array $fallbacks = []): string
 {
+  // Jika kosong → pakai fallback pertama yang tersedia
+  if (!$val) {
+    foreach ($fallbacks as $rel) {
+      $abs = FCPATH . ltrim($rel, '/');
+      if (is_file($abs))
+        return base_url($rel);
+    }
+    return 'https://via.placeholder.com/800x500?text=Image';
+  }
+
+  // Jika sudah full URL
+  if (preg_match('~^https?://~i', $val))
+    return $val;
+
+  // Kalau value sudah relatif (mis. "uploads/news/a.jpg" atau "assets/images/news/a.jpg")
+  // biarkan apa adanya tapi jadikan absolute dengan base_url()
+  $clean = ltrim($val, '/');
+  $absCandidate = FCPATH . $clean;
+  if (is_file($absCandidate))
+    return base_url($clean);
+
+  // Coba di beberapa base-folder umum
+  $candidates = [
+    "assets/images/$clean",
+    "images/$clean",
+    "uploads/$clean",
+    "assets/images/news/$clean",
+    "images/news/$clean",
+    "uploads/news/$clean",
+  ];
   foreach ($candidates as $rel) {
-    $abs = FCPATH . ltrim($rel, '/'); // FCPATH menunjuk ke /public
+    $abs = FCPATH . ltrim($rel, '/');
     if (is_file($abs))
       return base_url($rel);
   }
-  return null;
+
+  // Kalau masih gagal → fallback
+  foreach ($fallbacks as $rel) {
+    $abs = FCPATH . ltrim($rel, '/');
+    if (is_file($abs))
+      return base_url($rel);
+  }
+  return 'https://via.placeholder.com/800x500?text=Image';
 }
 
 function newsImageUrl(?string $fn): string
 {
-  if (!$fn)
-    return 'https://via.placeholder.com/600x400?text=News';
-  return pickPublicUrl([
-    "assets/images/news/$fn",
-    "images/news/$fn",
-    "uploads/news/$fn",
-  ]) ?? 'https://via.placeholder.com/600x400?text=News';
+  // fallback default untuk kartu berita
+  return urlImageSmart($fn, ['assets/images/news/default.jpg', 'assets/images/kantor.jpg']);
 }
-
 function heroImageUrl(?string $fn): string
 {
-  if ($fn) {
-    $u = pickPublicUrl([
-      "assets/images/hero/$fn",
-      "images/hero/$fn",
-      "uploads/hero/$fn",
-    ]);
-    if ($u)
-      return $u;
-  }
-  return base_url('assets/images/kantor.jpg'); // fallback
+  return urlImageSmart($fn, ['assets/images/kantor.jpg']);
 }
-
 function ownerImageUrl(?string $fn): string
 {
-  if ($fn) {
-    $u = pickPublicUrl([
-      "assets/images/owner/$fn",
-      "images/owner/$fn",
-      "uploads/owner/$fn",
-    ]);
-    if ($u)
-      return $u;
-  }
-  return base_url('assets/images/pemilik.jpg');
+  return urlImageSmart($fn, ['assets/images/pemilik.jpg']);
 }
 
-function fmtDate(?string $ts): string
-{
-  if (!$ts)
-    return '-';
-  $t = strtotime($ts);
-  return $t ? date('d M Y', $t) : '-';
-}
 
 // ======================= DATA FALLBACK =======================
 $settings = $settings ?? [];
