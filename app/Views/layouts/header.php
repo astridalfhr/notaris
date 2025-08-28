@@ -2,27 +2,58 @@
 <html lang="id">
 
 <head>
-  <meta charset="UTF-8">
-  <!-- ✅ Viewport wajib untuk responsif -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta charset="UTF-8" />
+
+  <!-- ✅ Responsif & safe area -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <!-- ✅ Warna bar address di Android (opsional) -->
+  <meta name="theme-color" content="#0ea5e9" />
+
+  <!-- ✅ SEO dasar -->
+  <meta name="description"
+    content="<?= esc($metaDescription ?? 'Layanan notaris — konsultasi, pembuatan akta, legalisasi, dan lainnya.') ?>" />
 
   <!-- ✅ Title dinamis -->
   <title><?= esc($title ?? 'Notaris') ?></title>
 
-  <!-- ✅ Tailwind CSS CDN -->
+  <!-- ✅ Favicon & ikon perangkat (sesuaikan jika punya PNG) -->
+  <link rel="icon" href="<?= base_url('assets/images/favicon.ico') ?>" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="<?= base_url('assets/images/icon-180.png') ?>" sizes="180x180" />
+
+  <!-- ✅ Preconnect untuk CDN (sedikit bantu first paint) -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+  <!-- ✅ Tailwind CSS CDN + konfigurasi ringan -->
+  <script>
+    // Konfig cepat: container center, screens, dan warna brand
+    window.tailwind = {
+      theme: {
+        extend: {
+          colors: { brand: '#0ea5e9' }
+        },
+        container: { center: true, padding: '1rem' },
+        screens: { sm: '640px', md: '768px', lg: '1024px', xl: '1280px' }
+      },
+      corePlugins: {
+        // aktifkan utilitas penting
+        container: true
+      }
+    };
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- ✅ Custom CSS -->
-  <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
+  <!-- ✅ Custom CSS kamu -->
+  <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>" />
 
-  <!-- ✅ Font Awesome (cukup satu versi terbaru saja, biar gak duplicate) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- ✅ Font Awesome (pastikan hanya satu versi) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/J6MdLecxB2FSWbYQd1Y15w7qvcu+oVQm8bX9rQx0vKYLbB+X9Xh8GKa9r3G5k3L1j4nY6J0A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- ✅ Google Sign-In -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-  <!-- ✅ Favicon (optional biar lebih pro) -->
-  <link rel="icon" href="<?= base_url('assets/images/favicon.ico') ?>" type="image/x-icon">
 </head>
 
-<body class="bg-gray-50 font-sans text-gray-900 antialiased leading-relaxed">
+<body class="bg-gray-50 text-gray-900 antialiased leading-relaxed">

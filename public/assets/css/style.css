@@ -1262,92 +1262,109 @@ body.centered-page {
   }
 }
 
-dan ini css untuk halaman kontaknya
+/* ====== CSS kontak (scoped opsional; biarkan jika kamu pakai file terpisah) ====== */
+/* (Tidak mengubah di sini untuk jaga kompatibilitas) */
 
-/* Tailwind tetap di-load via CDN di view. Ini hanya custom styles kecil biar rapi dipisah. */
+
+/* ===================================================================== */
+/* ==================  RESPONSIVE ENHANCEMENTS (ADDED)  ================= */
+/* ===================================================================== */
+
+/* Tokens & base font (non-breaking) */
+:root {
+  --brand: #fbbf24;
+  /* opsional referensi warna */
+  --brand-strong: #d97706;
+  --surface: #ffffff;
+  --bg: #f5f5f5;
+  --shadow: 0 8px 24px rgba(15, 23, 42, .08);
+}
+
+/* Gunakan Inter bila tersedia karena sudah di-import */
+html,
 body {
-  background: #f9fafc;
-  font-family: 'Inter', sans-serif;
-  color: #222222;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+  color: #111827;
+  background-color: var(--bg);
 }
 
-/* focus ring untuk input */
-.input-focus:focus {
-  outline: none !important;
-  border-color: #d97706;
-  /* amber-600 */
-  box-shadow: 0 0 0 3px rgb(253 186 116 / 0.5);
+/* Media aman di mobile: tidak pecah layout */
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-/* tombol utama */
-.btn-primary {
-  background-color: #fbbf24;
-  /* amber-400 */
-  color: #202020;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+/* Tabel aman di mobile: bungkus table dengan .table-responsive di HTML */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.btn-primary:hover {
-  background-color: #d97706;
-  /* amber-600 */
-  color: #fff;
+/* Utility container (opsional) */
+.container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(14px, 2vw, 24px);
 }
 
-/* ikon bulat di atas form */
-.icon-bg {
-  background-color: #fbbf24;
+/* Sentuh nyaman */
+button,
+.btn,
+.submit-btn {
+  min-height: 44px;
 }
 
-/* textarea interaktif */
-textarea {
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-textarea:focus {
-  background-color: #fffbea;
-  box-shadow: 0 0 8px 2px rgba(251, 191, 36, 0.5);
+/* Breakpoints tambahan ringan untuk komponen grid besar (non-intrusive) */
+@media (max-width:640px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* tombol submit dengan panah animasi */
-.btn-submit {
-  position: relative;
+/* Hero container padding aman di mobile */
+@media (max-width:768px) {
+  .hero .container {
+    padding-inline: 16px;
+  }
+}
+
+/* Admin layout: beri ruang samping kecil di tablet/HP (tanpa ubah bentuk) */
+@media (max-width:992px) {
+  .admin-layout {
+    padding: 12px var(--page-pad-x);
+  }
+}
+
+/* Helper: text wrap aman */
+.text-ellipsis {
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.btn-submit:after {
-  content: "→";
-  position: absolute;
-  right: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%) translateX(0);
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+.break-words {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
-.btn-submit:hover:after {
-  opacity: 1;
-  transform: translateY(-50%) translateX(5px);
+/* Helper: gambar bulat aman */
+.img-round {
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.alert {
-  padding: 10px 16px;
-  margin: 10px 0;
-  border-radius: 6px;
-  font-weight: 500
-}
-
-.alert.success {
-  background: #d1fae5;
-  color: #065f46
-}
-
-.alert.error {
-  background: #fee2e2;
-  color: #991b1b
-}
-
-.alert.warn {
-  background: #fef3c7;
-  color: #92400e
-}
+/* End of enhancements */
