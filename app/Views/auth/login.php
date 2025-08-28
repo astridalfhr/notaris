@@ -73,7 +73,7 @@
                         <?= csrf_field() ?>
 
                         <!-- Google Login Button -->
-                        <a href="<?= base_url('auth/LoginWithGoogle'); ?>"
+                        <a href="<?= base_url('auth/google'); ?>"
                             class="btn-primary w-full py-4 px-6 rounded-xl font-semibold text-black flex items-center justify-center space-x-3">
                             <i class="fab fa-google text-lg"></i>
                             <span>Masuk dengan Google</span>

@@ -40,6 +40,8 @@ $routes->post('auth/register', 'Auth::registerPost');
 $routes->get('logout', 'Auth::logout');
 $routes->get('auth/LoginWithGoogle', 'Auth::LoginWithGoogle');
 $routes->get('auth/googleCallback', 'Auth::googleCallback');
+$routes->get('auth/google', 'Auth::google');
+$routes->get('auth/callback', 'Auth::googleCallback'); 
 $routes->get('forgot', 'Auth::forgot');
 $routes->post('forgot', 'Auth::forgotPost');
 $routes->get('reset-password', 'Auth::reset');
