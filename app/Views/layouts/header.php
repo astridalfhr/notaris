@@ -46,6 +46,7 @@
 
   <!-- ✅ Custom CSS kamu -->
   <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>" />
+  <link rel="stylesheet" href="<?= base_url('assets/css/style.css?v=6') ?>">
 
   <!-- ✅ Font Awesome (pastikan hanya satu versi) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"

@@ -96,7 +96,7 @@ function fmt_date(?string $date): string
                 <div class="slot-card-head">
                     <h3>List Jadwal Booked (Aktif)</h3>
                 </div>
-                <div class="table-wrap table responsive">
+                <div class="table-wrap table-responsive">
                     <table class="slot-table">
                         <thead>
                             <tr>
@@ -118,7 +118,7 @@ function fmt_date(?string $date): string
                                         <td><?= esc($s['jam']) ?></td>
                                         <td><span class="badge <?= $cls ?>"><?= $txt ?></span></td>
                                         <td>
-                                            <div class="table-actions table responsive">
+                                            <div class="table-actions table-responsive">
                                                 <a href="<?= site_url('multiuser/slot/detail/' . (int) $s['jadwal_id']) ?>"
                                                     class="btn btn-gray">
                                                     <i class="fa-solid fa-circle-info"></i> Detail
@@ -151,7 +151,7 @@ function fmt_date(?string $date): string
                 <div class="slot-card-head">
                     <h3>List Jadwal Available</h3>
                 </div>
-                <div class="table-wrap table responsive">
+                <div class="table-wrap table-responsive">
                     <table class="slot-table">
                         <thead>
                             <tr>
@@ -213,7 +213,7 @@ function fmt_date(?string $date): string
                 <div class="slot-card-head">
                     <h3>List Jadwal Selesai</h3>
                 </div>
-                <div class="table-wrap table responsive">
+                <div class="table-wrap table-responsive">
                     <table class="slot-table">
                         <thead>
                             <tr>

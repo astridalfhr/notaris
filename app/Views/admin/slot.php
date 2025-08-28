@@ -96,7 +96,7 @@ function fmt_date(?string $date): string
                 <div class="slot-card-head">
                     <h3>List Jadwal Booked (Aktif)</h3>
                 </div>
-                <div class="table-wrap table responsive">
+                <div class="table-wrap table-responsive">
                     <table class="slot-table">
                         <thead>
                             <tr>
@@ -151,7 +151,7 @@ function fmt_date(?string $date): string
                 <div class="slot-card-head">
                     <h3>List Jadwal Available</h3>
                 </div>
-                <div class="table-wrap">
+                <div class="table-wrap table-responsive">
                     <table class="slot-table">
                         <thead>
                             <tr>
@@ -213,7 +213,7 @@ function fmt_date(?string $date): string
                 <div class="slot-card-head">
                     <h3>List Jadwal Selesai</h3>
                 </div>
-                <div class="table-wrap">
+                <div class="table-wrap table-responsive">
                     <table class="slot-table">
                         <thead>
                             <tr>
