@@ -3,17 +3,17 @@ set -euo pipefail
 
 ENV_PATH="/var/www/html/.env"
 
-# ===== baseURL fallback dari domain Railway kalau APP_BASE_URL kosong
+# baseURL fallback dari domain Railway kalau APP_BASE_URL kosong
 APP_BASE_URL="${APP_BASE_URL:-}"
 if [ -z "$APP_BASE_URL" ] && [ -n "${RAILWAY_PUBLIC_DOMAIN:-}" ]; then
   APP_BASE_URL="https://${RAILWAY_PUBLIC_DOMAIN}"
 fi
 
-# ===== default DB config (boleh di-override via env)
-DB_DRIVER="${DB_DRIVER:-MySQLi}"        # opsi lain: Postgre
+# default DB
+DB_DRIVER="${DB_DRIVER:-MySQLi}"        # atau set Postgre
 DB_PORT="${DB_PORT:-$([ "$DB_DRIVER" = "Postgre" ] && echo 5432 || echo 3306)}"
 
-# Tulis .env
+# tulis .env
 cat > "$ENV_PATH" <<EOF
 CI_ENVIRONMENT=${CI_ENVIRONMENT:-production}
 app.baseURL="${APP_BASE_URL}"
@@ -41,7 +41,7 @@ email.mailType=html
 email.charset=UTF-8
 EOF
 
-# ===== optional: jalankan migrasi kalau diminta
+# opsional: jalankan migrasi sekali jalan kalau diminta
 if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
   echo "[entrypoint] Running migrations..."
   php spark migrate --all --no-interaction || true
