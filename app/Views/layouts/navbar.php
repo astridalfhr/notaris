@@ -45,6 +45,7 @@ if ($isUrl) {
   <div class="container mx-auto flex justify-between items-center px-6 py-3">
     <div class="flex items-center space-x-10">
       <div class="text-xl font-bold text-gray-800 cursor-default select-none">Notaris</div>
+      <!-- Navbar desktop -->
       <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
         <a href="<?= site_url('/') ?>" class="hover:text-yellow-600 transition">Beranda</a>
         <a href="<?= site_url('profile') ?>" class="hover:text-yellow-600 transition">Profile</a>
@@ -53,6 +54,7 @@ if ($isUrl) {
       </nav>
     </div>
 
+    <!-- Bagian kanan desktop -->
     <div class="hidden md:flex space-x-6 items-center text-sm text-gray-600">
       <div>📞 +62 852-7128-8009</div>
       <div class="border-l border-gray-300 h-6"></div>
@@ -82,7 +84,7 @@ if ($isUrl) {
 
           <!-- Dropdown -->
           <div id="userDropdown"
-            class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden">
+            class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
             <a href="<?= site_url($dashboardUrl) ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
               Dashboard
             </a>
@@ -103,31 +105,150 @@ if ($isUrl) {
         </a>
       <?php endif; ?>
     </div>
+
+    <!-- Hamburger menu button untuk mobile -->
+    <div class="md:hidden flex items-center space-x-4">
+      <!-- Nomor telepon bisa disembunyikan atau ditampilkan sesuai kebutuhan -->
+      <button id="mobileMenuBtn" aria-label="Toggle menu" class="focus:outline-none">
+        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <?php if ($isLogged): ?>
+        <!-- Tombol user icon di mobile -->
+        <button id="mobileUser Btn" aria-label="User  menu" class="focus:outline-none">
+          <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+            <?php if ($avatar): ?>
+              <img src="<?= esc($avatar) ?>" alt="<?= esc($displayName ?: 'Me') ?>" class="w-full h-full object-cover">
+            <?php else: ?>
+              <i class="fas fa-user text-gray-600"></i>
+            <?php endif; ?>
+          </div>
+        </button>
+      <?php else: ?>
+        <!-- Tombol login di mobile -->
+        <a href="<?= site_url('login') ?>"
+          class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition text-sm">
+          Login
+        </a>
+      <?php endif; ?>
+    </div>
+  </div>
+
+  <!-- Mobile menu (hidden by default) -->
+  <nav id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-md">
+    <div class="flex flex-col px-6 py-4 space-y-3 text-gray-700 font-medium">
+      <a href="<?= site_url('/') ?>" class="hover:text-yellow-600 transition">Beranda</a>
+      <a href="<?= site_url('profile') ?>" class="hover:text-yellow-600 transition">Profile</a>
+      <a href="<?= site_url('layanan') ?>" class="hover:text-yellow-600 transition">Layanan</a>
+      <a href="<?= site_url('kontak') ?>" class="hover:text-yellow-600 transition">Kontak</a>
+      <div class="border-t border-gray-300 my-2"></div>
+      <div class="text-sm text-gray-600">
+        📞 +62 852-7128-8009
+      </div>
+
+      <?php if ($isLogged): ?>
+        <!-- Dropdown user mobile -->
+        <div class="border-t border-gray-300 pt-2">
+          <a href="<?= site_url($dashboardUrl) ?>" class="block py-2 hover:text-yellow-600 transition">Dashboard</a>
+          <a href="<?= site_url($profileUrl) ?>" class="block py-2 hover:text-yellow-600 transition">Edit Profile</a>
+          <a href="<?= site_url('logout') ?>" class="block py-2 hover:text-yellow-600 transition">Logout</a>
+        </div>
+      <?php else: ?>
+        <a href="<?= site_url('login') ?>"
+          class="block py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition text-center">
+          Login / Sign Up
+        </a>
+      <?php endif; ?>
+    </div>
+  </nav>
+
+  <!-- Dropdown user mobile (popup) -->
+  <div id="mobileUser Dropdown" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-sm p-6">
+      <h2 class="text-xl font-semibold mb-4">Akun</h2>
+      <div class="flex items-center space-x-4 mb-4">
+        <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+          <?php if ($avatar): ?>
+            <img src="<?= esc($avatar) ?>" alt="<?= esc($displayName ?: 'Me') ?>" class="w-full h-full object-cover">
+          <?php else: ?>
+            <i class="fas fa-user text-gray-600"></i>
+          <?php endif; ?>
+        </div>
+        <div>
+          <div class="font-medium"><?= esc($displayName ?: $displayEmail ?: 'Akun') ?></div>
+          <div class="text-sm text-gray-500"><?= esc($displayEmail) ?></div>
+        </div>
+      </div>
+      <a href="<?= site_url($dashboardUrl) ?>" class="block py-2 hover:text-yellow-600 transition">Dashboard</a>
+      <a href="<?= site_url($profileUrl) ?>" class="block py-2 hover:text-yellow-600 transition">Edit Profile</a>
+      <div class="border-t border-gray-300 my-2"></div>
+      <a href="<?= site_url('logout') ?>" class="block py-2 hover:text-yellow-600 transition">Logout</a>
+      <button id="closeMobileUser Dropdown" class="mt-4 w-full py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition">
+        Tutup
+      </button>
+    </div>
   </div>
 </header>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const button = document.getElementById("userMenuButton");
-    const dropdown = document.getElementById("userDropdown");
+    // Dropdown user desktop
+    const userBtn = document.getElementById("userMenuButton");
+    const userDropdown = document.getElementById("userDropdown");
 
-    if (!button || !dropdown) return;
-
-    function closeMenu() {
-      if (!dropdown.classList.contains("hidden")) {
-        dropdown.classList.add("hidden");
-        button.setAttribute("aria-expanded", "false");
+    if (userBtn && userDropdown) {
+      function closeUser Menu() {
+        if (!userDropdown.classList.contains("hidden")) {
+          userDropdown.classList.add("hidden");
+          userBtn.setAttribute("aria-expanded", "false");
+        }
       }
+
+      userBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        const isHidden = userDropdown.classList.contains("hidden");
+        userDropdown.classList.toggle("hidden");
+        userBtn.setAttribute("aria-expanded", String(isHidden));
+      });
+
+      document.addEventListener("click", closeUser Menu);
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeUser Menu(); });
     }
 
-    button.addEventListener("click", function (e) {
-      e.stopPropagation();
-      const isHidden = dropdown.classList.contains("hidden");
-      dropdown.classList.toggle("hidden");
-      button.setAttribute("aria-expanded", String(isHidden));
-    });
+    // Toggle mobile menu
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
 
-    document.addEventListener("click", function () { closeMenu(); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeMenu(); });
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    }
+
+    // Toggle mobile user dropdown
+    const mobileUser Btn = document.getElementById("mobileUser Btn");
+    const mobileUser Dropdown = document.getElementById("mobileUser Dropdown");
+    const closeMobileUser DropdownBtn = document.getElementById("closeMobileUser Dropdown");
+
+    if (mobileUser Btn && mobileUser Dropdown && closeMobileUser DropdownBtn) {
+      mobileUser Btn.addEventListener("click", () => {
+        mobileUser Dropdown.classList.remove("hidden");
+      });
+
+      closeMobileUser DropdownBtn.addEventListener("click", () => {
+        mobileUser Dropdown.classList.add("hidden");
+      });
+
+      // Klik di luar modal tutup modal
+      mobileUser Dropdown.addEventListener("click", (e) => {
+        if (e.target === mobileUser Dropdown) {
+          mobileUser Dropdown.classList.add("hidden");
+        }
+      });
+    }
   });
 </script>
