@@ -86,56 +86,57 @@
                             <i class="fa-solid fa-user-tie"></i>
                             <?= esc($g['karyawan_nama'] ?? 'Tanpa Nama') ?>
                         </h3>
-
-                        <table class="table flat">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Pengguna</th>
-                                    <th>Jam</th>
-                                    <th>Status</th>
-                                    <th>Konfirmasi</th>
-                                    <th>Detail</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 1;
-                                foreach ($g['items'] ?? [] as $row):
-                                    $st = strtolower($row['status'] ?? 'pending');
-                                    ?>
+                        <div class="table-responsive">
+                            <table class="table flat">
+                                <thead>
                                     <tr>
-                                        <td><?= $i++ ?></td>
-                                        <td><?= esc($row['user_nama'] ?? '-') ?></td>
-                                        <td><?= esc($row['jam'] ?? $row['jadwal_jam'] ?? '-') ?></td>
-                                        <td><span class="badge <?= esc($st) ?>"><?= esc(ucfirst($st)) ?></span></td>
-
-                                        <td>
-                                            <?php if (($g['karyawan_id'] ?? 0) === ($myEmployeeId ?? -1) && $st === 'pending'): ?>
-                                                <form method="post"
-                                                    action="<?= site_url('multiuser/dashboard/booking-confirm/' . (int) $row['id']) ?>"
-                                                    style="display:inline">
-                                                    <?= csrf_field() ?>
-                                                    <input type="hidden" name="back" value="<?= esc(site_url('multiuser')) ?>">
-                                                    <button class="btn small success"
-                                                        onclick="return confirm('Konfirmasi booking ini?')">
-                                                        Confirm
-                                                    </button>
-                                                </form>
-                                            <?php else: ?>
-                                                —
-                                            <?php endif; ?>
-                                        </td>
-
-                                        <td>
-                                            <a class="btn small warn"
-                                                href="<?= site_url('booking/detail/' . (int) $row['id']) . '?back=' . urlencode(site_url('multiuser')) ?>">
-                                                Lihat
-                                            </a>
-                                        </td>
+                                        <th>No</th>
+                                        <th>Pengguna</th>
+                                        <th>Jam</th>
+                                        <th>Status</th>
+                                        <th>Konfirmasi</th>
+                                        <th>Detail</th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 1;
+                                    foreach ($g['items'] ?? [] as $row):
+                                        $st = strtolower($row['status'] ?? 'pending');
+                                        ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= esc($row['user_nama'] ?? '-') ?></td>
+                                            <td><?= esc($row['jam'] ?? $row['jadwal_jam'] ?? '-') ?></td>
+                                            <td><span class="badge <?= esc($st) ?>"><?= esc(ucfirst($st)) ?></span></td>
+
+                                            <td>
+                                                <?php if (($g['karyawan_id'] ?? 0) === ($myEmployeeId ?? -1) && $st === 'pending'): ?>
+                                                    <form method="post"
+                                                        action="<?= site_url('multiuser/dashboard/booking-confirm/' . (int) $row['id']) ?>"
+                                                        style="display:inline">
+                                                        <?= csrf_field() ?>
+                                                        <input type="hidden" name="back" value="<?= esc(site_url('multiuser')) ?>">
+                                                        <button class="btn small success"
+                                                            onclick="return confirm('Konfirmasi booking ini?')">
+                                                            Confirm
+                                                        </button>
+                                                    </form>
+                                                <?php else: ?>
+                                                    —
+                                                <?php endif; ?>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn small warn"
+                                                    href="<?= site_url('booking/detail/' . (int) $row['id']) . '?back=' . urlencode(site_url('multiuser')) ?>">
+                                                    Lihat
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>

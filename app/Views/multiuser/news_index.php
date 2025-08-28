@@ -16,7 +16,7 @@
             <div class="card" style="border-left:4px solid #EF4444;"><?= esc(session()->getFlashdata('error')) ?></div>
         <?php endif; ?>
 
-        <div class="card">
+        <div class="card table responsive">
             <h3 class="card-title"><i class="fa-solid fa-list"></i> Daftar Berita</h3>
             <table class="table flat">
                 <thead>

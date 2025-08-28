@@ -131,95 +131,99 @@ $cacheBuster = '?v=' . time(); // cegah cache browser
 
             <!-- Jadwal Hari Ini -->
             <h3 class="block-title"><i class="fa-solid fa-calendar-check"></i> Jadwal Hari Ini</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Pengguna</th>
-                        <th>Tanggal</th>
-                        <th>Jam</th>
-                        <th>Status</th>
-                        <th style="width:220px">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (!empty($bookingsToday)): ?>
-                        <?php $i = 1;
-                        foreach ($bookingsToday as $b):
-                            $tgl = !empty($b['tanggal']) ? date('d M Y', strtotime($b['tanggal'])) : '-';
-                            $jam = ($tmp = trim((string) ($b['jam'] ?? ''))) !== '' ? $tmp : '-';
-
-                            // Normalisasi status agar sesuai badge CSS yang ada
-                            $raw = strtolower((string) ($b['status'] ?? 'pending'));
-                            $status = match ($raw) {
-                                'approve' => 'confirmed',
-                                'approved' => 'confirmed',
-                                'cancelled', 'cancel' => 'cancelled',
-                                'done' => 'completed',
-                                default => $raw,
-                            };
-                            ?>
-                            <tr>
-                                <td><?= $i++ ?></td>
-                                <td>
-                                    <strong><?= esc($b['user_nama'] ?? '-') ?></strong>
-                                    <div class="subtext"><?= esc($b['user_email'] ?? '-') ?></div>
-                                </td>
-                                <td><?= esc($tgl) ?></td>
-                                <td><?= esc($jam) ?></td>
-                                <td><span class="badge <?= esc($status) ?>"><?= esc(ucfirst($status)) ?></span></td>
-                                <td>
-                                    <div class="row-actions">
-                                        <a href="<?= site_url('booking/detail/' . (int) $b['id']) ?>" class="btn small warn">
-                                            <i class="fa-solid fa-eye"></i> Detail
-                                        </a>
-                                        <?php if ($status === 'pending'): ?>
-                                            <form action="<?= site_url('admin/approve/' . (int) $b['id']) ?>" method="post"
-                                                style="display:inline">
-                                                <?= csrf_field() ?>
-                                                <button class="btn small success" type="submit">
-                                                    <i class="fa-solid fa-check"></i> Approve
-                                                </button>
-                                            </form>
-                                            <form action="<?= site_url('admin/reject/' . (int) $b['id']) ?>" method="post"
-                                                style="display:inline" onsubmit="return confirm('Tolak booking ini?');">
-                                                <?= csrf_field() ?>
-                                                <button class="btn small danger" type="submit">
-                                                    <i class="fa-solid fa-xmark"></i> Tolak
-                                                </button>
-                                            </form>
-                                        <?php else: ?>
-                                            <span class="muted">-</span>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-
-                    <?php elseif (!empty($slotsToday)): /* fallback: tampilkan slot jika belum ada booking */ ?>
-                        <?php $i = 1;
-                        foreach ($slotsToday as $s):
-                            $tgl = !empty($s['tanggal']) ? date('d M Y', strtotime($s['tanggal'])) : '-';
-                            $jam = !empty($s['jam']) ? $s['jam'] : '-';
-                            $st = strtolower((string) ($s['status'] ?? 'available'));
-                            ?>
-                            <tr>
-                                <td><?= $i++ ?></td>
-                                <td><em class="muted">—</em></td>
-                                <td><?= esc($tgl) ?></td>
-                                <td><?= esc($jam) ?></td>
-                                <td><span class="badge <?= esc($st) ?>"><?= esc(ucfirst($st)) ?></span></td>
-                                <td><span class="muted">Belum dipesan</span></td>
-                            </tr>
-                        <?php endforeach; ?>
-
-                    <?php else: ?>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td colspan="6" class="empty">Tidak ada jadwal/slot yang sudah dibooking untuk hari ini.</td>
+                            <th>No</th>
+                            <th>Pengguna</th>
+                            <th>Tanggal</th>
+                            <th>Jam</th>
+                            <th>Status</th>
+                            <th style="width:220px">Aksi</th>
                         </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($bookingsToday)): ?>
+                            <?php $i = 1;
+                            foreach ($bookingsToday as $b):
+                                $tgl = !empty($b['tanggal']) ? date('d M Y', strtotime($b['tanggal'])) : '-';
+                                $jam = ($tmp = trim((string) ($b['jam'] ?? ''))) !== '' ? $tmp : '-';
+
+                                // Normalisasi status agar sesuai badge CSS yang ada
+                                $raw = strtolower((string) ($b['status'] ?? 'pending'));
+                                $status = match ($raw) {
+                                    'approve' => 'confirmed',
+                                    'approved' => 'confirmed',
+                                    'cancelled', 'cancel' => 'cancelled',
+                                    'done' => 'completed',
+                                    default => $raw,
+                                };
+                                ?>
+                                <tr>
+                                    <td><?= $i++ ?></td>
+                                    <td>
+                                        <strong><?= esc($b['user_nama'] ?? '-') ?></strong>
+                                        <div class="subtext"><?= esc($b['user_email'] ?? '-') ?></div>
+                                    </td>
+                                    <td><?= esc($tgl) ?></td>
+                                    <td><?= esc($jam) ?></td>
+                                    <td><span class="badge <?= esc($status) ?>"><?= esc(ucfirst($status)) ?></span></td>
+                                    <td>
+                                        <div class="row-actions">
+                                            <a href="<?= site_url('booking/detail/' . (int) $b['id']) ?>"
+                                                class="btn small warn">
+                                                <i class="fa-solid fa-eye"></i> Detail
+                                            </a>
+                                            <?php if ($status === 'pending'): ?>
+                                                <form action="<?= site_url('admin/approve/' . (int) $b['id']) ?>" method="post"
+                                                    style="display:inline">
+                                                    <?= csrf_field() ?>
+                                                    <button class="btn small success" type="submit">
+                                                        <i class="fa-solid fa-check"></i> Approve
+                                                    </button>
+                                                </form>
+                                                <form action="<?= site_url('admin/reject/' . (int) $b['id']) ?>" method="post"
+                                                    style="display:inline" onsubmit="return confirm('Tolak booking ini?');">
+                                                    <?= csrf_field() ?>
+                                                    <button class="btn small danger" type="submit">
+                                                        <i class="fa-solid fa-xmark"></i> Tolak
+                                                    </button>
+                                                </form>
+                                            <?php else: ?>
+                                                <span class="muted">-</span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+
+                        <?php elseif (!empty($slotsToday)): /* fallback: tampilkan slot jika belum ada booking */ ?>
+                            <?php $i = 1;
+                            foreach ($slotsToday as $s):
+                                $tgl = !empty($s['tanggal']) ? date('d M Y', strtotime($s['tanggal'])) : '-';
+                                $jam = !empty($s['jam']) ? $s['jam'] : '-';
+                                $st = strtolower((string) ($s['status'] ?? 'available'));
+                                ?>
+                                <tr>
+                                    <td><?= $i++ ?></td>
+                                    <td><em class="muted">—</em></td>
+                                    <td><?= esc($tgl) ?></td>
+                                    <td><?= esc($jam) ?></td>
+                                    <td><span class="badge <?= esc($st) ?>"><?= esc(ucfirst($st)) ?></span></td>
+                                    <td><span class="muted">Belum dipesan</span></td>
+                                </tr>
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6" class="empty">Tidak ada jadwal/slot yang sudah dibooking untuk hari ini.
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 </div>

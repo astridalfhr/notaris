@@ -19,55 +19,58 @@
 
         <div class="card">
             <h3 class="card-title"><i class="fa-solid fa-list"></i> Daftar Karyawan</h3>
-            <table class="table flat">
-                <thead>
-                    <tr>
-                        <th>Foto</th>
-                        <th>Nama</th>
-                        <th>Jabatan</th>
-                        <th>Email</th>
-                        <th>Spesialisasi</th>
-                        <th>Status</th>
-                        <th style="width:220px;">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach (($rows ?? []) as $r): ?>
+            <div class="table-responsive">
+                <table class="table flat">
+                    <thead>
                         <tr>
-                            <td>
-                                <?php if (!empty($r['foto'])): ?>
-                                    <img src="<?= base_url('images/karyawan/' . $r['foto']) ?>" alt=""
-                                        style="height:42px;border-radius:8px;">
-                                <?php else: ?>
-                                    <div class="muted">—</div>
-                                <?php endif; ?>
-                            </td>
-                            <td><strong><?= esc($r['nama'] ?? '-') ?></strong></td>
-                            <td><?= esc($r['jabatan'] ?? '-') ?></td>
-                            <td class="muted"><?= esc($r['email'] ?? '-') ?></td>
-                            <td><?= esc($r['spesialisasi'] ?? '-') ?></td>
-                            <td><?= ($r['status'] ?? 'aktif') === 'aktif' ? '<span class="badge success">Aktif</span>' : '<span class="badge">Nonaktif</span>' ?>
-                            </td>
-                            <td style="white-space:nowrap;">
-                                <a class="btn small warn"
-                                    href="<?= site_url('multiuser/employees/edit/' . $r['id']) ?>">Edit</a>
-                                <form action="<?= site_url('multiuser/employees/toggle/' . $r['id']) ?>" method="post"
-                                    style="display:inline"><?= csrf_field() ?><button
-                                        class="btn small"><?= ($r['status'] ?? 'aktif') === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' ?></button>
-                                </form>
-                                <form action="<?= site_url('multiuser/employees/delete/' . $r['id']) ?>" method="post"
-                                    style="display:inline" onsubmit="return confirm('Hapus karyawan ini?')">
-                                    <?= csrf_field() ?><button class="btn small danger">Hapus</button></form>
-                            </td>
+                            <th>Foto</th>
+                            <th>Nama</th>
+                            <th>Jabatan</th>
+                            <th>Email</th>
+                            <th>Spesialisasi</th>
+                            <th>Status</th>
+                            <th style="width:220px;">Aksi</th>
                         </tr>
-                    <?php endforeach; ?>
-                    <?php if (empty($rows)): ?>
-                        <tr>
-                            <td colspan="7" class="muted">Belum ada karyawan.</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach (($rows ?? []) as $r): ?>
+                            <tr>
+                                <td>
+                                    <?php if (!empty($r['foto'])): ?>
+                                        <img src="<?= base_url('images/karyawan/' . $r['foto']) ?>" alt=""
+                                            style="height:42px;border-radius:8px;">
+                                    <?php else: ?>
+                                        <div class="muted">—</div>
+                                    <?php endif; ?>
+                                </td>
+                                <td><strong><?= esc($r['nama'] ?? '-') ?></strong></td>
+                                <td><?= esc($r['jabatan'] ?? '-') ?></td>
+                                <td class="muted"><?= esc($r['email'] ?? '-') ?></td>
+                                <td><?= esc($r['spesialisasi'] ?? '-') ?></td>
+                                <td><?= ($r['status'] ?? 'aktif') === 'aktif' ? '<span class="badge success">Aktif</span>' : '<span class="badge">Nonaktif</span>' ?>
+                                </td>
+                                <td style="white-space:nowrap;">
+                                    <a class="btn small warn"
+                                        href="<?= site_url('multiuser/employees/edit/' . $r['id']) ?>">Edit</a>
+                                    <form action="<?= site_url('multiuser/employees/toggle/' . $r['id']) ?>" method="post"
+                                        style="display:inline"><?= csrf_field() ?><button
+                                            class="btn small"><?= ($r['status'] ?? 'aktif') === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' ?></button>
+                                    </form>
+                                    <form action="<?= site_url('multiuser/employees/delete/' . $r['id']) ?>" method="post"
+                                        style="display:inline" onsubmit="return confirm('Hapus karyawan ini?')">
+                                        <?= csrf_field() ?><button class="btn small danger">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php if (empty($rows)): ?>
+                            <tr>
+                                <td colspan="7" class="muted">Belum ada karyawan.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 </div>

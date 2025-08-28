@@ -97,61 +97,64 @@
         </div>
 
         <?php if (!empty($bookings)): ?>
-            <table class="booking-table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Pegawai</th>
-                        <th>Layanan</th>
-                        <th>Status</th>
-                        <th>Tanggal Booking</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($bookings as $index => $booking): ?>
-                        <?php
-                        // Format tanggal booking dari created_at
-                        $bCreated = $booking['created_at'] ?? null;
-                        $bDate = '-';
-                        if (!empty($bCreated) && $bCreated !== '0000-00-00 00:00:00') {
-                            $bTs = strtotime((string) $bCreated);
-                            if ($bTs !== false)
-                                $bDate = date('d M Y, H:i', $bTs);
-                        }
-
-                        // Fallback nama pegawai
-                        $pegawaiNama = $booking['nama_pegawai']
-                            ?? $booking['karyawan_nama']
-                            ?? $booking['nama'] // jika join berbeda
-                            ?? 'N/A';
-
-                        $st = strtolower($booking['status'] ?? 'pending');
-                        $id = (int) ($booking['id'] ?? 0);
-                        ?>
+            <div class="table-responsive">
+                <table class="booking-table">
+                    <thead>
                         <tr>
-                            <td><?= $index + 1 ?></td>
-                            <td><strong><?= esc($pegawaiNama) ?></strong></td>
-                            <td><?= esc($booking['nama_layanan'] ?? 'Layanan') ?></td>
-                            <td>
-                                <span class="status-badge status-<?= esc($st) ?>">
-                                    <?= esc(ucfirst($st)) ?>
-                                </span>
-                            </td>
-                            <td><?= esc($bDate) ?></td>
-                            <td>
-                                <?php if ($id): ?>
-                                    <a href="<?= base_url('booking/detail/' . $id) ?>" style="color:#FFD700; text-decoration:none;">
-                                        <i class="fas fa-eye"></i> Detail
-                                    </a>
-                                <?php else: ?>
-                                    <span style="color:#999;">-</span>
-                                <?php endif; ?>
-                            </td>
+                            <th>No</th>
+                            <th>Nama Pegawai</th>
+                            <th>Layanan</th>
+                            <th>Status</th>
+                            <th>Tanggal Booking</th>
+                            <th>Aksi</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($bookings as $index => $booking): ?>
+                            <?php
+                            // Format tanggal booking dari created_at
+                            $bCreated = $booking['created_at'] ?? null;
+                            $bDate = '-';
+                            if (!empty($bCreated) && $bCreated !== '0000-00-00 00:00:00') {
+                                $bTs = strtotime((string) $bCreated);
+                                if ($bTs !== false)
+                                    $bDate = date('d M Y, H:i', $bTs);
+                            }
+
+                            // Fallback nama pegawai
+                            $pegawaiNama = $booking['nama_pegawai']
+                                ?? $booking['karyawan_nama']
+                                ?? $booking['nama'] // jika join berbeda
+                                ?? 'N/A';
+
+                            $st = strtolower($booking['status'] ?? 'pending');
+                            $id = (int) ($booking['id'] ?? 0);
+                            ?>
+                            <tr>
+                                <td><?= $index + 1 ?></td>
+                                <td><strong><?= esc($pegawaiNama) ?></strong></td>
+                                <td><?= esc($booking['nama_layanan'] ?? 'Layanan') ?></td>
+                                <td>
+                                    <span class="status-badge status-<?= esc($st) ?>">
+                                        <?= esc(ucfirst($st)) ?>
+                                    </span>
+                                </td>
+                                <td><?= esc($bDate) ?></td>
+                                <td>
+                                    <?php if ($id): ?>
+                                        <a href="<?= base_url('booking/detail/' . $id) ?>"
+                                            style="color:#FFD700; text-decoration:none;">
+                                            <i class="fas fa-eye"></i> Detail
+                                        </a>
+                                    <?php else: ?>
+                                        <span style="color:#999;">-</span>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php else: ?>
             <div class="empty-state">
                 <div class="empty-state-icon">

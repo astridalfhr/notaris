@@ -20,31 +20,32 @@
         <div class="admin-head">
             <h2><i class="fa-solid fa-id-card"></i> Daftar Karyawan</h2>
         </div>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($employees)):
-                    $i = 1;
-                    foreach ($employees as $e): ?>
-                        <tr>
-                            <td><?= $i++ ?></td>
-                            <td><?= esc($e['nama'] ?? '-') ?></td>
-                            <td><?= esc($e['email'] ?? '-') ?></td>
-                        </tr>
-                    <?php endforeach; else: ?>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td colspan="3" class="empty">Belum ada data karyawan.</td>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Email</th>
                     </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php if (!empty($employees)):
+                        $i = 1;
+                        foreach ($employees as $e): ?>
+                            <tr>
+                                <td><?= $i++ ?></td>
+                                <td><?= esc($e['nama'] ?? '-') ?></td>
+                                <td><?= esc($e['email'] ?? '-') ?></td>
+                            </tr>
+                        <?php endforeach; else: ?>
+                        <tr>
+                            <td colspan="3" class="empty">Belum ada data karyawan.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </main>
 </div>
 

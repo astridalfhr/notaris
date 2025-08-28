@@ -10,7 +10,7 @@
             <a class="btn-grad" href="<?= site_url('admin/slot') ?>"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
         </div>
 
-        <div class="card">
+        <div class="card table responsive">
             <table class="table flat">
                 <tbody>
                     <tr>

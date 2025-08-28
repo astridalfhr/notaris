@@ -12,7 +12,8 @@
 
         <p class="muted" style="margin-bottom:16px;"><?= esc($desc) ?></p>
 
-        <form action="<?= site_url('multiuser/kerja/upload') ?>" method="post" enctype="multipart/form-data" class="card">
+        <form action="<?= site_url('multiuser/kerja/upload') ?>" method="post" enctype="multipart/form-data"
+            class="card">
             <?= csrf_field() ?>
             <input type="hidden" name="origin" value="<?= esc($kategori . '/' . $slug) ?>">
             <div class="form-row">
@@ -23,52 +24,54 @@
         </form>
 
         <h3 class="block-title"><i class="fa-solid fa-folder-open"></i> Berkas Saya</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th style="width:56px">No</th>
-                    <th>Nama File</th>
-                    <th>Diunggah</th>
-                    <th style="width:260px">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($files)):
-                    $i = 1;
-                    foreach ($files as $f): ?>
-                        <tr>
-                            <td><?= $i++ ?></td>
-                            <td class="file-name"><?= esc($f['name']) ?></td>
-                            <td><?= $f['mtime'] ? date('d M Y H:i', (int) $f['mtime']) : '-' ?></td>
-                            <td>
-                                <div class="row-actions">
-                                    <button type="button" class="btn small warn js-preview" data-url="<?= esc($f['url']) ?>"
-                                        data-name="<?= esc($f['name']) ?>">
-                                        <i class="fa-solid fa-eye"></i> Lihat
-                                    </button>
-
-                                    <a class="btn small" href="<?= esc($f['url']) ?>" download>
-                                        <i class="fa-solid fa-download"></i> Unduh
-                                    </a>
-
-                                    <form action="<?= site_url('multiuser/kerja/delete') ?>" method="post" style="display:inline"
-                                        onsubmit="return confirm('Hapus file ini?');">
-                                        <?= csrf_field() ?>
-                                        <input type="hidden" name="rel" value="<?= esc($f['rel']) ?>">
-                                        <button type="submit" class="btn small danger">
-                                            <i class="fa-solid fa-trash"></i> Hapus
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    <?php endforeach; else: ?>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td colspan="4" class="empty">Belum ada berkas.</td>
+                        <th style="width:56px">No</th>
+                        <th>Nama File</th>
+                        <th>Diunggah</th>
+                        <th style="width:260px">Aksi</th>
                     </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php if (!empty($files)):
+                        $i = 1;
+                        foreach ($files as $f): ?>
+                            <tr>
+                                <td><?= $i++ ?></td>
+                                <td class="file-name"><?= esc($f['name']) ?></td>
+                                <td><?= $f['mtime'] ? date('d M Y H:i', (int) $f['mtime']) : '-' ?></td>
+                                <td>
+                                    <div class="row-actions">
+                                        <button type="button" class="btn small warn js-preview" data-url="<?= esc($f['url']) ?>"
+                                            data-name="<?= esc($f['name']) ?>">
+                                            <i class="fa-solid fa-eye"></i> Lihat
+                                        </button>
+
+                                        <a class="btn small" href="<?= esc($f['url']) ?>" download>
+                                            <i class="fa-solid fa-download"></i> Unduh
+                                        </a>
+
+                                        <form action="<?= site_url('multiuser/kerja/delete') ?>" method="post"
+                                            style="display:inline" onsubmit="return confirm('Hapus file ini?');">
+                                            <?= csrf_field() ?>
+                                            <input type="hidden" name="rel" value="<?= esc($f['rel']) ?>">
+                                            <button type="submit" class="btn small danger">
+                                                <i class="fa-solid fa-trash"></i> Hapus
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; else: ?>
+                        <tr>
+                            <td colspan="4" class="empty">Belum ada berkas.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
 
         <!-- Modal preview (sama dengan kerja_index) -->
         <div id="filePreviewModal" class="preview-modal" aria-hidden="true">
