@@ -49,7 +49,7 @@
                             style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;">
 
                         <div style="height:8px"></div>
-                        <label class="muted">Subjudul Pemilik</label>
+                        <label class="muted">Deskripsi</label>
                         <input name="owner_subtitle" value="<?= esc($r['owner_subtitle'] ?? '') ?>"
                             style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;">
 
