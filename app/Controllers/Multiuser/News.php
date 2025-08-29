@@ -105,9 +105,14 @@ class News extends BaseController
 
         $img = $this->request->getFile('image');
         if ($img && $img->isValid()) {
+            $dir = FCPATH . 'images/news';
+            if (!is_dir($dir)) {
+                @mkdir($dir, 0775, true);
+            }
             $newName = $img->getRandomName();
-            $img->move(FCPATH . 'images/news', $newName);
-            $payload['image'] = $newName;
+            if ($img->move($dir, $newName)) {
+                $payload['image'] = $newName;
+            }
         }
 
         $m->update($id, $payload);
