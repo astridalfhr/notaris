@@ -2,10 +2,9 @@
 <?= $this->section('content') ?>
 
 <?php
-// fallback ringkas biar halaman tetap rapi walau data kosong
 $settings = $settings ?? [];
-$heroes = $heroes ?? [];      // dari site_hero
-$featured = $featured ?? [];    // fallback: news featured
+$heroes = $heroes ?? [];
+$featured = $featured ?? [];
 $latest = $latest ?? [];
 
 function newsImageUrl(?string $fn): string
@@ -32,26 +31,21 @@ function fmtDate(?string $ts): string
   return $t ? date('d M Y', $t) : '-';
 }
 
-// Tentukan sumber slide: heroes (utama) atau featured (fallback)
 $useHeroes = !empty($heroes);
 $slidesData = $useHeroes ? $heroes : $featured;
 $dotCount = max(1, count($slidesData));
 ?>
 
-<!-- HERO SLIDER -->
+<!-- HERO SLIDER (tidak diubah) -->
 <section class="relative bg-gray-100 h-[600px] flex items-center justify-center">
   <div id="slider" class="relative max-w-5xl w-full shadow-lg rounded-lg overflow-hidden bg-white">
-
-    <!-- Slides -->
     <div class="relative overflow-hidden">
       <div class="slides flex transition-transform duration-700 ease-in-out" style="transform: translateX(0%)"
         id="slidesContainer">
-
-        <?php if (!empty($slidesData)): ?>
-          <?php foreach ($slidesData as $it): ?>
+        <?php if (!empty($slidesData)):
+          foreach ($slidesData as $it): ?>
             <article class="min-w-full p-10 flex flex-col md:flex-row items-center gap-10">
               <?php if ($useHeroes): ?>
-                <!-- Render dari site_hero -->
                 <img src="<?= esc(heroImageUrl($it['image'] ?? null)) ?>" alt="<?= esc($it['title'] ?? 'Banner') ?>"
                   class="w-72 h-72 object-cover rounded-md shadow-md" onerror="this.style.display='none'" />
                 <div class="max-w-xl">
@@ -62,17 +56,12 @@ $dotCount = max(1, count($slidesData));
                   <?php elseif (!empty($settings['hero_tagline'])): ?>
                     <p class="text-gray-700 leading-relaxed mb-4"><?= esc($settings['hero_tagline']) ?></p>
                   <?php endif; ?>
-
                   <?php if (!empty($it['button_text']) && !empty($it['button_link'])): ?>
                     <a href="<?= esc($it['button_link']) ?>"
-                      class="inline-block px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
-                      <?= esc($it['button_text']) ?>
-                    </a>
+                      class="inline-block px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"><?= esc($it['button_text']) ?></a>
                   <?php endif; ?>
                 </div>
-
               <?php else: ?>
-                <!-- Render fallback dari news featured -->
                 <img src="<?= esc(newsImageUrl($it['image'] ?? null)) ?>" alt="<?= esc($it['title'] ?? 'Featured') ?>"
                   class="w-72 h-72 object-cover rounded-md shadow-md" onerror="this.style.display='none'" />
                 <div class="max-w-xl">
@@ -89,38 +78,27 @@ $dotCount = max(1, count($slidesData));
                 </div>
               <?php endif; ?>
             </article>
-          <?php endforeach; ?>
-        <?php else: ?>
-          <!-- fallback 1 slide absolute minimum -->
+          <?php endforeach; else: ?>
           <article class="min-w-full p-10 flex flex-col md:flex-row items-center gap-10">
             <img src="<?= base_url('images/kantor.jpg') ?>" alt="Kantor"
               class="w-72 h-72 object-cover rounded-md shadow-md" onerror="this.style.display='none'" />
             <div class="max-w-xl">
               <p class="uppercase tracking-widest text-gray-500 mb-2">Selamat Datang</p>
-              <h2 class="text-4xl font-extrabold mb-3">
-                <?= esc($settings['hero_title'] ?? 'Kantor Notaris') ?>
-              </h2>
+              <h2 class="text-4xl font-extrabold mb-3"><?= esc($settings['hero_title'] ?? 'Kantor Notaris') ?></h2>
               <p class="text-gray-700 leading-relaxed">
-                <?= esc($settings['hero_tagline'] ?? 'Profesional & terpercaya.') ?>
-              </p>
+                <?= esc($settings['hero_tagline'] ?? 'Profesional & terpercaya.') ?></p>
             </div>
           </article>
         <?php endif; ?>
-
       </div>
     </div>
-
-    <!-- Arrows -->
     <button id="prevBtn"
       class="arrow-btn absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-4xl font-bold z-20 select-none">❮</button>
     <button id="nextBtn"
       class="arrow-btn absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-4xl font-bold z-20 select-none">❯</button>
-
-    <!-- Dots -->
     <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex space-x-4 z-20">
-      <?php for ($i = 0; $i < $dotCount; $i++): ?>
-        <button class="w-4 h-4 rounded-full bg-gray-400"></button>
-      <?php endfor; ?>
+      <?php for ($i = 0; $i < $dotCount; $i++): ?><button
+          class="w-4 h-4 rounded-full bg-gray-400"></button><?php endfor; ?>
     </div>
   </div>
 </section>
@@ -130,55 +108,42 @@ $dotCount = max(1, count($slidesData));
   <div class="flex items-center justify-between mb-8">
     <h2 class="text-3xl font-extrabold">Berita Terbaru Kantor Notaris</h2>
     <button id="newsLoadMore"
-      class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition hidden">
-      Berita lainnya
-    </button>
+      class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition hidden">Berita
+      lainnya</button>
   </div>
 
-  <!-- Fallback SSR: pakai $latest, dibatasi 6 item -->
   <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    <?php if (!empty($latest)): ?>
-      <?php $i = 0;
+    <?php if (!empty($latest)):
+      $i = 0;
       foreach ($latest as $it):
         if (++$i > 6)
           break; ?>
         <article class="news-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer"
-          data-id="<?= isset($it['id']) ? (int) $it['id'] : '' ?>">
+          data-id="<?= isset($it['id']) ? (int) $it['id'] : 0 ?>">
           <img src="<?= esc(newsImageUrl($it['image'] ?? null)) ?>" alt="<?= esc($it['title'] ?? 'Berita') ?>"
             class="rounded-md mb-4 object-cover h-48 w-full" onerror="this.style.display='none'" />
           <h3 class="text-xl font-bold mb-2"><?= esc($it['title'] ?? '-') ?></h3>
-
           <?php if (!empty($it['excerpt'])): ?>
             <p class="text-gray-700 mb-3"><?= esc($it['excerpt']) ?></p>
           <?php elseif (!empty($it['body'])): ?>
             <p class="text-gray-700 mb-3"><?= esc(strip_tags(mb_substr($it['body'], 0, 120))) ?>...</p>
           <?php endif; ?>
-
           <time class="text-sm text-gray-500"><?= esc(fmtDate($it['published_at'] ?? null)) ?></time>
         </article>
-      <?php endforeach; ?>
-    <?php endif; ?>
+      <?php endforeach; endif; ?>
   </div>
 </section>
 
-<!-- AOS CSS -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-<!-- PROFIL PEMILIK & VISI MISI -->
 <section class="py-16 bg-gray-100">
   <div class="max-w-7xl mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-8">
-
-    <!-- Card Profil Pemilik -->
     <div class="bg-white rounded-2xl shadow-xl p-8 flex items-center space-x-6" data-aos="fade-up" data-aos-delay="100">
       <img src="<?= esc(ownerImageUrl($settings['owner_photo'] ?? null)) ?>" alt="Pemilik Notaris"
         class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shadow-md">
       <div>
-        <h2 class="text-3xl font-semibold text-gray-800 mb-2">
-          <?= esc($settings['owner_name'] ?? 'Nama Pemilik') ?>
-        </h2>
+        <h2 class="text-3xl font-semibold text-gray-800 mb-2"><?= esc($settings['owner_name'] ?? 'Nama Pemilik') ?></h2>
         <p class="text-gray-600 leading-relaxed text-sm md:text-base">
-          <?= esc($settings['owner_subtitle'] ?? 'Profil singkat pemilik atau jabatan.') ?>
-        </p>
+          <?= esc($settings['owner_subtitle'] ?? 'Profil singkat pemilik atau jabatan.') ?></p>
         <a href="<?= site_url('profile') ?>"
           class="inline-flex items-center mt-4 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl text-sm font-medium shadow transition duration-300">
           Lihat Profil Lengkap
@@ -190,7 +155,6 @@ $dotCount = max(1, count($slidesData));
       </div>
     </div>
 
-    <!-- Card Visi Misi / About -->
     <div class="bg-white rounded-2xl shadow-xl p-8 flex flex-col md:flex-row items-center gap-6" data-aos="fade-up"
       data-aos-delay="200">
       <img src="<?= base_url('images/kantor.jpg') ?>" alt="Kantor Notaris"
@@ -202,48 +166,33 @@ $dotCount = max(1, count($slidesData));
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- Contact & Social Media Section -->
 <section class="bg-white py-12">
   <div class="max-w-6xl mx-auto text-center">
     <h2 class="text-2xl font-semibold mb-6 text-gray-800">Hubungi Kami</h2>
     <div class="flex justify-center gap-6 text-gray-600 text-2xl">
-
       <?php if (!empty($settings['social_email'])): ?>
-        <a href="mailto:<?= esc($settings['social_email']) ?>" class="hover:text-blue-600 transition" title="Email">
-          <i class="fas fa-envelope"></i>
-        </a>
+        <a href="mailto:<?= esc($settings['social_email']) ?>" class="hover:text-blue-600 transition" title="Email"><i
+            class="fas fa-envelope"></i></a>
       <?php endif; ?>
-
       <?php if (!empty($settings['social_instagram'])): ?>
         <a href="<?= esc($settings['social_instagram']) ?>" target="_blank" class="hover:text-pink-500 transition"
-          title="Instagram">
-          <i class="fab fa-instagram"></i>
-        </a>
+          title="Instagram"><i class="fab fa-instagram"></i></a>
       <?php endif; ?>
-
       <?php if (!empty($settings['social_whatsapp'])): ?>
         <a href="https://wa.me/<?= esc(preg_replace('/\D/', '', $settings['social_whatsapp'])) ?>" target="_blank"
-          class="hover:text-green-500 transition" title="WhatsApp">
-          <i class="fab fa-whatsapp"></i>
-        </a>
+          class="hover:text-green-500 transition" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
       <?php endif; ?>
-
       <?php if (!empty($settings['social_linkedin'])): ?>
         <a href="<?= esc($settings['social_linkedin']) ?>" target="_blank" class="hover:text-blue-700 transition"
-          title="LinkedIn">
-          <i class="fab fa-linkedin"></i>
-        </a>
+          title="LinkedIn"><i class="fab fa-linkedin"></i></a>
       <?php endif; ?>
-
     </div>
   </div>
 </section>
 
-<!-- Google Maps Section -->
 <section class="bg-gray-100 py-12">
   <div class="max-w-6xl mx-auto px-4 text-center">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Lokasi Kantor Notaris</h2>
@@ -260,17 +209,15 @@ $dotCount = max(1, count($slidesData));
   </div>
 </section>
 
-<!-- AOS JS -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script> AOS.init({ duration: 1000, once: true }); </script>
 
-<!-- Slider JS -->
+<!-- Slider JS (tetap) -->
 <script>
   const slidesContainer = document.getElementById("slidesContainer");
   const slides = slidesContainer.children;
   const dots = document.querySelectorAll("#slider .absolute.bottom-5 button");
-  let currentIndex = 0;
-  const totalSlides = slides.length;
+  let currentIndex = 0, totalSlides = slides.length;
 
   function updateSlider(index) {
     if (index < 0) index = totalSlides - 1;
@@ -286,75 +233,47 @@ $dotCount = max(1, count($slidesData));
   updateSlider(0);
 </script>
 
-<!-- News Feed + Modal JS -->
+<!-- News Feed + Modal JS (taat aturan: hanya untuk section berita) -->
 <script>
   (function () {
     const grid = document.getElementById('newsGrid');
     const btnMore = document.getElementById('newsLoadMore');
     const modal = document.getElementById('newsModal');
     const modalBody = document.getElementById('newsModalBody');
-    const modalClose = document.getElementById('newsModalClose');
 
     const feedUrl = "<?= site_url('news/feed') ?>";
     const showUrl = id => "<?= site_url('news/show') ?>/" + id;
 
-    function fmtID(s) {
-      if (!s) return '';
-      const d = new Date((s + '').replace(' ', 'T'));
-      return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
-    }
+    function fmtID(s) { if (!s) return ''; const d = new Date((s + '').replace(' ', 'T')); return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }); }
 
     function cardTemplate(it) {
-      const img = it.image ? `<img src="${it.image}" alt="${it.title}" class="rounded-md mb-4 object-cover h-48 w-full" onerror="this.style.display='none'>` : '';
-      const plain = (it.excerpt && it.excerpt.trim().length)
-        ? it.excerpt
-        : (it.body || '').replace(/<[^>]+>/g, '');
+      const img = it.image ? `<img src="${it.image}" alt="${it.title}" class="rounded-md mb-4 object-cover h-48 w-full" onerror="this.style.display='none'">` : '';
+      const plain = (it.excerpt && it.excerpt.trim().length) ? it.excerpt : (it.body || '').replace(/<[^>]+>/g, '');
       const preview = plain.length > 120 ? plain.slice(0, 120) + '…' : plain;
-
-      return `
-      <article class="news-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer" data-id="${it.id}">
-        ${img}
-        <h3 class="text-xl font-bold mb-2">${it.title}</h3>
-        <p class="text-gray-700 mb-3">${preview}</p>
-        <time class="text-sm text-gray-500">${fmtID(it.published_at)}</time>
-      </article>
-    `;
+      return `<article class="news-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer" data-id="${it.id}">
+      ${img}<h3 class="text-xl font-bold mb-2">${it.title}</h3><p class="text-gray-700 mb-3">${preview}</p>
+      <time class="text-sm text-gray-500">${fmtID(it.published_at)}</time></article>`;
     }
 
-    function openModal(html) {
-      modalBody.innerHTML = html;
-      modal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal() {
-      modal.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
+    function openModal(html) { modalBody.innerHTML = html; modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    function closeModal() { modal.classList.add('hidden'); document.body.style.overflow = ''; }
 
-    // Pasang klik pada card fallback SSR (hanya jika ada id)
+    // hanya pasang handler jika id valid (taat aturan)
     grid.querySelectorAll('.news-card').forEach(el => {
       const id = el.dataset.id;
-      if (id && Number(id) > 0) {
-        el.addEventListener('click', () => openDetail(id));
-      }
+      if (id && Number(id) > 0) el.addEventListener('click', () => openDetail(id));
     });
 
     let page = 1, loading = false, initializedFromAjax = false;
 
     async function loadPage() {
-      if (loading) return;
-      loading = true;
-      if (btnMore) btnMore.disabled = true;
-
+      if (loading) return; loading = true; if (btnMore) btnMore.disabled = true;
       try {
         const res = await fetch(`${feedUrl}?page=${page}`, { headers: { 'Accept': 'application/json' } });
-        if (!res.ok) throw new Error('Gagal memuat berita');
+        if (!res.ok) throw new Error('feed ' + res.status);
         const data = await res.json();
 
-        // replace isi SSR pada load pertama agar konsisten 6 item dari API
-        if (page === 1 && grid.children.length > 0 && !initializedFromAjax) {
-          grid.innerHTML = '';
-        }
+        if (page === 1 && grid.children.length > 0 && !initializedFromAjax) { grid.innerHTML = ''; }
         initializedFromAjax = true;
 
         (data.items || []).forEach(it => {
@@ -363,46 +282,28 @@ $dotCount = max(1, count($slidesData));
           el.addEventListener('click', () => openDetail(it.id));
         });
 
-        if (data.has_more) {
-          btnMore.classList.remove('hidden');
-          btnMore.disabled = false;
-          page += 1;
-        } else {
-          btnMore.classList.add('hidden');
-        }
-      } catch (e) {
-        console.error(e);
-        // biarkan fallback SSR tetap tampil
-      } finally {
-        loading = false;
-      }
+        if (data.has_more) { btnMore.classList.remove('hidden'); btnMore.disabled = false; page += 1; }
+        else { btnMore.classList.add('hidden'); }
+      } catch (e) { console.error(e); } finally { loading = false; }
     }
 
     async function openDetail(id) {
-      if (!id) return; // guard
+      if (!id) return;
       try {
-        const res = await fetch(showUrl(id), { headers: { 'Accept': 'application/json' } });
+        const url = showUrl(id);
+        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
         if (!res.ok) {
-          console.error('News detail error', res.status, await res.text());
+          const t = await res.text().catch(() => '');
+          console.error('News detail error:', res.status, url, t);
           alert('Tidak dapat membuka berita (kode ' + res.status + ').');
           return;
         }
         const n = await res.json();
-
         const img = n.image ? `<img src="${n.image}" alt="${n.title}" class="w-full max-h-80 object-cover rounded-lg mb-4">` : '';
-        openModal(`
-        <h3 class="text-2xl font-bold mb-2">${n.title}</h3>
-        <div class="text-sm text-gray-500 mb-4">${fmtID(n.published_at)}</div>
-        ${img}
-        <div class="prose max-w-none">${n.body || ''}</div>
-      `);
-      } catch (e) {
-        console.error(e);
-        alert('Tidak dapat membuka berita.');
-      }
+        openModal(`<h3 class="text-2xl font-bold mb-2">${n.title}</h3><div class="text-sm text-gray-500 mb-4">${fmtID(n.published_at)}</div>${img}<div class="prose max-w-none">${n.body || ''}</div>`);
+      } catch (e) { console.error(e); alert('Tidak dapat membuka berita (jaringan).'); }
     }
 
-    // init
     loadPage();
     btnMore && btnMore.addEventListener('click', loadPage);
     document.getElementById('newsModalClose')?.addEventListener('click', closeModal);

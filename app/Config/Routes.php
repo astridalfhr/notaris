@@ -18,10 +18,10 @@ $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 
 $routes->get('/', 'Home::index');
-$routes->get('profile', 'Profile::index');
-$routes->get('layanan', 'Layanan::index');
 $routes->get('news/feed', 'Home::newsFeed');
 $routes->get('news/show/(:num)', 'Home::newsShow/$1');
+$routes->get('profile', 'Profile::index');
+$routes->get('layanan', 'Layanan::index');
 $routes->get('jadwal/(:num)', 'JadwalController::getJadwal/$1');
 $routes->get('kontak', 'Contact::index');
 $routes->match(['post', 'get'], 'contact/send', 'Contact::send', ['as' => 'contact_send']);
