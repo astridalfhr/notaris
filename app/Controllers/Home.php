@@ -9,33 +9,26 @@ use App\Models\SiteHeroModel;
 
 class Home extends BaseController
 {
-    // jumlah berita per halaman (load more)
     private int $newsPerPage = 6;
 
-    /** Bangun URL gambar absolut dari nama file/URL */
     private function imgUrl(?string $fn): string
     {
         $fn = trim((string) $fn);
         if ($fn === '')
             return '';
-        // kalau sudah URL penuh, kembalikan apa adanya
         if (filter_var($fn, FILTER_VALIDATE_URL))
             return $fn;
-        // simpan file di public/images/news/
         return base_url('images/news/' . $fn);
     }
 
-    /** Halaman beranda (hero + berita + section lainnya) */
     public function index()
     {
-        // Settings aktif untuk home
         $settings = (new SiteSettingsModel())
             ->where('context', 'home')
             ->where('is_active', 1)
             ->orderBy('updated_at', 'DESC')
             ->first() ?? [];
 
-        // Hero slides aktif (utama). Jika kosong, slider fallback pakai featured news
         $heroes = (new SiteHeroModel())
             ->where('is_active', 1)
             ->orderBy('sort_order', 'ASC')
@@ -44,13 +37,11 @@ class Home extends BaseController
 
         $news = new SiteNewsModel();
 
-        // 6 berita awal untuk SSR fallback (supaya halaman tetap ada konten tanpa JS)
         $latest = $news->select('id,title,excerpt,body,image,published_at')
             ->where('is_published', 1)
             ->orderBy('published_at', 'DESC')
             ->findAll($this->newsPerPage);
 
-        // max 3 news featured untuk fallback slider jika heroes kosong
         $featured = $news->select('id,title,excerpt,body,image,published_at')
             ->where('is_published', 1)
             ->where('is_featured', 1)
@@ -60,7 +51,6 @@ class Home extends BaseController
         return view('home', compact('settings', 'heroes', 'latest', 'featured'));
     }
 
-    /** Endpoint JSON: feed berita (paginated) untuk “Berita lainnya” */
     public function newsFeed()
     {
         $page = max(1, (int) $this->request->getGet('page'));
@@ -82,8 +72,8 @@ class Home extends BaseController
                 'id' => (int) ($r['id'] ?? 0),
                 'title' => (string) ($r['title'] ?? ''),
                 'excerpt' => (string) ($r['excerpt'] ?? ''),
-                'body' => (string) ($r['body'] ?? ''),         // HTML utuh (dipakai modal)
-                'image' => $this->imgUrl($r['image'] ?? ''),   // selalu URL penuh
+                'body' => (string) ($r['body'] ?? ''),
+                'image' => $this->imgUrl($r['image'] ?? ''),
                 'published_at' => (string) $published,
             ];
         }, $rows);
@@ -96,7 +86,6 @@ class Home extends BaseController
         ]);
     }
 
-    /** Endpoint JSON: detail berita by id (publik hanya yang publish) */
     public function newsShow($id = null)
     {
         if (!$id || !ctype_digit((string) $id)) {
@@ -105,29 +94,22 @@ class Home extends BaseController
         $id = (int) $id;
 
         $m = new SiteNewsModel();
-        // penting: gunakan where()->first() (jangan find()+where)
-        $row = $m->where('id', $id)
-            ->where('is_published', 1) // publik hanya yg publish
-            ->first();
-
+        $row = $m->where('id', $id)->where('is_published', 1)->first();
         if (!$row) {
             return $this->response->setStatusCode(404)->setJSON(['error' => 'Not found']);
         }
 
         $published = $row['published_at'] ?? ($row['updated_at'] ?? $row['created_at'] ?? null);
 
-        return $this->response
-            ->setContentType('application/json')
-            ->setJSON([
-                'id' => (int) $row['id'],
-                'title' => (string) $row['title'],
-                'body' => (string) ($row['body'] ?? ''),
-                'image' => $this->imgUrl($row['image'] ?? ''), // selalu URL penuh
-                'published_at' => (string) $published,
-            ]);
+        return $this->response->setContentType('application/json')->setJSON([
+            'id' => (int) $row['id'],
+            'title' => (string) $row['title'],
+            'body' => (string) ($row['body'] ?? ''),
+            'image' => $this->imgUrl($row['image'] ?? ''),
+            'published_at' => (string) $published,
+        ]);
     }
 
-    /** Halaman kontak (tetap) */
     public function kontak()
     {
         return view('kontak');
