@@ -243,8 +243,8 @@ $dotCount = max(1, count($slidesData));
     const modal = document.getElementById('newsModal');
     const modalBody = document.getElementById('newsModalBody');
 
-    const feedUrl = "news/feed";
-    const showUrl = id => "news/show/" + id;
+    const feedUrl = "<?= site_url('news/feed') ?>";
+    const showUrl = id => "<?= site_url('news/show') ?>/" + id;
 
     function fmtID(s) {
       if (!s) return '';
