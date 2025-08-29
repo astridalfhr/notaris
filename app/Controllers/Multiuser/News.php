@@ -56,17 +56,17 @@ class News extends BaseController
 
         // Upload (opsional)
         $img = $this->request->getFile('image');
-        if ($img && $img->isValid() && $img->getError() === UPLOAD_ERR_OK) {
-            $targetDir = FCPATH . 'images/news';
-            if (!is_dir($targetDir))
-                @mkdir($targetDir, 0775, true);
-            if (!is_writable($targetDir)) {
-                return redirect()->back()->withInput()->with('error', 'Folder images/news tidak bisa ditulis.');
+        if ($img && $img->isValid()) {
+            $dir = FCPATH . 'images/news';
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
             }
             $newName = $img->getRandomName();
-            $img->move($targetDir, $newName);
-            $payload['image'] = $newName;
+            if ($img->move($dir, $newName)) {
+                $payload['image'] = $newName;
+            }
         }
+
 
         // Simpan
         $m->insert($payload);
