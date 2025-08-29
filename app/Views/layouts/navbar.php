@@ -112,8 +112,7 @@ if ($isUrl) {
       <button id="mobileMenuBtn" aria-label="Toggle menu" class="focus:outline-none">
         <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
 
@@ -167,7 +166,8 @@ if ($isUrl) {
   </nav>
 
   <!-- Dropdown user mobile (popup) -->
-  <div id="mobileUser Dropdown" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div id="mobileUser Dropdown"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-sm p-6">
       <h2 class="text-xl font-semibold mb-4">Akun</h2>
       <div class="flex items-center space-x-4 mb-4">
@@ -187,7 +187,8 @@ if ($isUrl) {
       <a href="<?= site_url($profileUrl) ?>" class="block py-2 hover:text-yellow-600 transition">Edit Profile</a>
       <div class="border-t border-gray-300 my-2"></div>
       <a href="<?= site_url('logout') ?>" class="block py-2 hover:text-yellow-600 transition">Logout</a>
-      <button id="closeMobileUser Dropdown" class="mt-4 w-full py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition">
+      <button id="closeMobileUser Dropdown"
+        class="mt-4 w-full py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition">
         Tutup
       </button>
     </div>
@@ -237,18 +238,18 @@ if ($isUrl) {
     if (mobileUser Btn && mobileUser Dropdown && closeMobileUser DropdownBtn) {
       mobileUser Btn.addEventListener("click", () => {
         mobileUser Dropdown.classList.remove("hidden");
-      });
+    });
 
       closeMobileUser DropdownBtn.addEventListener("click", () => {
         mobileUser Dropdown.classList.add("hidden");
-      });
+    });
 
       // Klik di luar modal tutup modal
       mobileUser Dropdown.addEventListener("click", (e) => {
-        if (e.target === mobileUser Dropdown) {
+      if (e.target === mobileUser Dropdown) {
           mobileUser Dropdown.classList.add("hidden");
-        }
-      });
+    }
+  });
     }
   });
 </script>
