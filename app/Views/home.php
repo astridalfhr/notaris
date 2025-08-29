@@ -4,13 +4,18 @@
 <?php
 // fallback ringkas biar halaman tetap rapi walau data kosong
 $settings = $settings ?? [];
-$heroes = $heroes ?? [];   // <-- dari site_hero (baru)
+$heroes = $heroes ?? [];       // dari site_hero (baru)
 $featured = $featured ?? [];   // fallback: berita featured
 $latest = $latest ?? [];
 
 function newsImageUrl(?string $fn): string
 {
-  return $fn ? base_url('images/news/' . $fn) : 'https://via.placeholder.com/600x400?text=News';
+  if (!$fn)
+    return 'https://via.placeholder.com/600x400?text=News';
+  // jika sudah URL, kembalikan apa adanya
+  if (filter_var($fn, FILTER_VALIDATE_URL))
+    return $fn;
+  return base_url('images/news/' . $fn);
 }
 function heroImageUrl(?string $fn): string
 {
@@ -123,27 +128,38 @@ $dotCount = max(1, count($slidesData));
 
 <!-- BERITA TERBARU -->
 <section class="container mx-auto px-6 py-12">
-  <h2 class="text-3xl font-extrabold mb-8 text-center">Berita Terbaru Kantor Notaris</h2>
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="text-3xl font-extrabold">Berita Terbaru Kantor Notaris</h2>
+    <button id="newsLoadMore"
+      class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition hidden">
+      Berita lainnya
+    </button>
+  </div>
 
-  <?php if (!empty($latest)): ?>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <?php foreach ($latest as $it): ?>
-        <article class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer">
+  <!-- Fallback SSR: pakai $latest milikmu, dibatasi 6 item -->
+  <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <?php if (!empty($latest)): ?>
+      <?php $i = 0;
+      foreach ($latest as $it):
+        if (++$i > 6)
+          break; ?>
+        <article class="news-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer"
+          data-id="<?= esc($it['id'] ?? '') ?>">
           <img src="<?= esc(newsImageUrl($it['image'] ?? null)) ?>" alt="<?= esc($it['title'] ?? 'Berita') ?>"
             class="rounded-md mb-4 object-cover h-48 w-full" onerror="this.style.display='none'" />
           <h3 class="text-xl font-bold mb-2"><?= esc($it['title'] ?? '-') ?></h3>
+
           <?php if (!empty($it['excerpt'])): ?>
             <p class="text-gray-700 mb-3"><?= esc($it['excerpt']) ?></p>
           <?php elseif (!empty($it['body'])): ?>
             <p class="text-gray-700 mb-3"><?= esc(strip_tags(mb_substr($it['body'], 0, 120))) ?>...</p>
           <?php endif; ?>
+
           <time class="text-sm text-gray-500"><?= esc(fmtDate($it['published_at'] ?? null)) ?></time>
         </article>
       <?php endforeach; ?>
-    </div>
-  <?php else: ?>
-    <div class="text-center text-gray-500">Belum ada berita dipublikasikan.</div>
-  <?php endif; ?>
+    <?php endif; ?>
+  </div>
 </section>
 
 <!-- AOS CSS -->
@@ -270,5 +286,136 @@ $dotCount = max(1, count($slidesData));
   if (totalSlides > 1) setInterval(() => updateSlider(currentIndex + 1), 7000);
   updateSlider(0);
 </script>
+
+<!-- News Feed + Modal JS -->
+<script>
+  (function () {
+    const grid = document.getElementById('newsGrid');
+    const btnMore = document.getElementById('newsLoadMore');
+    const modal = document.getElementById('newsModal');
+    const modalBody = document.getElementById('newsModalBody');
+    const modalClose = document.getElementById('newsModalClose');
+
+    const feedUrl = "<?= site_url('news/feed') ?>";
+    const showUrl = id => "<?= site_url('news/show') ?>/" + id;
+
+    function fmtID(s) {
+      if (!s) return '';
+      const d = new Date((s + '').replace(' ', 'T'));
+      return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function cardTemplate(it) {
+      const img = it.image ? `<img src="${it.image}" alt="${it.title}" class="rounded-md mb-4 object-cover h-48 w-full" onerror="this.style.display='none'">` : '';
+      // preview: pakai excerpt jika ada, kalau tidak potong dari body (bersihkan HTML)
+      const plain = (it.excerpt && it.excerpt.trim().length)
+        ? it.excerpt
+        : (it.body || '').replace(/<[^>]+>/g, '');
+      const preview = plain.length > 120 ? plain.slice(0, 120) + '…' : plain;
+
+      return `
+      <article class="news-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer" data-id="${it.id}">
+        ${img}
+        <h3 class="text-xl font-bold mb-2">${it.title}</h3>
+        <p class="text-gray-700 mb-3">${preview}</p>
+        <time class="text-sm text-gray-500">${fmtID(it.published_at)}</time>
+      </article>
+    `;
+    }
+
+    function openModal(html) {
+      modalBody.innerHTML = html;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // Pasang klik pada card fallback SSR
+    grid.querySelectorAll('.news-card[data-id]').forEach(el => {
+      el.addEventListener('click', () => openDetail(el.dataset.id));
+    });
+
+    let page = 1, loading = false, initializedFromAjax = false;
+
+    async function loadPage() {
+      if (loading) return;
+      loading = true;
+      if (btnMore) btnMore.disabled = true;
+
+      try {
+        const res = await fetch(`${feedUrl}?page=${page}`, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('Gagal memuat berita');
+        const data = await res.json();
+
+        // replace isi SSR pada load pertama agar konsisten 6 item dari API
+        if (page === 1 && grid.children.length > 0 && !initializedFromAjax) {
+          grid.innerHTML = '';
+        }
+        initializedFromAjax = true;
+
+        (data.items || []).forEach(it => {
+          grid.insertAdjacentHTML('beforeend', cardTemplate(it));
+          const el = grid.lastElementChild;
+          el.addEventListener('click', () => openDetail(it.id));
+        });
+
+        if (data.has_more) {
+          btnMore.classList.remove('hidden');
+          btnMore.disabled = false;
+          page += 1;
+        } else {
+          btnMore.classList.add('hidden');
+        }
+      } catch (e) {
+        console.error(e);
+        // biarkan fallback SSR tetap tampil
+      } finally {
+        loading = false;
+      }
+    }
+
+    async function openDetail(id) {
+      try {
+        const res = await fetch(showUrl(id), { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('Gagal memuat detail');
+        const n = await res.json();
+
+        const img = n.image ? `<img src="${n.image}" alt="${n.title}" class="w-full max-h-80 object-cover rounded-lg mb-4">` : '';
+        openModal(`
+        <h3 class="text-2xl font-bold mb-2">${n.title}</h3>
+        <div class="text-sm text-gray-500 mb-4">${fmtID(n.published_at)}</div>
+        ${img}
+        <div class="prose max-w-none">${n.body || ''}</div>
+      `);
+      } catch (e) {
+        console.error(e);
+        alert('Tidak dapat membuka berita.');
+      }
+    }
+
+    // init
+    loadPage();
+    btnMore && btnMore.addEventListener('click', loadPage);
+    document.getElementById('newsModalClose').addEventListener('click', closeModal);
+    document.getElementById('newsModal').addEventListener('click', (e) => { if (e.target.id === 'newsModal') closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  })();
+</script>
+
+<!-- Modal detail berita -->
+<div id="newsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+  <div class="relative bg-white w-11/12 max-w-3xl max-h-[85vh] overflow-auto rounded-xl shadow-xl p-6">
+    <button id="newsModalClose"
+      class="absolute top-3 right-3 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+      aria-label="Tutup">
+      ✕
+    </button>
+    <div id="newsModalBody"></div>
+  </div>
+</div>
 
 <?= $this->endSection() ?>
