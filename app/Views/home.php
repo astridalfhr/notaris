@@ -4,15 +4,14 @@
 <?php
 // fallback ringkas biar halaman tetap rapi walau data kosong
 $settings = $settings ?? [];
-$heroes = $heroes ?? [];       // dari site_hero (baru)
-$featured = $featured ?? [];   // fallback: berita featured
+$heroes = $heroes ?? [];      // dari site_hero
+$featured = $featured ?? [];    // fallback: news featured
 $latest = $latest ?? [];
 
 function newsImageUrl(?string $fn): string
 {
   if (!$fn)
     return 'https://via.placeholder.com/600x400?text=News';
-  // jika sudah URL, kembalikan apa adanya
   if (filter_var($fn, FILTER_VALIDATE_URL))
     return $fn;
   return base_url('images/news/' . $fn);
@@ -136,7 +135,7 @@ $dotCount = max(1, count($slidesData));
     </button>
   </div>
 
-  <!-- Fallback SSR: pakai $latest milikmu, dibatasi 6 item -->
+  <!-- Fallback SSR: pakai $latest, dibatasi 6 item -->
   <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
     <?php if (!empty($latest)): ?>
       <?php $i = 0;
@@ -144,7 +143,7 @@ $dotCount = max(1, count($slidesData));
         if (++$i > 6)
           break; ?>
         <article class="news-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer"
-          data-id="<?= esc($it['id'] ?? '') ?>">
+          data-id="<?= isset($it['id']) ? (int) $it['id'] : '' ?>">
           <img src="<?= esc(newsImageUrl($it['image'] ?? null)) ?>" alt="<?= esc($it['title'] ?? 'Berita') ?>"
             class="rounded-md mb-4 object-cover h-48 w-full" onerror="this.style.display='none'" />
           <h3 class="text-xl font-bold mb-2"><?= esc($it['title'] ?? '-') ?></h3>
@@ -306,8 +305,7 @@ $dotCount = max(1, count($slidesData));
     }
 
     function cardTemplate(it) {
-      const img = it.image ? `<img src="${it.image}" alt="${it.title}" class="rounded-md mb-4 object-cover h-48 w-full" onerror="this.style.display='none'">` : '';
-      // preview: pakai excerpt jika ada, kalau tidak potong dari body (bersihkan HTML)
+      const img = it.image ? `<img src="${it.image}" alt="${it.title}" class="rounded-md mb-4 object-cover h-48 w-full" onerror="this.style.display='none'>` : '';
       const plain = (it.excerpt && it.excerpt.trim().length)
         ? it.excerpt
         : (it.body || '').replace(/<[^>]+>/g, '');
@@ -333,9 +331,12 @@ $dotCount = max(1, count($slidesData));
       document.body.style.overflow = '';
     }
 
-    // Pasang klik pada card fallback SSR
-    grid.querySelectorAll('.news-card[data-id]').forEach(el => {
-      el.addEventListener('click', () => openDetail(el.dataset.id));
+    // Pasang klik pada card fallback SSR (hanya jika ada id)
+    grid.querySelectorAll('.news-card').forEach(el => {
+      const id = el.dataset.id;
+      if (id && Number(id) > 0) {
+        el.addEventListener('click', () => openDetail(id));
+      }
     });
 
     let page = 1, loading = false, initializedFromAjax = false;
@@ -378,9 +379,14 @@ $dotCount = max(1, count($slidesData));
     }
 
     async function openDetail(id) {
+      if (!id) return; // guard
       try {
         const res = await fetch(showUrl(id), { headers: { 'Accept': 'application/json' } });
-        if (!res.ok) throw new Error('Gagal memuat detail');
+        if (!res.ok) {
+          console.error('News detail error', res.status, await res.text());
+          alert('Tidak dapat membuka berita (kode ' + res.status + ').');
+          return;
+        }
         const n = await res.json();
 
         const img = n.image ? `<img src="${n.image}" alt="${n.title}" class="w-full max-h-80 object-cover rounded-lg mb-4">` : '';
@@ -399,8 +405,8 @@ $dotCount = max(1, count($slidesData));
     // init
     loadPage();
     btnMore && btnMore.addEventListener('click', loadPage);
-    document.getElementById('newsModalClose').addEventListener('click', closeModal);
-    document.getElementById('newsModal').addEventListener('click', (e) => { if (e.target.id === 'newsModal') closeModal(); });
+    document.getElementById('newsModalClose')?.addEventListener('click', closeModal);
+    document.getElementById('newsModal')?.addEventListener('click', (e) => { if (e.target.id === 'newsModal') closeModal(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
   })();
 </script>
@@ -411,9 +417,7 @@ $dotCount = max(1, count($slidesData));
   <div class="relative bg-white w-11/12 max-w-3xl max-h-[85vh] overflow-auto rounded-xl shadow-xl p-6">
     <button id="newsModalClose"
       class="absolute top-3 right-3 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
-      aria-label="Tutup">
-      ✕
-    </button>
+      aria-label="Tutup">✕</button>
     <div id="newsModalBody"></div>
   </div>
 </div>
