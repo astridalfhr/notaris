@@ -24,55 +24,50 @@ class News extends BaseController
 
     public function store()
     {
-        if (!session('id'))
-            return redirect()->to('/login');
-
-        helper(['text']); // penting untuk url_title()
-        $m = new \App\Models\SiteNewsModel();
+        $m = new SiteNewsModel();
 
         $title = trim((string) $this->request->getPost('title'));
-        $base = url_title($title, '-', true) ?: 'berita';
-
-        // Pastikan slug unik
-        $slug = $base;
-        $i = 2;
-        while ($m->where('slug', $slug)->countAllResults()) {
-            $slug = $base . '-' . $i++;
-        }
-
-        // published_at dari datetime-local
-        $pubIn = trim((string) $this->request->getPost('published_at'));
-        $pubOut = $pubIn ? date('Y-m-d H:i:s', strtotime($pubIn)) : \CodeIgniter\I18n\Time::now()->toDateTimeString();
+        $slug = url_title($title, '-', true);
 
         $payload = [
             'title' => $title,
             'slug' => $slug,
             'excerpt' => (string) $this->request->getPost('excerpt'),
             'body' => (string) $this->request->getPost('body'),
-            'is_featured' => (int) ($this->request->getPost('is_featured') ?? 0),
+            'is_featured' => (int) $this->request->getPost('is_featured'),
             'is_published' => (int) ($this->request->getPost('is_published') ?? 1),
-            'published_at' => $pubOut,
+            'published_at' => $this->request->getPost('published_at') ?: Time::now()->toDateTimeString(),
         ];
 
-        // Upload (opsional)
         $img = $this->request->getFile('image');
-        if ($img && $img->isValid()) {
+        if ($img && $img->isValid() && !$img->hasMoved()) {
             $dir = FCPATH . 'images/news';
             if (!is_dir($dir)) {
-                mkdir($dir, 0777, true);
+                @mkdir($dir, 0777, true);
             }
+            if (!is_writable($dir)) {
+                log_message('error', 'Upload dir not writable: {dir}', ['dir' => $dir]);
+                return redirect()->back()->withInput()->with('error', 'Folder upload tidak dapat ditulis.');
+            }
+
             $newName = $img->getRandomName();
             if ($img->move($dir, $newName)) {
-                $payload['image'] = $newName;
+                $payload['image'] = $newName; // SIMPAN HANYA NAMA FILE
+            } else {
+                log_message('error', 'Move failed: {err}', ['err' => $img->getErrorString()]);
+                return redirect()->back()->withInput()->with('error', 'Gagal menyimpan gambar: ' . $img->getErrorString());
             }
+        } elseif ($img && !$img->isValid() && $img->getError() !== UPLOAD_ERR_NO_FILE) {
+            log_message('error', 'Upload invalid: code={code} msg={msg}', [
+                'code' => $img->getError(),
+                'msg' => $img->getErrorString(),
+            ]);
+            return redirect()->back()->withInput()->with('error', 'Upload tidak valid: ' . $img->getErrorString());
         }
 
-
-        // Simpan
         $m->insert($payload);
         return redirect()->to(site_url('multiuser/news'))->with('success', 'Berita ditambahkan.');
     }
-
 
     public function edit(int $id)
     {
@@ -87,8 +82,9 @@ class News extends BaseController
     {
         $m = new SiteNewsModel();
         $row = $m->find($id);
-        if (!$row)
+        if (!$row) {
             return redirect()->to(site_url('multiuser/news'))->with('error', 'Berita tidak ditemukan.');
+        }
 
         $title = trim((string) $this->request->getPost('title'));
         $slug = $row['slug'] ?: url_title($title, '-', true);
@@ -96,24 +92,39 @@ class News extends BaseController
         $payload = [
             'title' => $title,
             'slug' => $slug,
-            'excerpt' => trim((string) $this->request->getPost('excerpt')),
+            'excerpt' => (string) $this->request->getPost('excerpt'),
             'body' => (string) $this->request->getPost('body'),
             'is_featured' => (int) $this->request->getPost('is_featured'),
-            'is_published' => (int) $this->request->getPost('is_published', FILTER_SANITIZE_NUMBER_INT) ?: 1,
-            'published_at' => $this->request->getPost('published_at') ?: $row['published_at'],
+            'is_published' => (int) ($this->request->getPost('is_published') ?? 1),
+            'published_at' => $this->request->getPost('published_at') ?: ($row['published_at'] ?? Time::now()->toDateTimeString()),
         ];
 
         $img = $this->request->getFile('image');
-        if ($img && $img->isValid()) {
+        if ($img && $img->isValid() && !$img->hasMoved()) {
             $dir = FCPATH . 'images/news';
             if (!is_dir($dir)) {
-                @mkdir($dir, 0775, true);
+                @mkdir($dir, 0777, true);
             }
+            if (!is_writable($dir)) {
+                log_message('error', 'Upload dir not writable: {dir}', ['dir' => $dir]);
+                return redirect()->back()->withInput()->with('error', 'Folder upload tidak dapat ditulis.');
+            }
+
             $newName = $img->getRandomName();
             if ($img->move($dir, $newName)) {
-                $payload['image'] = $newName;
+                $payload['image'] = $newName; // update ke file baru
+            } else {
+                log_message('error', 'Move failed: {err}', ['err' => $img->getErrorString()]);
+                return redirect()->back()->withInput()->with('error', 'Gagal menyimpan gambar: ' . $img->getErrorString());
             }
+        } elseif ($img && !$img->isValid() && $img->getError() !== UPLOAD_ERR_NO_FILE) {
+            log_message('error', 'Upload invalid: code={code} msg={msg}', [
+                'code' => $img->getError(),
+                'msg' => $img->getErrorString(),
+            ]);
+            return redirect()->back()->withInput()->with('error', 'Upload tidak valid: ' . $img->getErrorString());
         }
+        // kalau tidak ada file baru: payload['image'] tidak di-set → gambar lama tetap
 
         $m->update($id, $payload);
         return redirect()->to(site_url('multiuser/news'))->with('success', 'Berita diperbarui.');
