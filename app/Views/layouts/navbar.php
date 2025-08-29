@@ -16,11 +16,11 @@ switch (true) {
     $dashboardUrl = 'admin/dashboard';
     $profileUrl = 'admin/profile_edit';
     break;
-  case in_array($role, ['multi-user', 'multiuser', 'multiuser'], true):
+  case in_array($role, ['multi-user', 'multiuser'], true):
     $dashboardUrl = 'multiuser/dashboard';
     $profileUrl = 'multiuser/profile_edit';
     break;
-  default: // user atau tak dikenal
+  default:
     $dashboardUrl = 'user/dashboard';
     $profileUrl = 'user/edit_profile';
     break;
@@ -33,9 +33,8 @@ $localAbs = FCPATH . $localRel;
 $avatar = null;
 
 if ($isUrl) {
-  $avatar = $photo; // URL Google
+  $avatar = $photo;
 } elseif ($photo && is_file($localAbs)) {
-  // cache-busting agar selalu ambil foto terbaru
   $ver = @filemtime($localAbs) ?: time();
   $avatar = base_url($localRel) . '?v=' . $ver;
 }
@@ -108,7 +107,6 @@ if ($isUrl) {
 
     <!-- Hamburger menu button untuk mobile -->
     <div class="md:hidden flex items-center space-x-4">
-      <!-- Nomor telepon bisa disembunyikan atau ditampilkan sesuai kebutuhan -->
       <button id="mobileMenuBtn" aria-label="Toggle menu" class="focus:outline-none">
         <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +116,7 @@ if ($isUrl) {
 
       <?php if ($isLogged): ?>
         <!-- Tombol user icon di mobile -->
-        <button id="mobileUser Btn" aria-label="User  menu" class="focus:outline-none">
+        <button id="mobileUserBtn" aria-label="User menu" class="focus:outline-none">
           <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
             <?php if ($avatar): ?>
               <img src="<?= esc($avatar) ?>" alt="<?= esc($displayName ?: 'Me') ?>" class="w-full h-full object-cover">
@@ -128,7 +126,6 @@ if ($isUrl) {
           </div>
         </button>
       <?php else: ?>
-        <!-- Tombol login di mobile -->
         <a href="<?= site_url('login') ?>"
           class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition text-sm">
           Login
@@ -145,12 +142,9 @@ if ($isUrl) {
       <a href="<?= site_url('layanan') ?>" class="hover:text-yellow-600 transition">Layanan</a>
       <a href="<?= site_url('kontak') ?>" class="hover:text-yellow-600 transition">Kontak</a>
       <div class="border-t border-gray-300 my-2"></div>
-      <div class="text-sm text-gray-600">
-        📞 +62 852-7128-8009
-      </div>
+      <div class="text-sm text-gray-600">📞 +62 852-7128-8009</div>
 
       <?php if ($isLogged): ?>
-        <!-- Dropdown user mobile -->
         <div class="border-t border-gray-300 pt-2">
           <a href="<?= site_url($dashboardUrl) ?>" class="block py-2 hover:text-yellow-600 transition">Dashboard</a>
           <a href="<?= site_url($profileUrl) ?>" class="block py-2 hover:text-yellow-600 transition">Edit Profile</a>
@@ -166,7 +160,7 @@ if ($isUrl) {
   </nav>
 
   <!-- Dropdown user mobile (popup) -->
-  <div id="mobileUser Dropdown"
+  <div id="mobileUserDropdown"
     class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-sm p-6">
       <h2 class="text-xl font-semibold mb-4">Akun</h2>
@@ -187,7 +181,7 @@ if ($isUrl) {
       <a href="<?= site_url($profileUrl) ?>" class="block py-2 hover:text-yellow-600 transition">Edit Profile</a>
       <div class="border-t border-gray-300 my-2"></div>
       <a href="<?= site_url('logout') ?>" class="block py-2 hover:text-yellow-600 transition">Logout</a>
-      <button id="closeMobileUser Dropdown"
+      <button id="closeMobileUserDropdown"
         class="mt-4 w-full py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition">
         Tutup
       </button>
@@ -197,59 +191,90 @@ if ($isUrl) {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // Dropdown user desktop
+    // ===== Desktop user dropdown =====
     const userBtn = document.getElementById("userMenuButton");
     const userDropdown = document.getElementById("userDropdown");
 
-    if (userBtn && userDropdown) {
-      function closeUser Menu() {
-        if (!userDropdown.classList.contains("hidden")) {
-          userDropdown.classList.add("hidden");
-          userBtn.setAttribute("aria-expanded", "false");
-        }
+    function closeUserMenu() {
+      if (userDropdown && !userDropdown.classList.contains("hidden")) {
+        userDropdown.classList.add("hidden");
+        if (userBtn) userBtn.setAttribute("aria-expanded", "false");
       }
+    }
 
+    if (userBtn && userDropdown) {
       userBtn.addEventListener("click", function (e) {
         e.stopPropagation();
         const isHidden = userDropdown.classList.contains("hidden");
+        // Tutup menu lain yang mungkin sedang terbuka
+        closeMobileUserModal();
         userDropdown.classList.toggle("hidden");
         userBtn.setAttribute("aria-expanded", String(isHidden));
       });
 
-      document.addEventListener("click", closeUser Menu);
-      document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeUser Menu(); });
-    }
+      // Klik di luar area: tutup
+      document.addEventListener("click", function (e) {
+        if (!userDropdown.classList.contains("hidden")) {
+          const clickInside = userDropdown.contains(e.target) || userBtn.contains(e.target);
+          if (!clickInside) closeUserMenu();
+        }
+      });
 
-    // Toggle mobile menu
-    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-
-    if (mobileMenuBtn && mobileMenu) {
-      mobileMenuBtn.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
+      // Escape
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeUserMenu();
       });
     }
 
-    // Toggle mobile user dropdown
-    const mobileUser Btn = document.getElementById("mobileUser Btn");
-    const mobileUser Dropdown = document.getElementById("mobileUser Dropdown");
-    const closeMobileUser DropdownBtn = document.getElementById("closeMobileUser Dropdown");
+    // ===== Mobile menu toggle =====
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener("click", () => {
+        // Tutup modal user jika terbuka
+        closeMobileUserModal();
+        mobileMenu.classList.toggle("hidden");
+      });
 
-    if (mobileUser Btn && mobileUser Dropdown && closeMobileUser DropdownBtn) {
-      mobileUser Btn.addEventListener("click", () => {
-        mobileUser Dropdown.classList.remove("hidden");
-    });
-
-      closeMobileUser DropdownBtn.addEventListener("click", () => {
-        mobileUser Dropdown.classList.add("hidden");
-    });
-
-      // Klik di luar modal tutup modal
-      mobileUser Dropdown.addEventListener("click", (e) => {
-      if (e.target === mobileUser Dropdown) {
-          mobileUser Dropdown.classList.add("hidden");
+      // Klik di luar mobileMenu saat terbuka (opsional)
+      document.addEventListener("click", function (e) {
+        if (!mobileMenu.classList.contains("hidden")) {
+          const within = mobileMenu.contains(e.target) || mobileMenuBtn.contains(e.target);
+          if (!within) mobileMenu.classList.add("hidden");
+        }
+      });
     }
-  });
+
+    // ===== Mobile user modal =====
+    const mobileUserBtn = document.getElementById("mobileUserBtn");
+    const mobileUserDropdown = document.getElementById("mobileUserDropdown");
+    const closeMobileUserDropdownBtn = document.getElementById("closeMobileUserDropdown");
+
+    function closeMobileUserModal() {
+      if (mobileUserDropdown && !mobileUserDropdown.classList.contains("hidden")) {
+        mobileUserDropdown.classList.add("hidden");
+      }
+    }
+
+    if (mobileUserBtn && mobileUserDropdown && closeMobileUserDropdownBtn) {
+      mobileUserBtn.addEventListener("click", () => {
+        // Tutup desktop dropdown & mobile menu jika terbuka
+        closeUserMenu();
+        if (mobileMenu) mobileMenu.classList.add("hidden");
+        mobileUserDropdown.classList.remove("hidden");
+      });
+
+      closeMobileUserDropdownBtn.addEventListener("click", closeMobileUserModal);
+
+      // Klik backdrop menutup modal
+      mobileUserDropdown.addEventListener("click", (e) => {
+        if (e.target === mobileUserDropdown) closeMobileUserModal();
+      });
+
+      // Escape
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeMobileUserModal();
+      });
     }
   });
 </script>
