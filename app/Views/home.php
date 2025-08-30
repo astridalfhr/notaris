@@ -86,7 +86,8 @@ $dotCount = max(1, count($slidesData));
               <p class="uppercase tracking-widest text-gray-500 mb-2">Selamat Datang</p>
               <h2 class="text-4xl font-extrabold mb-3"><?= esc($settings['hero_title'] ?? 'Kantor Notaris') ?></h2>
               <p class="text-gray-700 leading-relaxed">
-                <?= esc($settings['hero_tagline'] ?? 'Profesional & terpercaya.') ?></p>
+                <?= esc($settings['hero_tagline'] ?? 'Profesional & terpercaya.') ?>
+              </p>
             </div>
           </article>
         <?php endif; ?>
@@ -147,7 +148,8 @@ $dotCount = max(1, count($slidesData));
       <div>
         <h2 class="text-3xl font-semibold text-gray-800 mb-2"><?= esc($settings['owner_name'] ?? 'Nama Pemilik') ?></h2>
         <p class="text-gray-600 leading-relaxed text-sm md:text-base">
-          <?= esc($settings['owner_subtitle'] ?? 'Profil singkat pemilik atau jabatan.') ?></p>
+          <?= esc($settings['owner_subtitle'] ?? 'Profil singkat pemilik atau jabatan.') ?>
+        </p>
         <a href="<?= site_url('profile') ?>"
           class="inline-flex items-center mt-4 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl text-sm font-medium shadow transition duration-300">
           Lihat Profil Lengkap
@@ -206,45 +208,63 @@ $dotCount = max(1, count($slidesData));
       <?php else: ?>
         <iframe
           src="https://www.google.com/maps?q=<?= urlencode($settings['address'] ?? 'Kantor Notaris') ?>&output=embed"
-          width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+          width="100%" height="450" style="border:0;" allowfullscreen loading="lazy"
           referrerpolicy="no-referrer-when-downgrade" class="w-full rounded-xl"></iframe>
       <?php endif; ?>
     </div>
   </div>
 </section>
 
+<!-- Modal (satu-satunya) -->
+<div id="newsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+  <div class="relative bg-white w-11/12 max-w-3xl max-h-[85vh] overflow-auto rounded-xl shadow-xl p-6">
+    <button id="newsModalClose"
+      class="absolute top-3 right-3 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+      aria-label="Tutup">✕</button>
+    <div id="newsModalBody"></div>
+  </div>
+</div>
+
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script> AOS.init({ duration: 1000, once: true }); </script>
 
 <script>
-  const slidesContainer = document.getElementById("slidesContainer");
-  const slides = slidesContainer.children;
-  const dots = document.querySelectorAll("#slider .absolute.bottom-5 button");
-  let currentIndex = 0;
-  const totalSlides = slides.length;
-  function updateSlider(index) {
-    if (index < 0) index = totalSlides - 1;
-    else if (index >= totalSlides) index = 0;
-    currentIndex = index;
-    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach((dot, i) => dot.classList.toggle('bg-yellow-600', i === index));
-  }
-  document.getElementById("prevBtn").addEventListener("click", () => updateSlider(currentIndex - 1));
-  document.getElementById("nextBtn").addEventListener("click", () => updateSlider(currentIndex + 1));
-  dots.forEach((dot, idx) => dot.addEventListener('click', () => updateSlider(idx)));
-  if (totalSlides > 1) setInterval(() => updateSlider(currentIndex + 1), 7000);
-  updateSlider(0);
-</script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // ===== Slider =====
+    const slidesContainer = document.getElementById("slidesContainer");
+    if (slidesContainer) {
+      const slides = slidesContainer.children;
+      const dots = document.querySelectorAll("#slider .absolute.bottom-5 button");
+      let currentIndex = 0;
+      const totalSlides = slides.length;
 
-<script>
-  (function () {
+      function updateSlider(index) {
+        if (index < 0) index = totalSlides - 1;
+        else if (index >= totalSlides) index = 0;
+        currentIndex = index;
+        slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach((dot, i) => dot.classList.toggle('bg-yellow-600', i === index));
+      }
+
+      document.getElementById("prevBtn")?.addEventListener("click", () => updateSlider(currentIndex - 1));
+      document.getElementById("nextBtn")?.addEventListener("click", () => updateSlider(currentIndex + 1));
+      dots.forEach((dot, idx) => dot.addEventListener('click', () => updateSlider(idx)));
+      if (totalSlides > 1) setInterval(() => updateSlider(currentIndex + 1), 7000);
+      updateSlider(0);
+    }
+
+    // ===== News + Modal =====
     const grid = document.getElementById('newsGrid');
     const btnMore = document.getElementById('newsLoadMore');
     const modal = document.getElementById('newsModal');
     const modalBody = document.getElementById('newsModalBody');
+    const btnClose = document.getElementById('newsModalClose');
 
-    const feedUrl = "<?= base_url('index.php/news/feed') ?>";
-    const showUrl = id => "<?= base_url('index.php/news/show') ?>/" + id;
+    if (!grid || !modal || !modalBody) return;
+
+    const feedUrl = "<?= site_url('news/feed') ?>";
+    const showUrl = id => "<?= site_url('news/show') ?>/" + id;
 
     function fmtID(s) {
       if (!s) return '';
@@ -265,9 +285,21 @@ $dotCount = max(1, count($slidesData));
       </article>`;
     }
 
-    function openModal(html) { modalBody.innerHTML = html; modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
-    function closeModal() { modal.classList.add('hidden'); document.body.style.overflow = ''; }
+    function openModal(html) {
+      modalBody.innerHTML = html;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
 
+    btnClose?.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // bind kartu statis (SSR)
     grid.querySelectorAll('.news-card').forEach(el => {
       const id = el.dataset.id;
       if (id && Number(id) > 0) el.addEventListener('click', () => openDetail(id));
@@ -287,13 +319,16 @@ $dotCount = max(1, count($slidesData));
 
         (data.items || []).forEach(it => {
           grid.insertAdjacentHTML('beforeend', cardTemplate(it));
-          const el = grid.lastElementChild;
-          el.addEventListener('click', () => openDetail(it.id));
+          grid.lastElementChild.addEventListener('click', () => openDetail(it.id));
         });
 
-        if (data.has_more) { btnMore.classList.remove('hidden'); btnMore.disabled = false; page += 1; }
-        else { btnMore.classList.add('hidden'); }
-      } catch (e) { console.error(e); } finally { loading = false; }
+        if (data.has_more) { btnMore?.classList.remove('hidden'); btnMore.disabled = false; page += 1; }
+        else { btnMore?.classList.add('hidden'); }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        loading = false;
+      }
     }
 
     async function openDetail(id) {
@@ -303,41 +338,28 @@ $dotCount = max(1, count($slidesData));
         const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
         const ct = (res.headers.get('content-type') || '').toLowerCase();
         if (!res.ok || !ct.includes('application/json')) {
-          const prev = await res.text().catch(() => '');
-          console.error('News detail error:', res.status, url, ct, prev.slice(0, 200));
+          console.error('News detail error:', res.status, url, ct);
           alert('Tidak dapat membuka berita (kode ' + res.status + ').');
           return;
         }
         const n = await res.json();
         const img = n.image ? `<img src="${n.image}" alt="${n.title}" class="w-full max-h-80 object-cover rounded-lg mb-4">` : '';
         openModal(`
-          <h3 class="text-2xl font-bold mb-2">${n.title}</h3>
-          <div class="text-sm text-gray-500 mb-4">${fmtID(n.published_at)}</div>
-          ${img}
-          <div class="prose max-w-none">${n.body || ''}</div>
-        `);
+        <h3 class="text-2xl font-bold mb-2">${n.title}</h3>
+        <div class="text-sm text-gray-500 mb-4">${fmtID(n.published_at)}</div>
+        ${img}
+        <div class="prose max-w-none">${n.body || ''}</div>
+      `);
       } catch (e) {
         console.error(e);
         alert('Tidak dapat membuka berita (jaringan).');
       }
     }
 
+    // mulai
     loadPage();
-    btnMore && btnMore.addEventListener('click', loadPage);
-    document.getElementById('newsModalClose').addEventListener('click', closeModal);
-    document.getElementById('newsModal').addEventListener('click', (e) => { if (e.target.id === 'newsModal') closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-  })();
+    btnMore?.addEventListener('click', loadPage);
+  });
 </script>
-
-<div id="newsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
-  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-  <div class="relative bg-white w-11/12 max-w-3xl max-h-[85vh] overflow-auto rounded-xl shadow-xl p-6">
-    <button id="newsModalClose"
-      class="absolute top-3 right-3 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
-      aria-label="Tutup">✕</button>
-    <div id="newsModalBody"></div>
-  </div>
-</div>
 
 <?= $this->endSection() ?>
