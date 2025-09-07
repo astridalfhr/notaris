@@ -42,12 +42,25 @@ class Profile extends BaseController
         $email = strtolower(trim((string) $this->request->getPost('email')));
         $noTelepon = trim((string) $this->request->getPost('no_telepon'));
         $jabatan = trim((string) $this->request->getPost('jabatan'));
-        $spesialisasi = trim((string) $this->request->getPost('spesialisasi'));
-        $deskripsi = trim((string) $this->request->getPost('deskripsi'));  // ← kolom baru (opsional)
+        $deskripsi = trim((string) $this->request->getPost('deskripsi'));
         $status = (string) ($this->request->getPost('status') ?: 'aktif');
 
+        // spesialisasi[] bisa array (checkbox) atau string CSV
+        $specPost = $this->request->getPost('spesialisasi');
+        $specList = [];
+        if (is_array($specPost)) {
+            $specList = array_values(array_filter(array_map('trim', $specPost), fn($v) => $v !== ''));
+        } else {
+            $csv = trim((string) $specPost);
+            if ($csv !== '') {
+                $specList = array_values(array_filter(array_map('trim', explode(',', $csv))));
+            }
+        }
+        // simpan sebagai JSON supaya rapi (view lain sudah siap baca JSON/CSV)
+        $spesialisasi = json_encode($specList, JSON_UNESCAPED_UNICODE);
+
         // Validasi minimal
-        if ($nama === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if ($nama === '' || ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL))) {
             return redirect()->back()->withInput()->with(
                 'error',
                 'Nama wajib diisi dan email harus valid.'
@@ -60,7 +73,7 @@ class Profile extends BaseController
             'no_telepon' => $noTelepon,
             'jabatan' => $jabatan,
             'spesialisasi' => $spesialisasi,
-            'deskripsi' => $deskripsi, // pastikan kolom ini sudah ada di DB & allowedFields
+            'deskripsi' => $deskripsi, // pastikan kolom ini ada & allowedFields
             'status' => $status,
         ];
 
@@ -95,17 +108,16 @@ class Profile extends BaseController
         // Simpan perubahan ke DB
         $m->update($employeeId, $data);
 
+        // Refresh data di session (header, dsb.)
         session()->set('nama', $data['nama']);
-        session()->set('email', $data['email']);
-
+        if ($email !== '')
+            session()->set('email', $data['email']);
         if (!empty($data['foto'])) {
-            // simpan path absolut/URL sesuai kebutuhan header
-            $fotoUrl = base_url('images/karyawan/' . $data['foto']);
-            session()->set('profile_photo', $fotoUrl);
+            session()->set('profile_photo', base_url('images/karyawan/' . $data['foto']));
         }
 
         $data['menu'] = KerjaMenu::get();
-        return redirect()->to(site_url('admin'))
+        return redirect()->to(site_url('layanan'))
             ->with('success', 'Profil berhasil diperbarui.');
     }
 }

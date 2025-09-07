@@ -44,7 +44,6 @@ class Auth extends Controller
         $email = strtolower((string) ($user['email'] ?? ''));
         $role = $this->canonRole((string) ($user['role'] ?? 'user'));
         $photo = $user['profile_photo'] ?? null;
-
         session()->regenerate(true);
         session()->set([
             'id' => $id,
@@ -57,7 +56,6 @@ class Auth extends Controller
             'user_name' => $nama,
             'user_email' => $email,
         ]);
-
         if ($role === 'admin' || $role === 'super-admin') {
             try {
                 $employeeId = EmployeeResolver::ensureForCurrentUser();
@@ -78,26 +76,12 @@ class Auth extends Controller
     {
         $role = (string) (session('role') ?? 'user');
         return match ($role) {
-            'admin' => '/admin',
+            'admin' => 'layanan',
             'multiuser' => '/multiuser',
             default => '/user',
         };
     }
 
-    // ====== helper untuk hitung Redirect URI yang konsisten ======
-    private function resolveRedirectUri(): string
-    {
-        $env = (string) (getenv('GOOGLE_REDIRECT_URI') ?: '');
-        if ($env !== '')
-            return $env;
-
-        $appBase = (string) (getenv('APP_BASE_URL') ?: '');
-        if ($appBase !== '')
-            return rtrim($appBase, '/') . '/auth/callback';
-
-        $base = rtrim((string) config('App')->baseURL, '/');
-        return $base . '/auth/callback';
-    }
 
     public function manual_login()
     {
@@ -117,7 +101,6 @@ class Auth extends Controller
         }
         $email = strtolower((string) $this->request->getPost('email'));
         $pass = (string) $this->request->getPost('password');
-
         $userM = new UserModel();
         $user = $userM->findByEmail($email);
         if (!$user || empty($user['password']) || !password_verify($pass, $user['password'])) {
@@ -164,11 +147,11 @@ class Auth extends Controller
                 'reset_expires' => Time::now()->addMinutes(30),
             ]);
             $resetUrl = base_url('auth/reset?token=' . $token);
-            $emailServer = \Config\Services::email();
-            $emailServer->setTo($email);
-            $emailServer->setFrom('ragilibnuhajarMkn@gmail.com', 'Notariss System');
-            $emailServer->setSubject('Reset Password Anda');
-            $emailServer->setMessage(
+            $emailService = \Config\Services::email();
+            $emailService->setTo($email);
+            $emailService->setFrom('ragilibnuhajarMkn@gmail.com', 'Notariss System');
+            $emailService->setSubject('Reset Password Anda');
+            $emailService->setMessage(
                 "Halo {$user['nama']},<br><br>" .
                 "Kami menerima permintaan reset password.<br>" .
                 "Silakan klik tautan berikut untuk mengatur password baru:<br>" .
@@ -176,8 +159,8 @@ class Auth extends Controller
                 "Tautan ini berlaku selama 30 menit.<br><br>" .
                 "Salam,<br>Tim Notariss"
             );
-            if (!$emailServer->send()) {
-                $debug = $emailServer->printDebugger(['headers', 'subject', 'body']);
+            if (!$emailService->send()) {
+                $debug = $emailService->printDebugger(['headers', 'subject', 'body']);
                 log_message('error', 'Reset password email failed: ' . $debug);
             }
         }
@@ -218,57 +201,40 @@ class Auth extends Controller
         return redirect()->to('/login')->with('success', 'Password diperbarui. Silakan login.');
     }
 
-    // ====== GOOGLE OAUTH ======
-
-    // kompatibel dengan path lama: /auth/LoginWithGoogle
     public function LoginWithGoogle()
     {
         $client = new Google_Client();
         $client->setClientId((string) getenv('GOOGLE_CLIENT_ID'));
         $client->setClientSecret((string) getenv('GOOGLE_CLIENT_SECRET'));
-
-        $redirect = $this->resolveRedirectUri(); // **pakai helper konsisten**
-        $client->setRedirectUri($redirect);
-
+        $client->setRedirectUri(base_url('auth/googleCallback'));
         $client->addScope('email');
         $client->addScope('profile');
-
-        log_message('debug', 'Using Google redirect URI: ' . $redirect);
         return redirect()->to($client->createAuthUrl());
     }
 
-    // kompatibel dengan path lama: /auth/googleCallback
     public function googleCallback()
     {
         $code = (string) $this->request->getGet('code');
         if ($code === '') {
             return redirect()->to('/login')->with('error', 'Login Google gagal: kode tidak ditemukan.');
         }
-
         $client = new Google_Client();
         $client->setClientId((string) getenv('GOOGLE_CLIENT_ID'));
         $client->setClientSecret((string) getenv('GOOGLE_CLIENT_SECRET'));
-
-        $redirect = $this->resolveRedirectUri(); // **pakai helper konsisten**
-        $client->setRedirectUri($redirect);
-
+        $client->setRedirectUri(base_url('auth/googleCallback'));
         $token = $client->fetchAccessTokenWithAuthCode($code);
         if (isset($token['error']) || empty($token['access_token'])) {
             $msg = $token['error_description'] ?? $token['error'] ?? 'Token exchange error';
-            log_message('error', 'OAuth error: ' . $msg);
             return redirect()->to('/login')->with('error', 'Login Google gagal: ' . $msg);
         }
-
         $client->setAccessToken($token['access_token']);
         $gs = new Google_Service_Oauth2($client);
         $g = $gs->userinfo->get();
-
         $userM = new UserModel();
         $email = strtolower((string) ($g->email ?? ''));
         $photo = (string) ($g->picture ?? '');
         $name = (string) ($g->name ?? '');
         $gid = (string) ($g->id ?? '');
-
         $user = $userM->asArray()->where('email', $email)->first();
         if (!$user) {
             $userId = $userM->insert([
@@ -281,16 +247,17 @@ class Auth extends Controller
             $user = $userM->asArray()->find($userId);
         } else {
             $update = [];
-            if (empty($user['google_id']) && $gid !== '')
+            if (empty($user['google_id']) && $gid !== '') {
                 $update['google_id'] = $gid;
-            if (empty($user['profile_photo']) && $photo !== '')
+            }
+            if (empty($user['profile_photo']) && $photo !== '') {
                 $update['profile_photo'] = $photo;
+            }
             if ($update) {
                 $userM->update($user['id'], $update);
                 $user = $userM->asArray()->find($user['id']);
             }
         }
-
         $this->setUserSession($user);
         return redirect()->to($this->afterLoginRedirect());
     }

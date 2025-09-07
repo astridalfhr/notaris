@@ -493,18 +493,9 @@
             <label for="service">Jenis Layanan</label>
             <select id="service" name="service" class="input-focus" required>
               <option value="">Pilih Layanan</option>
-              <option value="Jual Beli Tanah & Bangunan" <?= old('service') === 'Jual Beli Tanah & Bangunan' ? 'selected' : ''; ?>>Jual Beli Tanah & Bangunan</option>
+              <option value="Jual Beli Tanah & Bangunan" <?= old('service') === 'Jual Beli Tanah & Bangunan' ? 'selected' : ''; ?>>PPAT</option>
               <option value="Pendirian Perusahaan" <?= old('service') === 'Pendirian Perusahaan' ? 'selected' : ''; ?>>
-                Pendirian Perusahaan</option>
-              <option value="Hibah" <?= old('service') === 'Hibah' ? 'selected' : ''; ?>>Hibah</option>
-              <option value="Pembagian Waris" <?= old('service') === 'Pembagian Waris' ? 'selected' : ''; ?>>Pembagian Waris
-              </option>
-              <option value="Perjanjian Kawin" <?= old('service') === 'Perjanjian Kawin' ? 'selected' : ''; ?>>Perjanjian Kawin
-              </option>
-              <option value="Legalisasi Dokumen" <?= old('service') === 'Legalisasi Dokumen' ? 'selected' : ''; ?>>Legalisasi
-                Dokumen</option>
-              <option value="Konsultasi Hukum" <?= old('service') === 'Konsultasi Hukum' ? 'selected' : ''; ?>>Konsultasi Hukum
-              </option>
+                Notaris</option>
               <option value="Lainnya" <?= old('service') === 'Lainnya' ? 'selected' : ''; ?>>Lainnya</option>
             </select>
           </div>

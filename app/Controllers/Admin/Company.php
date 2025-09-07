@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers\Multiuser;
+namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\SiteSettingsModel;
@@ -14,7 +14,7 @@ class Company extends BaseController
         $m = new SiteSettingsModel();
         $row = $m->first() ?? [];
 
-        return view('multiuser/company_form', ['row' => $row]);
+        return view('admin/company_form', ['row' => $row]);
     }
 
     public function save()
@@ -51,6 +51,6 @@ class Company extends BaseController
         else
             $m->insert($payload);
 
-        return redirect()->to(site_url('multiuser/company'))->with('success', 'Profil perusahaan disimpan.');
+        return redirect()->to(site_url('/'))->with('success', 'Profil perusahaan disimpan.');
     }
 }

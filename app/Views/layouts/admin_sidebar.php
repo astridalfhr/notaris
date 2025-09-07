@@ -55,6 +55,31 @@ $isNotarisOpen = str_starts_with($pathN, 'admin/kerja/notaris');
             <i class="fa-solid fa-user-gear"></i><span>Profil Admin</span>
         </a>
 
+        <a class="admin-nav__link <?= $activeStart('admin/employees') ?> <?= $activeExact('admin/employees') ?>"
+            href="<?= site_url('admin/employees') ?>">
+            <i class="fa-solid fa-users-gear"></i><span>Kelola Karyawan</span>
+        </a>
+
+        <a class="admin-nav__link <?= $activeStart('admin/roles') ?> <?= $activeExact('admin/roles') ?>"
+            href="<?= site_url('admin/roles') ?>">
+            <i class="fa-solid fa-users-gear"></i><span>Kelola Role</span>
+        </a>
+
+        <a class="admin-nav__link <?= $activeStart('admin/company') ?> <?= $activeExact('admin/company') ?>"
+            href="<?= site_url('admin/company') ?>">
+            <i class="fa-solid fa-building"></i><span>Profil Perusahaan</span>
+        </a>
+
+        <a class="admin-nav__link <?= $activeExact('admin/homepage') ?>"
+            href="<?= site_url('admin/homepage') ?>">
+            <i class="fa-solid fa-newspaper"></i><span>Kelola Beranda</span>
+        </a>
+
+        <a class="admin-nav__link <?= $activeStart('admin/news') ?> <?= $activeExact('admin/news') ?>"
+            href="<?= site_url('admin/news') ?>">
+            <i class="fa-solid fa-rectangle-list"></i><span>Kelola Beranda</span>
+        </a>
+
         <a class="admin-nav__link <?= $activeExact('admin/kerja') ?> <?= $activeStart('admin/kerja/') ?>"
             href="<?= site_url('admin/kerja') ?>">
             <i class="fa-solid fa-briefcase"></i><span>Halaman Kerja</span>

@@ -1,5 +1,5 @@
-<?php // app/Controllers/Multiuser/Homepage.php
-namespace App\Controllers\Multiuser;
+<?php
+namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\SiteSettingsModel;
@@ -18,7 +18,7 @@ class Homepage extends BaseController
             $row = $m->first();
         }
 
-        return view('multiuser/homepage_form', ['data' => $row]);
+        return view('admin/homepage_form', ['data' => $row]);
     }
 
     public function save()
@@ -64,6 +64,6 @@ class Homepage extends BaseController
                 $m->insert($payload);
         }
 
-        return redirect()->to(site_url('multiuser/homepage'))->with('success', 'Pengaturan beranda tersimpan.');
+        return redirect()->to(site_url('/'))->with('success', 'Pengaturan beranda tersimpan.');
     }
 }

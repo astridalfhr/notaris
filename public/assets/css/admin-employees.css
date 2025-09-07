@@ -1,0 +1,275 @@
+/* ========== Layout & Header ========== */
+.employees-page {
+    padding: 20px clamp(8px, 2vw, 24px);
+    background: #f7f8fa;
+    min-height: 65vh;
+}
+
+.emp-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.emp-head h2 {
+    margin: 0;
+    font-weight: 700;
+    font-size: clamp(18px, 2.2vw, 22px);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.emp-head__actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ========== Card ========== */
+.card {
+    background: #fff;
+    border: 1px solid #eef0f3;
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+}
+
+.emp-card {
+    padding: 12px;
+}
+
+.card__title {
+    font-weight: 600;
+    padding: 10px 12px 8px;
+    border-bottom: 1px solid #f1f2f5;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* ========== Table ========== */
+.table-wrap {
+    overflow: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th {
+    text-align: left;
+    font-weight: 600;
+    color: #6b7280;
+    font-size: 13px;
+    background: #fafbfc;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 12px 14px;
+    border-bottom: 1px solid #eef0f3;
+}
+
+.table tbody td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.table--flat tbody tr:hover {
+    background: #fafcff;
+}
+
+.col-no {
+    width: 56px;
+}
+
+.col-foto {
+    width: 64px;
+}
+
+.col-status {
+    width: 110px;
+}
+
+.col-aksi {
+    width: 280px;
+}
+
+/* ========== Avatar ========== */
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar__placeholder {
+    color: #9ca3af;
+    font-size: 18px;
+}
+
+/* ========== Text helpers ========== */
+.emp-name {
+    font-weight: 600;
+}
+
+.emp-jabatan,
+.emp-email,
+.emp-spec {
+    color: #374151;
+}
+
+.emp-email {
+    word-break: break-all;
+}
+
+/* ========== Badges ========== */
+.badge {
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+}
+
+.badge--active {
+    color: #065f46;
+    background: #d1fae5;
+    border: 1px solid #a7f3d0;
+}
+
+.badge--inactive {
+    color: #7c2d12;
+    background: #ffedd5;
+    border: 1px solid #fed7aa;
+}
+
+/* ========== Buttons ========== */
+.btn {
+    --bg: #e5e7eb;
+    --fg: #111827;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid #e5e7eb;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform .05s ease, filter .15s ease;
+}
+
+.btn:hover {
+    filter: brightness(.98);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn--sm {
+    padding: 7px 10px;
+    font-size: 13px;
+    border-radius: 8px;
+}
+
+.btn--success {
+    --bg: #10b981;
+    --fg: #ffffff;
+    border-color: #10b981;
+}
+
+.btn--danger {
+    --bg: #ef4444;
+    --fg: #ffffff;
+    border-color: #ef4444;
+}
+
+.btn--dim {
+    --bg: #e5e7eb;
+    --fg: #111827;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.inline {
+    display: inline-block;
+}
+
+/* ========== Empty & Pager ========== */
+.empty {
+    text-align: center;
+    color: #9ca3af;
+    padding: 20px 10px;
+    font-style: italic;
+}
+
+.pager-wrap {
+    padding: 12px;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 1024px) {
+    .col-aksi {
+        width: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .emp-head {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .table thead {
+        display: none;
+    }
+
+    .table tr {
+        display: grid;
+        gap: 8px;
+        border-bottom: 1px solid #eef0f3;
+        padding: 12px 10px;
+    }
+
+    .table td {
+        border: 0;
+        padding: 6px 0;
+    }
+
+    .col-no {
+        order: -1;
+        color: #9ca3af;
+    }
+
+    .btn span {
+        display: none;
+    }
+
+    /* hemat ruang, ikon saja */
+}

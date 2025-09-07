@@ -1,11 +1,12 @@
 <?= $this->extend('layouts/main') ?>
 <?= $this->section('content') ?>
+<?php helper('employee'); // specs_to_string() tersedia ?>
 
 <?php
 $company = $company ?? [];
 $employees = $employees ?? [];
 
-// pastikan semua key ada supaya tidak error undefined
+// pastikan key lengkap
 $company = array_merge([
     'name' => null,
     'summary' => null,
@@ -24,12 +25,11 @@ function safe($v)
 {
     return esc((string) ($v ?? ''));
 }
-$ownerImg = !empty($company['owner_photo'])
-    ? $company['owner_photo']
-    : base_url('images/pemilik.jpg');
+
+$ownerImg = !empty($company['owner_photo']) ? $company['owner_photo'] : base_url('images/pemilik.jpg');
 ?>
 
-<!-- ===== Profil Perusahaan (optimized) ===== -->
+<!-- ===== Profil Perusahaan ===== -->
 <section class="container mx-auto px-6 py-10">
     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
         <div class="grid md:grid-cols-12 gap-0">
@@ -96,15 +96,13 @@ $ownerImg = !empty($company['owner_photo'])
                     <?php if (!empty($company['summary'])): ?>
                         <?= $company['summary'] ?>
                     <?php else: ?>
-                        <p>Tambahkan deskripsi perusahaan melalui menu <em>Profil Perusahaan</em> di panel Multiuser.</p>
+                        <p>Tambahkan deskripsi perusahaan melalui menu <em>Profil Perusahaan</em> di panel Admin.</p>
                     <?php endif; ?>
                 </div>
 
                 <?php if (!empty($company['map_embed'])): ?>
                     <div class="mt-6">
-                        <div class="rounded-xl overflow-hidden shadow">
-                            <?= $company['map_embed'] ?>
-                        </div>
+                        <div class="rounded-xl overflow-hidden shadow"><?= $company['map_embed'] ?></div>
                     </div>
                 <?php elseif (!empty($company['address'])): ?>
                     <div class="mt-6">
@@ -147,7 +145,6 @@ $ownerImg = !empty($company['owner_photo'])
         <?php else: ?>
             <div class="col-span-full text-center text-gray-500">Belum ada data karyawan aktif.</div>
         <?php endif; ?>
-
     </div>
 
     <?php if (strtolower((string) session('role')) === 'multiuser'): ?>
@@ -198,49 +195,61 @@ $ownerImg = !empty($company['owner_photo'])
     const backdrop = document.getElementById('employee-backdrop');
     const closeBtn = document.getElementById('modal-close');
     const fotoEl = document.getElementById('modal-foto');
-    const titleEl = document.getElementById('modal-title');
     const namaEl = document.getElementById('modal-nama');
     const jabatanEl = document.getElementById('modal-jabatan');
     const emailEl = document.getElementById('modal-email');
-    const spesialisasiEl = document.getElementById('modal-spesialisasi');
-    const deskripsiEl = document.getElementById('modal-deskripsi');
-    const text = (v) => (v && typeof v === 'string') ? v : (v ?? '').toString();
+    const spesEl = document.getElementById('modal-spesialisasi');
+    const deskEl = document.getElementById('modal-deskripsi');
 
-    function openProfile(index) {
-        const data = employees[index];
-        if (!data) return;
+    // === formatter universal utk spesialisasi ===
+    function normalizeSpecs(val) {
+        if (!val) return '-';
+        if (Array.isArray(val)) return val.filter(Boolean).join(', ');
+        if (typeof val === 'string') {
+            // coba JSON
+            try {
+                const a = JSON.parse(val);
+                if (Array.isArray(a)) return a.filter(Boolean).join(', ');
+            } catch (_) { }
+            // fallback CSV/string mentah -> buang bracket & petik, split koma
+            const s = val.replace(/^\s*\[|\]\s*$/g, '');
+            return s.split(',')
+                .map(p => p.trim().replace(/^["']|["']$/g, ''))
+                .filter(Boolean)
+                .join(', ');
+        }
+        return String(val);
+    }
 
-        const foto = data.foto_url && data.foto_url.length ? data.foto_url : 'https://via.placeholder.com/150';
-        fotoEl.src = foto;
-        fotoEl.alt = (data.nama ?? 'Karyawan');
+    function openProfile(idx) {
+        const d = employees[idx];
+        if (!d) return;
 
-        titleEl.textContent = 'Detail Karyawan';
-        namaEl.textContent = text(data.nama ?? '-');
-        jabatanEl.textContent = text(data.jabatan ?? '-');
-        emailEl.textContent = text(data.email ?? '-');
-        spesialisasiEl.textContent = text(data.spesialisasi ?? '-');
+        fotoEl.src = (d.foto_url && d.foto_url.length) ? d.foto_url : 'https://via.placeholder.com/150';
+        fotoEl.alt = d.nama ?? 'Karyawan';
 
-        const desc = (data.deskripsi && data.deskripsi.trim() !== '')
-            ? data.deskripsi
-            : `Deskripsi singkat tentang ${(data.nama ?? 'karyawan')} belum ditambahkan.`;
-        deskripsiEl.textContent = desc;
+        namaEl.textContent = d.nama ?? '-';
+        jabatanEl.textContent = d.jabatan ?? '-';
+        emailEl.textContent = d.email ?? '-';
+        spesEl.textContent = normalizeSpecs(d.spesialisasi ?? '-');
+
+        const desc = (d.deskripsi && String(d.deskripsi).trim() !== '')
+            ? d.deskripsi
+            : `Deskripsi singkat tentang ${(d.nama ?? 'karyawan')} belum ditambahkan.`;
+        deskEl.textContent = desc;
 
         modal.classList.remove('hidden');
         document.documentElement.style.overflow = 'hidden';
     }
-
     function closeProfile() {
         modal.classList.add('hidden');
         document.documentElement.style.overflow = '';
     }
 
     document.getElementById('employee-list')?.addEventListener('click', (e) => {
-        const btn = e.target.closest('.employee-card');
-        if (!btn) return;
-        const idx = btn.getAttribute('data-index');
-        openProfile(parseInt(idx, 10));
+        const btn = e.target.closest('.employee-card'); if (!btn) return;
+        openProfile(parseInt(btn.getAttribute('data-index'), 10));
     });
-
     backdrop.addEventListener('click', closeProfile);
     closeBtn.addEventListener('click', closeProfile);
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeProfile(); });

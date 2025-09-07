@@ -119,7 +119,8 @@ $hiddenBack = $backUrl;
                         <div class="text-sm text-gray-600"><?= esc($detail['karyawan_jabatan'] ?? '-') ?></div>
                         <?php if (!empty($detail['karyawan_spesialisasi'])): ?>
                             <div class="text-xs text-gray-500 italic">Spesialis:
-                                <?= esc($detail['karyawan_spesialisasi']) ?></div>
+                                <?= esc($detail['karyawan_spesialisasi']) ?>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -171,29 +172,49 @@ $hiddenBack = $backUrl;
         </div>
 
         <div class="px-6 pb-6 flex flex-wrap items-center gap-3">
+            <!-- Tombol kembali selalu ada -->
             <a href="<?= esc($backUrl) ?>"
                 class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50">← Kembali</a>
 
-            <?php if ($isAdmin || $isMultiuser || $isEmployee): ?>
+            <?php if ($isAdmin): ?>
                 <?php if ($status === 'pending' && $confirmAction): ?>
+                    <!-- Admin: PENDING -->
                     <form action="<?= $confirmAction ?>" method="post" style="display:inline">
                         <?= csrf_field() ?>
                         <input type="hidden" name="back" value="<?= esc($hiddenBack) ?>">
                         <button type="submit"
                             class="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700">Konfirmasi</button>
                     </form>
-                <?php endif; ?>
-
-                <?php if ($isAdmin): ?>
                     <form action="<?= $cancelAction ?>" method="post" style="display:inline"
-                        onsubmit="return confirm('Tolak / batalkan booking ini?');">
+                        onsubmit="return confirm('Tolak booking ini?');">
                         <?= csrf_field() ?>
                         <input type="hidden" name="back" value="<?= esc($hiddenBack) ?>">
                         <button type="submit" class="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">Tolak</button>
                     </form>
+
+                <?php elseif ($status === 'confirmed'): ?>
+                    <!-- Admin: CONFIRMED -->
+                    <form action="<?= site_url('admin/slot/complete/' . (int) ($detail['jadwal_id'] ?? 0)) ?>" method="post"
+                        style="display:inline" onsubmit="return confirm('Tandai booking ini sebagai selesai?');">
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="back" value="<?= esc($hiddenBack) ?>">
+                        <button type="submit"
+                            class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">Selesai</button>
+                    </form>
+                    <form action="<?= $cancelAction ?>" method="post" style="display:inline"
+                        onsubmit="return confirm('Batalkan booking ini?');">
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="back" value="<?= esc($hiddenBack) ?>">
+                        <button type="submit" class="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">Tolak</button>
+                    </form>
+
+                <?php elseif ($status === 'completed'): ?>
+                    <!-- Admin: COMPLETED -->
+                    <!-- Hanya tombol kembali -->
                 <?php endif; ?>
 
             <?php else: ?>
+                <!-- Non-admin (user/employee/multiuser) -->
                 <?php if (in_array($status, ['pending', 'confirmed', 'booked'], true)): ?>
                     <form action="<?= $cancelAction ?>" method="post" style="display:inline"
                         onsubmit="return confirm('Batalkan booking ini?');">

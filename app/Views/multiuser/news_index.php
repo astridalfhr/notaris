@@ -18,49 +18,46 @@
 
         <div class="card">
             <h3 class="card-title"><i class="fa-solid fa-list"></i> Daftar Berita</h3>
-            <div class="table-responsive">
-                <table class="table flat">
-                    <thead>
+            <table class="table flat">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Judul</th>
+                        <th>Publish</th>
+                        <th>Featured</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1;
+                    foreach (($rows ?? []) as $r): ?>
                         <tr>
-                            <th>No</th>
-                            <th>Judul</th>
-                            <th>Publish</th>
-                            <th>Featured</th>
-                            <th>Aksi</th>
+                            <td><?= $i++ ?></td>
+                            <td><?= esc($r['title']) ?></td>
+                            <td><?= $r['is_published'] ? esc(date('d M Y H:i', strtotime($r['published_at']))) : '<span class="muted">Draft</span>' ?>
+                            </td>
+                            <td><?= $r['is_featured'] ? 'Ya' : '—' ?></td>
+                            <td>
+                                <a class="btn small warn" href="<?= site_url('multiuser/news/edit/' . $r['id']) ?>">Edit</a>
+                                <form action="<?= site_url('multiuser/news/delete/' . $r['id']) ?>" method="post"
+                                    style="display:inline" onsubmit="return confirm('Hapus berita ini?')">
+                                    <?= csrf_field() ?><button class="btn small danger">Hapus</button>
+                                </form>
+                                <form action="<?= site_url('multiuser/news/feature/' . $r['id']) ?>" method="post"
+                                    style="display:inline">
+                                    <?= csrf_field() ?><button
+                                        class="btn small"><?= $r['is_featured'] ? 'Lepas Featured' : 'Jadikan Featured' ?></button>
+                                </form>
+                                <form action="<?= site_url('multiuser/news/publish/' . $r['id']) ?>" method="post"
+                                    style="display:inline">
+                                    <?= csrf_field() ?><button
+                                        class="btn small"><?= $r['is_published'] ? 'Unpublish' : 'Publish' ?></button>
+                                </form>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1;
-                        foreach (($rows ?? []) as $r): ?>
-                            <tr>
-                                <td><?= $i++ ?></td>
-                                <td><?= esc($r['title']) ?></td>
-                                <td><?= $r['is_published'] ? esc(date('d M Y H:i', strtotime($r['published_at']))) : '<span class="muted">Draft</span>' ?>
-                                </td>
-                                <td><?= $r['is_featured'] ? 'Ya' : '—' ?></td>
-                                <td>
-                                    <a class="btn small warn"
-                                        href="<?= site_url('multiuser/news/edit/' . $r['id']) ?>">Edit</a>
-                                    <form action="<?= site_url('multiuser/news/delete/' . $r['id']) ?>" method="post"
-                                        style="display:inline" onsubmit="return confirm('Hapus berita ini?')">
-                                        <?= csrf_field() ?><button class="btn small danger">Hapus</button>
-                                    </form>
-                                    <form action="<?= site_url('multiuser/news/feature/' . $r['id']) ?>" method="post"
-                                        style="display:inline">
-                                        <?= csrf_field() ?><button
-                                            class="btn small"><?= $r['is_featured'] ? 'Lepas Featured' : 'Jadikan Featured' ?></button>
-                                    </form>
-                                    <form action="<?= site_url('multiuser/news/publish/' . $r['id']) ?>" method="post"
-                                        style="display:inline">
-                                        <?= csrf_field() ?><button
-                                            class="btn small"><?= $r['is_published'] ? 'Unpublish' : 'Publish' ?></button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </main>
 </div>

@@ -205,13 +205,6 @@ class Profile extends BaseController
         return $employees;
     }
 
-    /**
-     * Loader profil perusahaan yang robust:
-     * - Cari di site_settings (konteks 'profile' | 'company' | 'home') dan is_active=1 (jika ada).
-     * - Kalau tidak ada, cari di site_home (prioritaskan is_active=1 jika ada).
-     * - Pilih row terbaru (updated_at desc, fallback id desc).
-     * - Auto-convert map_url → iframe bila map_embed kosong.
-     */
     private function loadCompanyProfileRobust($db): array
     {
         // 1) Coba site_settings (beberapa kemungkinan context)

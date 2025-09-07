@@ -68,7 +68,7 @@ $routes->group('user', ['filter' => ['auth', 'role:user']], static function (Rou
     $routes->post('edit_profile', 'User\Profile::update');
 });
 
-$routes->group('admin', ['filter' => ['auth', 'role:admin']], static function (\CodeIgniter\Router\RouteCollection $routes) {
+$routes->group('admin', ['filter' => ['auth', 'role:admin']], static function (RouteCollection $routes) {
     $routes->get('/', 'Admin\Dashboard::index');
     $routes->get('dashboard', 'Admin\Dashboard::index');
     $routes->get('profile', 'Admin\Profile::edit');
@@ -86,79 +86,53 @@ $routes->group('admin', ['filter' => ['auth', 'role:admin']], static function (\
     $routes->post('dashboard/booking-confirm/(:num)', 'Admin\Dashboard::bookingConfirm/$1');
     $routes->post('dashboard/booking-cancel/(:num)', 'Admin\Dashboard::bookingCancel/$1');
     $routes->get('dashboard/health', 'Admin\Dashboard::health');
+    $routes->get('roles', 'Admin\Roles::index');
+    $routes->post('roles/update', 'Admin\Roles::update', ['as' => 'admin_roles_update']);
+    $routes->get('employees', 'Admin\Employees::index');
+    $routes->get('employees/create', 'Admin\Employees::create');
+    $routes->post('employees/store', 'Admin\Employees::store');
+    $routes->get('employees/edit/(:num)', 'Admin\Employees::edit/$1');
+    $routes->post('employees/update/(:num)', 'Admin\Employees::update/$1');
+    $routes->post('employees/toggle/(:num)', 'Admin\Employees::toggle/$1');
+    $routes->post('employees/delete/(:num)', 'Admin\Employees::delete/$1');
     $routes->post('slot/store', 'Admin\Dashboard::slotStore');
     $routes->post('slot/delete/(:num)', 'Admin\Dashboard::slotDelete/$1');
-    $routes->get('slot/detail/(:num)', 'Admin\Dashboard::slotDetail/$1');
+    $routes->get('slot_detail/(:num)', 'Admin\Dashboard::slotDetail/$1');
     $routes->post('slot/complete/(:num)', 'Admin\Dashboard::slotComplete/$1');
-    $routes->get('kerja', 'Admin\Kerja::index');
-    $routes->get('/', 'Admin\Kerja::index');
-    $routes->get('kerja/(:segment)', 'Admin\Kerja::index/$1');
-    $routes->get('kerja/(:segment)/(:segment)', 'Admin\Kerja::item/$1/$2');
-    $routes->post('upload', 'Admin\Kerja::upload');
-    $routes->post('delete', 'Admin\Kerja::delete');
+    $routes->get('kerja/feed', 'Admin\WorkController::feed');
+    $routes->post('kerja/upload', 'Admin\WorkController::upload');
+    $routes->post('kerja/update/(:num)', 'Admin\WorkController::update/$1');
+    $routes->delete('kerja/delete/(:num)', 'Admin\WorkController::delete/$1');
+    $routes->get('kerja/download/(:num)', 'Admin\WorkController::download/$1');
+    $routes->get('kerja/preview/(:num)', 'Admin\WorkController::preview/$1');
+    $routes->get('panel/summary', 'Admin\Panel::summary');
+    $routes->get('company', 'Admin\Company::index');
+    $routes->get('company/(:alpha)', 'Admin\Company::index/$1');
+    $routes->post('company/save', 'Admin\Company::save');
+    $routes->post('company/save/(:alpha)', 'Admin\Company::save/$1');
+    $routes->post('company/activate/(:num)', 'Admin\Company::activate/$1');
+    $routes->get('homepage', 'Admin\Homepage::index', ['filter' => 'auth']);
+    $routes->post('homepage/save', 'Admin\Homepage::save', ['filter' => 'auth']);
 });
 
-$routes->group('multiuser', ['filter' => ['auth', 'role:multiuser']], static function (RouteCollection $routes) {
-    $routes->get('/', 'Multiuser\Dashboard::index');
-    $routes->get('dashboard', 'Multiuser\Dashboard::index');
-    $routes->get('profile', 'Multiuser\Profile::edit');
-    $routes->get('profile_edit', 'Multiuser\Profile::edit');
-    $routes->post('profile/update', 'Multiuser\Profile::update');
-    $routes->get('users', 'Multiuser\Dashboard::users');
-    $routes->post('users/role/(:num)', 'Multiuser\Dashboard::setRole/$1');
-    $routes->get('employees', 'Multiuser\Employees::index');
-    $routes->get('employees/create', 'Multiuser\Employees::create');
-    $routes->post('employees/store', 'Multiuser\Employees::store');
-    $routes->get('employees/edit/(:num)', 'Multiuser\Employees::edit/$1');
-    $routes->post('employees/update/(:num)', 'Multiuser\Employees::update/$1');
-    $routes->post('employees/toggle/(:num)', 'Multiuser\Employees::toggle/$1');
-    $routes->post('employees/delete/(:num)', 'Multiuser\Employees::delete/$1');
-    $routes->get('company', 'Multiuser\Company::index');
-    $routes->post('company/save', 'Multiuser\Company::save');
-    $routes->get('slots', 'Multiuser\Dashboard::slot');
-    $routes->get('slot', 'Multiuser\Dashboard::slot');
-    $routes->post('slot/store', 'Multiuser\Dashboard::slotStore');
-    $routes->post('slot/delete/(:num)', 'Multiuser\Dashboard::slotDelete/$1');
-    $routes->get('slot/detail/(:num)', 'Multiuser\Dashboard::slotDetail/$1');
-    $routes->post('slot/complete/(:num)', 'Multiuser\Dashboard::slotComplete/$1');
-    $routes->post('dashboard/booking-confirm/(:num)', 'Multiuser\Dashboard::bookingConfirm/$1');
-    $routes->get('multiuser/slot/detail/(:num)', 'Multiuser\Dashboard::slotDetail/$1', ['filter' => 'auth']);
-    $routes->get('company', 'Multiuser\Company::index');
-    $routes->get('company/(:alpha)', 'Multiuser\Company::index/$1');
-    $routes->post('company/save', 'Multiuser\Company::save');
-    $routes->post('company/save/(:alpha)', 'Multiuser\Company::save/$1');
-    $routes->post('company/activate/(:num)', 'Multiuser\Company::activate/$1');
-    $routes->get('homepage', 'Multiuser\Homepage::index', ['filter' => 'auth']);
-    $routes->post('homepage/save', 'Multiuser\Homepage::save', ['filter' => 'auth']);
-    $routes->get('hero', 'Multiuser\Hero::index');
-    $routes->get('hero/create', 'Multiuser\Hero::create');
-    $routes->post('hero/store', 'Multiuser\Hero::store');
-    $routes->get('hero/edit/(:num)', 'Multiuser\Hero::edit/$1');
-    $routes->post('hero/update/(:num)', 'Multiuser\Hero::update/$1');
-    $routes->post('hero/delete/(:num)', 'Multiuser\Hero::delete/$1');
-    $routes->post('hero/toggle/(:num)', 'Multiuser\Hero::toggle/$1');
-    $routes->post('hero/move-up/(:num)', 'Multiuser\Hero::moveUp/$1');
-    $routes->post('hero/move-down/(:num)', 'Multiuser\Hero::moveDown/$1');
-    $routes->get('news', 'Multiuser\News::index');
-    $routes->get('news/create', 'Multiuser\News::create');
-    $routes->post('news/store', 'Multiuser\News::store');
-    $routes->get('news/edit/(:num)', 'Multiuser\News::edit/$1');
-    $routes->post('news/update/(:num)', 'Multiuser\News::update/$1');
-    $routes->post('news/delete/(:num)', 'Multiuser\News::delete/$1');
-    $routes->post('news/feature/(:num)', 'Multiuser\News::toggleFeature/$1');
-    $routes->post('news/publish/(:num)', 'Multiuser\News::togglePublish/$1');
-    $routes->get('roles', 'Multiuser\Roles::index');
-    $routes->post('roles/update', 'Multiuser\Roles::update', ['as' => 'multiuser_roles_update']);
-    $routes->group('kerja', static function (RouteCollection $routes) {
-        $routes->get('/', 'Multiuser\Kerja::index');
-        $routes->post('upload', 'Multiuser\Kerja::upload');
-        $routes->get('(:segment)/(:segment)', 'Multiuser\Kerja::item/$1/$2');
-        $routes->post('delete', 'Multiuser\Kerja::delete');
+$routes->group('admin', static function ($routes) {
+    $routes->group('booking', static function ($routes) {
+        $routes->get('today', 'Booking::today');
+        $routes->post('(:num)/confirm', 'Booking::confirm/$1');
+        $routes->post('(:num)/cancel', 'Booking::cancel/$1');
+        $routes->post('(:num)/complete', 'Booking::complete/$1');
+        $routes->get('(:num)', 'Booking::detail/$1');
     });
 });
 
-$routes->addRedirect('multi', 'multiuser');
-$routes->addRedirect('multi/(:any)', 'multiuser/$1');
+$routes->group('admin/arsip', ['namespace' => 'App\Controllers\Admin'], static function ($r) {
+    $r->get('feed', 'Arsip::feed');
+    $r->post('upload', 'Arsip::upload');
+    $r->match(['delete', 'post'], 'delete/(:num)', 'Arsip::delete/$1');
+    $r->post('update/(:num)', 'Arsip::update/$1');
+    $r->get('report', 'Arsip::report');
+});
+
 
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
