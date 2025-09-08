@@ -5,18 +5,17 @@ use App\Controllers\BaseController;
 use CodeIgniter\I18n\Time;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-// use App\Models\ArsipModel; // kalau dipakai nanti tinggal aktifkan
 
 class Arsip extends BaseController
 {
     /** Direktori publik untuk menyimpan file arsip (pastikan writeable) */
     private string $storeDir = 'uploads/arsip';
 
-    /** Cek apakah request mengharapkan JSON (compat untuk CI4 lawas) */
+    /** Cek apakah request mengharapkan JSON (kompatibel CI4 lawas) */
     private function acceptsJson(): bool
     {
         $accept = strtolower($this->request->getHeaderLine('Accept'));
-        $xrw = strtolower($this->request->getHeaderLine('X-Requested-With'));
+        $xrw    = strtolower($this->request->getHeaderLine('X-Requested-With'));
         $isAjax = method_exists($this->request, 'isAJAX') ? $this->request->isAJAX() : ($xrw === 'xmlhttprequest');
 
         return $isAjax
@@ -94,13 +93,13 @@ class Arsip extends BaseController
         $map = function (array $r) {
             $file = (string) ($r['file_name'] ?? '');
             return [
-                'id' => (int) ($r['id'] ?? 0),
-                'jenis' => (string) ($r['jenis'] ?? ''),
-                'tanggal' => (string) ($r['tanggal'] ?? ''),
-                'nomor_surat' => (string) ($r['nomor_surat'] ?? ''),
-                'perihal' => (string) ($r['perihal'] ?? ''),
-                'pihak' => (string) ($r['pihak'] ?? ''),
-                'url' => $file !== '' ? $this->fileUrl($file) : '',
+                'id'         => (int) ($r['id'] ?? 0),
+                'jenis'      => (string) ($r['jenis'] ?? ''),
+                'tanggal'    => (string) ($r['tanggal'] ?? ''),
+                'nomor_surat'=> (string) ($r['nomor_surat'] ?? ''),
+                'perihal'    => (string) ($r['perihal'] ?? ''),
+                'pihak'      => (string) ($r['pihak'] ?? ''),
+                'url'        => $file !== '' ? $this->fileUrl($file) : '',
                 'created_by' => (int) ($r['created_by'] ?? 0),
                 'created_at' => (string) ($r['created_at'] ?? ''),
             ];
@@ -117,10 +116,10 @@ class Arsip extends BaseController
         }
 
         return $this->response->setJSON([
-            'ok' => true,
+            'ok'    => true,
             'month' => $month,
             'masuk' => $masuk,
-            'keluar' => $keluar
+            'keluar'=> $keluar
         ]);
     }
 
@@ -132,11 +131,11 @@ class Arsip extends BaseController
             return $this->response->setStatusCode(405)->setJSON(['ok' => false, 'error' => 'Method Not Allowed']);
         }
 
-        $jenis = strtolower((string) $this->request->getPost('jenis'));
-        $tanggal = (string) $this->request->getPost('tanggal');
-        $nomor_surat = trim((string) $this->request->getPost('nomor_surat'));
-        $perihal = trim((string) $this->request->getPost('perihal'));
-        $pihak = trim((string) $this->request->getPost('pihak'));
+        $jenis        = strtolower((string) $this->request->getPost('jenis'));
+        $tanggal      = (string) $this->request->getPost('tanggal');
+        $nomor_surat  = trim((string) $this->request->getPost('nomor_surat'));
+        $perihal      = trim((string) $this->request->getPost('perihal'));
+        $pihak        = trim((string) $this->request->getPost('pihak'));
 
         if (!in_array($jenis, ['masuk', 'keluar'], true)) {
             return $this->response->setJSON(['ok' => false, 'error' => 'Jenis harus "masuk" atau "keluar".']);
@@ -169,14 +168,14 @@ class Arsip extends BaseController
 
         $db = db_connect();
         $db->table('arsip_surat')->insert([
-            'jenis' => $jenis,
-            'tanggal' => $tanggal,
+            'jenis'       => $jenis,
+            'tanggal'     => $tanggal,
             'nomor_surat' => $nomor_surat,
-            'perihal' => $perihal,
-            'pihak' => $pihak,
-            'file_name' => $safeName,
-            'created_by' => (int) (session('id') ?? 0),
-            'created_at' => date('Y-m-d H:i:s'),
+            'perihal'     => $perihal,
+            'pihak'       => $pihak,
+            'file_name'   => $safeName,
+            'created_by'  => (int) (session('id') ?? 0),
+            'created_at'  => date('Y-m-d H:i:s'),
         ]);
 
         return $this->response->setJSON(['ok' => true]);
@@ -231,11 +230,45 @@ class Arsip extends BaseController
 
         $html = view('admin/arsip_report_pdf', ['rows' => $rows, 'month' => $month]);
 
-        $opts = new Options();
-        $opts->set('isRemoteEnabled', true);
-        $opts->set('isHtml5ParserEnabled', true);
+        // Pastikan Dompdf tersedia. Railway akan install via composer saat build.
+        if (!class_exists(Dompdf::class)) {
+            // coba vendor autoload (jaga-jaga kalau autoload CI tidak mengikutkan vendor)
+            $vendorAutoload = ROOTPATH . 'vendor/autoload.php';
+            if (is_file($vendorAutoload)) {
+                require_once $vendorAutoload;
+            }
 
-        $dompdf = new Dompdf($opts);
+            // fallback manual jika kamu taruh dompdf di app/ThirdParty/dompdf
+            if (!class_exists(Dompdf::class)) {
+                $thirdPartyAutoload = APPPATH . 'ThirdParty/dompdf/autoload.inc.php';
+                if (is_file($thirdPartyAutoload)) {
+                    require_once $thirdPartyAutoload;
+                }
+            }
+        }
+
+        if (!class_exists(Dompdf::class)) {
+            return $this->response->setStatusCode(500)->setBody(
+                'Dompdf belum terpasang. Jalankan "composer require dompdf/dompdf" ' .
+                'atau taruh dompdf di app/ThirdParty/dompdf (dengan autoload.inc.php).'
+            );
+        }
+
+        // Options opsional: hanya set jika klasnya ada
+        $opts = null;
+        if (class_exists(Options::class)) {
+            $opts = new Options();
+            $opts->set('isRemoteEnabled', true);
+            $opts->set('isHtml5ParserEnabled', true);
+        }
+
+        $dompdf = $opts ? new Dompdf($opts) : new Dompdf();
+        if (!$opts) {
+            // jika Options tidak ada (versi dompdf lebih lawas), set via set_option
+            $dompdf->set_option('isRemoteEnabled', true);
+            $dompdf->set_option('isHtml5ParserEnabled', true);
+        }
+
         $dompdf->loadHtml($html, 'UTF-8');
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
@@ -265,7 +298,7 @@ class Arsip extends BaseController
             return $this->response->setStatusCode(404)->setJSON(['ok' => false, 'error' => 'Data tidak ditemukan']);
         }
 
-        $jenis = strtolower((string) ($this->request->getPost('jenis') ?: $row['jenis']));
+        $jenis   = strtolower((string) ($this->request->getPost('jenis') ?: $row['jenis']));
         if (!in_array($jenis, ['masuk', 'keluar'], true)) {
             $jenis = (string) $row['jenis'];
         }
@@ -276,20 +309,20 @@ class Arsip extends BaseController
         }
 
         $perihal = (string) ($this->request->getPost('perihal') ?: $row['perihal']);
-        $pihak = (string) ($this->request->getPost('pihak') ?: $row['pihak']);
-        $nomor = (string) ($this->request->getPost('nomor_surat')
+        $pihak   = (string) ($this->request->getPost('pihak') ?: $row['pihak']);
+        $nomor   = (string) ($this->request->getPost('nomor_surat')
             ?: $this->request->getPost('no_surat')
             ?: $this->request->getPost('nomor')
             ?: $row['nomor_surat']);
 
         $data = [
-            'jenis' => $jenis,
-            'tanggal' => $tanggal,
+            'jenis'       => $jenis,
+            'tanggal'     => $tanggal,
             'nomor_surat' => trim($nomor),
-            'perihal' => trim($perihal),
-            'pihak' => trim($pihak),
-            'updated_at' => date('Y-m-d H:i:s'),
-            'updated_by' => (int) (session('id') ?? 0), // kolom opsional
+            'perihal'     => trim($perihal),
+            'pihak'       => trim($pihak),
+            'updated_at'  => date('Y-m-d H:i:s'),
+            'updated_by'  => (int) (session('id') ?? 0), // kolom opsional
         ];
 
         // Ganti file (opsional)
