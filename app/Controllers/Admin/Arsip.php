@@ -5,20 +5,45 @@ use App\Controllers\BaseController;
 use CodeIgniter\I18n\Time;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use App\Models\ArsipModel; // <- pakai model kalau kamu punya
+// use App\Models\ArsipModel; // kalau dipakai nanti tinggal aktifkan
 
 class Arsip extends BaseController
 {
     /** Direktori publik untuk menyimpan file arsip (pastikan writeable) */
     private string $storeDir = 'uploads/arsip';
 
+    /** Cek apakah request mengharapkan JSON (compat untuk CI4 lawas) */
+    private function acceptsJson(): bool
+    {
+        $accept = strtolower($this->request->getHeaderLine('Accept'));
+        $xrw = strtolower($this->request->getHeaderLine('X-Requested-With'));
+        $isAjax = method_exists($this->request, 'isAJAX') ? $this->request->isAJAX() : ($xrw === 'xmlhttprequest');
+
+        return $isAjax
+            || strpos($accept, 'application/json') !== false
+            || strpos($accept, 'text/json') !== false
+            || strpos($accept, 'application/*+json') !== false;
+    }
+
+    /** Compat: cek method HTTP dengan fallback jika $request->is() tidak ada */
+    private function isMethod(string $method): bool
+    {
+        $method = strtolower($method);
+        if (method_exists($this->request, 'is')) {
+            return $this->request->is($method);
+        }
+        return strtolower($this->request->getMethod()) === $method;
+    }
+
     /** Hanya admin */
     private function ensureAdmin(): void
     {
         $role = strtolower((string) (session('role') ?? ''));
         if ($role !== 'admin') {
-            if ($this->request->isAJAX() || $this->request->wantsJSON()) {
-                $this->response->setStatusCode(403)->setJSON(['ok' => false, 'error' => 'Forbidden'])->send();
+            if ($this->acceptsJson()) {
+                $this->response->setStatusCode(403)
+                    ->setJSON(['ok' => false, 'error' => 'Forbidden'])
+                    ->send();
                 exit;
             }
             redirect()->to('/login')->send();
@@ -91,14 +116,19 @@ class Arsip extends BaseController
             }
         }
 
-        return $this->response->setJSON(['ok' => true, 'month' => $month, 'masuk' => $masuk, 'keluar' => $keluar]);
+        return $this->response->setJSON([
+            'ok' => true,
+            'month' => $month,
+            'masuk' => $masuk,
+            'keluar' => $keluar
+        ]);
     }
 
     /** ====== UPLOAD: semua admin boleh upload ====== */
     public function upload()
     {
         $this->ensureAdmin();
-        if (!$this->request->is('post')) {
+        if (!$this->isMethod('post')) {
             return $this->response->setStatusCode(405)->setJSON(['ok' => false, 'error' => 'Method Not Allowed']);
         }
 
@@ -158,7 +188,7 @@ class Arsip extends BaseController
         $this->ensureAdmin();
 
         // Izinkan fallback POST (beberapa hosting blokir DELETE)
-        if (!($this->request->is('delete') || $this->request->is('post'))) {
+        if (!($this->isMethod('delete') || $this->isMethod('post'))) {
             return $this->response->setStatusCode(405)->setJSON(['ok' => false, 'error' => 'Method Not Allowed']);
         }
 
@@ -177,8 +207,9 @@ class Arsip extends BaseController
         $file = (string) ($row['file_name'] ?? '');
         if ($file !== '') {
             $abs = FCPATH . rtrim($this->storeDir, '/') . '/' . $file;
-            if (is_file($abs))
+            if (is_file($abs)) {
                 @unlink($abs);
+            }
         }
 
         $db->table('arsip_surat')->where('id', $id)->delete();
@@ -219,7 +250,7 @@ class Arsip extends BaseController
     public function update($id)
     {
         $this->ensureAdmin();
-        if (!$this->request->is('post')) {
+        if (!$this->isMethod('post')) {
             return $this->response->setStatusCode(405)->setJSON(['ok' => false, 'error' => 'Method Not Allowed']);
         }
 
@@ -235,12 +266,14 @@ class Arsip extends BaseController
         }
 
         $jenis = strtolower((string) ($this->request->getPost('jenis') ?: $row['jenis']));
-        if (!in_array($jenis, ['masuk', 'keluar'], true))
+        if (!in_array($jenis, ['masuk', 'keluar'], true)) {
             $jenis = (string) $row['jenis'];
+        }
 
         $tanggal = (string) ($this->request->getPost('tanggal') ?: $row['tanggal']);
-        if (!preg_match('/^\d{4}\-\d{2}\-\d{2}$/', $tanggal))
+        if (!preg_match('/^\d{4}\-\d{2}\-\d{2}$/', $tanggal)) {
             $tanggal = (string) $row['tanggal'];
+        }
 
         $perihal = (string) ($this->request->getPost('perihal') ?: $row['perihal']);
         $pihak = (string) ($this->request->getPost('pihak') ?: $row['pihak']);
@@ -256,7 +289,7 @@ class Arsip extends BaseController
             'perihal' => trim($perihal),
             'pihak' => trim($pihak),
             'updated_at' => date('Y-m-d H:i:s'),
-            'updated_by' => (int) (session('id') ?? 0), // kolom opsional; abaikan jika tidak ada
+            'updated_by' => (int) (session('id') ?? 0), // kolom opsional
         ];
 
         // Ganti file (opsional)
@@ -274,13 +307,13 @@ class Arsip extends BaseController
             $old = (string) ($row['file_name'] ?? '');
             if ($old) {
                 $abs = FCPATH . rtrim($this->storeDir, '/') . '/' . $old;
-                if (is_file($abs))
+                if (is_file($abs)) {
                     @unlink($abs);
+                }
             }
             $data['file_name'] = $newName;
         }
 
-        // Simpan
         $db->table('arsip_surat')->where('id', $id)->update($data);
 
         return $this->response->setJSON(['ok' => true]);
