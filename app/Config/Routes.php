@@ -50,6 +50,7 @@ $routes->get('reset-password', 'Auth::reset');
 $routes->post('reset-password', 'Auth::resetPost');
 $routes->get('auth/reset', 'Auth::reset', ['as' => 'password_reset']);
 $routes->post('auth/reset', 'Auth::resetPost');
+$routes->get('auth/diag', 'Auth::diag');
 
 $routes->get('login-warning', static function () {
     return view('auth/login_warning');
