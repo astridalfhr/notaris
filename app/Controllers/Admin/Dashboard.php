@@ -306,33 +306,61 @@ class Dashboard extends BaseController
     }
 
     /** Tandai slot selesai */
+    /** Tandai slot selesai */
     public function slotComplete($jadwalId = null)
     {
-        if (!session('id'))
+        if (!session('id')) {
             return redirect()->to('/login');
+        }
 
         $jadwalId = (int) $jadwalId;
         $employeeId = EmployeeResolver::ensureForCurrentUser();
         $jm = new JadwalModel();
 
-        $slot = $jm->where('id', $jadwalId)->where('karyawan_id', $employeeId)->first();
-        if (!$slot)
+        // Pastikan slot milik karyawan ini
+        $slot = $jm->where('id', $jadwalId)
+            ->where('karyawan_id', $employeeId)
+            ->first();
+        if (!$slot) {
             return redirect()->back()->with('error', 'Slot tidak ditemukan.');
-
-        $db = db_connect();
-        $active = $db->table('booking')
-            ->where('jadwal_id', $jadwalId)
-            ->whereIn('status', ['pending', 'confirmed'])
-            ->orderBy('id', 'DESC')->get()->getRowArray();
-
-        if ($active) {
-            $db->table('booking')->where('id', $active['id'])->update([
-                'status' => 'completed',
-                'updated_at' => date('Y-m-d H:i:s'),
-            ]);
         }
 
+        $db = db_connect();
+
+        // Ambil booking TERAKHIR untuk slot ini, apapun statusnya
+        $last = $db->table('booking')
+            ->where('jadwal_id', $jadwalId)
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->getRowArray();
+
+        if ($last) {
+            $raw = strtolower((string) ($last['status'] ?? ''));
+
+            // Status yang dianggap "aktif": belum selesai / belum batal
+            $isActiveLike = in_array($raw, [
+                'pending',
+                'confirmed',
+                'booked',
+                'approve',
+                'approved',
+                'confirm'
+            ], true);
+
+            if ($isActiveLike) {
+                $db->table('booking')
+                    ->where('id', (int) $last['id'])
+                    ->update([
+                        'status' => 'completed',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
+            }
+            // Jika sudah completed/cancelled, biarkan saja (idempotent)
+        }
+
+        // Slot dibuat available lagi supaya bisa dipakai ulang
         $jm->update($jadwalId, ['status' => 'available']);
+
         return redirect()->back()->with('success', 'Slot ditandai selesai.');
     }
 
