@@ -127,24 +127,23 @@ $ownerImg = !empty($company['owner_photo']) ? $company['owner_photo'] : base_url
         class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 px-6 max-w-7xl mx-auto transition-all duration-300">
 
         <?php if (!empty($employees)): ?>
-            <?php foreach ($employees as $index => $emp):
-                $foto = (string) ($emp['foto_url'] ?? '');
-                if ($foto === '')
-                    $foto = 'https://via.placeholder.com/150';
-                ?>
+            <?php foreach ($employees as $index => $emp): ?>
+                <?php $foto = employee_photo_url($emp); ?>
                 <button type="button"
                     class="employee-card bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-all duration-300 text-left"
                     data-index="<?= (int) $index ?>">
                     <img src="<?= esc($foto) ?>" alt="<?= esc($emp['nama'] ?? 'Karyawan') ?>"
-                        class="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
-                    <h3 class="text-lg font-semibold text-center"><?= safe($emp['nama'] ?? '-') ?></h3>
-                    <p class="text-sm text-gray-600 text-center"><?= safe($emp['jabatan'] ?? '-') ?></p>
-                    <p class="text-xs text-gray-400 text-center"><?= safe($emp['email'] ?? '-') ?></p>
+                        class="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                        onerror="this.src='https://via.placeholder.com/200?text=IMG'" />
+                    <h3 class="text-lg font-semibold text-center"><?= esc($emp['nama'] ?? '-') ?></h3>
+                    <p class="text-sm text-gray-600 text-center"><?= esc($emp['jabatan'] ?? '-') ?></p>
+                    <p class="text-xs text-gray-400 text-center"><?= esc($emp['email'] ?? '-') ?></p>
                 </button>
             <?php endforeach; ?>
         <?php else: ?>
             <div class="col-span-full text-center text-gray-500">Belum ada data karyawan aktif.</div>
         <?php endif; ?>
+
     </div>
 
     <?php if (strtolower((string) session('role')) === 'multiuser'): ?>

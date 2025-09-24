@@ -246,13 +246,13 @@ $normalize = static function (?string $s): string {
                 class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 transition-all duration-300">
                 <?php foreach ($employees as $emp): ?>
                     <?php
-                    $foto = (string) ($emp['foto'] ?? '');
-                    $src = $foto !== '' ? base_url('images/karyawan/' . $foto) : 'https://via.placeholder.com/96?text=IMG';
+                    $src = employee_photo_url($emp);
                     $specText = specs_to_string($emp['spesialisasi'] ?? '');
                     ?>
                     <div class="employee-card bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-all duration-500">
                         <img src="<?= esc($src) ?>" alt="<?= esc($emp['nama'] ?? 'Karyawan') ?>"
-                            class="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
+                            class="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                            onerror="this.src='https://www.gravatar.com/avatar/<?= md5(strtolower(trim($emp['email'] ?? ''))) ?>?s=200&d=identicon'" />
                         <h3 class="text-lg font-semibold text-center"><?= esc($emp['nama'] ?? '—') ?></h3>
                         <p class="text-sm text-gray-600 text-center"><?= esc($emp['jabatan'] ?? '-') ?></p>
                         <?php if ($specText !== ''): ?>
@@ -1314,21 +1314,21 @@ $normalize = static function (?string $s): string {
         function lampiranButtons(files) {
             if (!files || !files.length) return '-';
             return files.map(f => `
-                                    <div class="inline-flex items-center gap-2 mr-2 mb-1">
-                                      <button class="px-2 py-1 rounded bg-amber-600 hover:bg-amber-700 text-white text-xs js-preview"
-                                              data-url="${BASE}/open/${f.id}"
-                                              data-name="${(f.original || 'Lampiran').replace(/"/g, '')}"
-                                              data-file-id="${f.id}"
-                                              data-mime="${(f.mime || '').replace(/"/g, '')}">
-                                        <i class="fa-solid fa-eye"></i> Preview
-                                      </button>
-                                      <a class="px-2 py-1 rounded bg-white border hover:bg-gray-50 text-xs" href="${BASE}/download/${f.id}">
-                                        <i class="fa-solid fa-download"></i> Download
-                                      </a>
-                                      <button class="px-2 py-1 rounded bg-red-600 hover:bg-red-700 text-white text-xs js-del-lamp" data-file-id="${f.id}">
-                                        <i class="fa-solid fa-trash"></i> Hapus
-                                      </button>
-                                    </div>`).join('');
+                                        <div class="inline-flex items-center gap-2 mr-2 mb-1">
+                                          <button class="px-2 py-1 rounded bg-amber-600 hover:bg-amber-700 text-white text-xs js-preview"
+                                                  data-url="${BASE}/open/${f.id}"
+                                                  data-name="${(f.original || 'Lampiran').replace(/"/g, '')}"
+                                                  data-file-id="${f.id}"
+                                                  data-mime="${(f.mime || '').replace(/"/g, '')}">
+                                            <i class="fa-solid fa-eye"></i> Preview
+                                          </button>
+                                          <a class="px-2 py-1 rounded bg-white border hover:bg-gray-50 text-xs" href="${BASE}/download/${f.id}">
+                                            <i class="fa-solid fa-download"></i> Download
+                                          </a>
+                                          <button class="px-2 py-1 rounded bg-red-600 hover:bg-red-700 text-white text-xs js-del-lamp" data-file-id="${f.id}">
+                                            <i class="fa-solid fa-trash"></i> Hapus
+                                          </button>
+                                        </div>`).join('');
         }
 
         function renderNotaris(rows) {
@@ -1338,23 +1338,23 @@ $normalize = static function (?string $s): string {
             rows.forEach(r => {
                 const p = r.payload || {};
                 const acts = IS_ADMIN ? `
-                                      <div class="flex items-center justify-end gap-2">
-                                        <button class="px-2 py-1 rounded bg-white border hover:bg-gray-50 text-xs js-edit" data-id="${r.id}" data-kat="NOTARIS">
-                                          <i class="fa-solid fa-pen"></i> Edit
-                                        </button>
-                                        <button class="px-2 py-1 rounded bg-white border hover:bg-gray-50 text-xs js-del" data-id="${r.id}">
-                                          <i class="fa-solid fa-trash text-red-600"></i> Hapus
-                                        </button>
-                                      </div>` : '-';
+                                          <div class="flex items-center justify-end gap-2">
+                                            <button class="px-2 py-1 rounded bg-white border hover:bg-gray-50 text-xs js-edit" data-id="${r.id}" data-kat="NOTARIS">
+                                              <i class="fa-solid fa-pen"></i> Edit
+                                            </button>
+                                            <button class="px-2 py-1 rounded bg-white border hover:bg-gray-50 text-xs js-del" data-id="${r.id}">
+                                              <i class="fa-solid fa-trash text-red-600"></i> Hapus
+                                            </button>
+                                          </div>` : '-';
                 tblNotBody.insertAdjacentHTML('beforeend', `
-                                      <tr class="border-b last:border-0">
-                                        <td class="px-3 py-2">${r.nomor_bulanan ?? ''}</td>
-                                        <td class="px-3 py-2">${p.tanggal ?? ''}</td>
-                                        <td class="px-3 py-2">${p.sifat ?? ''}</td>
-                                        <td class="px-3 py-2">${p.nama_penghadap ?? ''}</td>
-                                        <td class="px-3 py-2">${lampiranButtons(r.files)}</td>
-                                        <td class="px-3 py-2">${acts}</td>
-                                      </tr>`);
+                                          <tr class="border-b last:border-0">
+                                            <td class="px-3 py-2">${r.nomor_bulanan ?? ''}</td>
+                                            <td class="px-3 py-2">${p.tanggal ?? ''}</td>
+                                            <td class="px-3 py-2">${p.sifat ?? ''}</td>
+                                            <td class="px-3 py-2">${p.nama_penghadap ?? ''}</td>
+                                            <td class="px-3 py-2">${lampiranButtons(r.files)}</td>
+                                            <td class="px-3 py-2">${acts}</td>
+                                          </tr>`);
             });
         }
 
@@ -1365,37 +1365,37 @@ $normalize = static function (?string $s): string {
             rows.forEach(r => {
                 const p = r.payload || {};
                 const acts = IS_ADMIN ? `
-                                      <div class="flex items-center justify-end gap-2">
-                                        <button class="px-2 py-1 rounded bg-white border hover:bg-gray-50 text-xs js-edit" data-id="${r.id}" data-kat="PPAT">
-                                          <i class="fa-solid fa-pen"></i> Edit
-                                        </button>
-                                        <button class="px-2 py-1 rounded bg-white border hover:bg-gray-50 text-xs js-del" data-id="${r.id}">
-                                          <i class="fa-solid fa-trash text-red-600"></i> Hapus
-                                        </button>
-                                      </div>` : '-';
+                                          <div class="flex items-center justify-end gap-2">
+                                            <button class="px-2 py-1 rounded bg-white border hover:bg-gray-50 text-xs js-edit" data-id="${r.id}" data-kat="PPAT">
+                                              <i class="fa-solid fa-pen"></i> Edit
+                                            </button>
+                                            <button class="px-2 py-1 rounded bg-white border hover:bg-gray-50 text-xs js-del" data-id="${r.id}">
+                                              <i class="fa-solid fa-trash text-red-600"></i> Hapus
+                                            </button>
+                                          </div>` : '-';
                 tblPpatBody.insertAdjacentHTML('beforeend', `
-                                      <tr class="border-b last:border-0">
-                                        <td class="px-3 py-2">${r.row_no ?? ''}</td>
-                                        <td class="px-3 py-2">${p.akta_no ?? ''}</td>
-                                        <td class="px-3 py-2">${p.akta_tgl ?? ''}</td>
-                                        <td class="px-3 py-2">${p.bentuk ?? ''}</td>
-                                        <td class="px-3 py-2">${p.pihak_pengalih ?? ''}</td>
-                                        <td class="px-3 py-2">${p.pihak_penerima ?? ''}</td>
-                                        <td class="px-3 py-2">${p.jenis_hak ?? ''}</td>
-                                        <td class="px-3 py-2">${p.letak ?? ''}</td>
-                                        <td class="px-3 py-2">${p.luas_tnh ?? ''}</td>
-                                        <td class="px-3 py-2">${p.luas_bgn ?? ''}</td>
-                                        <td class="px-3 py-2">${p.nilai_transaksi ?? ''}</td>
-                                        <td class="px-3 py-2">${p.sspt_tahun}</td>
-                                        <td class="px-3 py-2">${p.njop ?? ''}</td>
-                                        <td class="px-3 py-2">${p.sep_tgl ?? ''}</td>
-                                        <td class="px-3 py-2">${p.sep_nilai ?? ''}</td>
-                                        <td class="px-3 py-2">${p.bphtb_tgl ?? ''}</td>
-                                        <td class="px-3 py-2">${p.bphtb_nilai ?? ''}</td>
-                                        <td class="px-3 py-2">${p.ket ?? ''}</td>
-                                        <td class="px-3 py-2">${lampiranButtons(r.files)}</td>
-                                        <td class="px-3 py-2">${acts}</td>
-                                      </tr>`);
+                                          <tr class="border-b last:border-0">
+                                            <td class="px-3 py-2">${r.row_no ?? ''}</td>
+                                            <td class="px-3 py-2">${p.akta_no ?? ''}</td>
+                                            <td class="px-3 py-2">${p.akta_tgl ?? ''}</td>
+                                            <td class="px-3 py-2">${p.bentuk ?? ''}</td>
+                                            <td class="px-3 py-2">${p.pihak_pengalih ?? ''}</td>
+                                            <td class="px-3 py-2">${p.pihak_penerima ?? ''}</td>
+                                            <td class="px-3 py-2">${p.jenis_hak ?? ''}</td>
+                                            <td class="px-3 py-2">${p.letak ?? ''}</td>
+                                            <td class="px-3 py-2">${p.luas_tnh ?? ''}</td>
+                                            <td class="px-3 py-2">${p.luas_bgn ?? ''}</td>
+                                            <td class="px-3 py-2">${p.nilai_transaksi ?? ''}</td>
+                                            <td class="px-3 py-2">${p.sspt_tahun}</td>
+                                            <td class="px-3 py-2">${p.njop ?? ''}</td>
+                                            <td class="px-3 py-2">${p.sep_tgl ?? ''}</td>
+                                            <td class="px-3 py-2">${p.sep_nilai ?? ''}</td>
+                                            <td class="px-3 py-2">${p.bphtb_tgl ?? ''}</td>
+                                            <td class="px-3 py-2">${p.bphtb_nilai ?? ''}</td>
+                                            <td class="px-3 py-2">${p.ket ?? ''}</td>
+                                            <td class="px-3 py-2">${lampiranButtons(r.files)}</td>
+                                            <td class="px-3 py-2">${acts}</td>
+                                          </tr>`);
             });
         }
 
