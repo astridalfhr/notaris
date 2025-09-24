@@ -244,14 +244,14 @@ class Layanan extends BaseController
                 // ambil kolom yang mungkin ada (select aman)
                 $uRows = $userM->asArray()
                     ->select('LOWER(email) AS email, 
-                          google_picture, avatar, avatar_url, foto_url')
+                          google_picture, profile_photo, avatar, avatar_url, foto_url')
                     ->whereIn('email', $emails)
                     ->findAll();
 
                 $avatarMap = [];
                 foreach ($uRows as $u) {
                     $pic = '';
-                    foreach (['google_picture', 'avatar', 'avatar_url', 'foto_url'] as $k) {
+                    foreach (['google_picture', 'profile_photo', 'avatar', 'avatar_url', 'foto_url'] as $k) {
                         if (!empty($u[$k])) {
                             $pic = trim((string) $u[$k]);
                             break;
