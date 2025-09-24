@@ -1,7 +1,6 @@
 <?php
-// Variabel yang tersedia: $bulan, $tahun, $notaris, $ppat
+// Variabel: $bulan, $tahun, $notaris, $ppat
 $h = static fn($v) => htmlspecialchars((string) ($v ?? ''), ENT_QUOTES, 'UTF-8');
-
 $bln = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
 ?>
@@ -12,7 +11,6 @@ $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
     <meta charset="utf-8">
     <title>Laporan Bulanan (Notaris & PPAT) - <?= $h($judulBulan) ?></title>
     <style>
-        /* Halaman & margin (dompdf/mpdf) */
         @page {
             size: A4 landscape;
             margin: 8mm;
@@ -24,8 +22,7 @@ $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
 
         body {
             font-family: DejaVu Sans, Arial, Helvetica, sans-serif;
-            font-size: 10.5px;
-            /* hemat ruang */
+            font-size: 10px;
             color: #111;
         }
 
@@ -54,15 +51,11 @@ $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
         th,
         td {
             border: 1px solid #444;
-            padding: 4px 5px;
-            /* rapat */
+            padding: 3.5px 4px;
             vertical-align: top;
-            line-height: 1.15;
+            line-height: 1.12;
             word-break: break-word;
-            /* cegah tumpah */
-            overflow-wrap: anywhere;
             white-space: normal;
-            hyphens: auto;
         }
 
         thead th {
@@ -86,7 +79,19 @@ $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
             white-space: nowrap;
         }
 
-        /* NOTARIS: kolom sederhana, cukup fixed */
+        /* util: angka & tanggal */
+        .num {
+            word-break: break-all;
+        }
+
+        /* pecah angka panjang */
+        .date {
+            white-space: nowrap;
+        }
+
+        /* tanggal tetap 1 baris */
+
+        /* NOTARIS */
         .notaris col.nobul {
             width: 70px;
         }
@@ -103,13 +108,9 @@ $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
             width: auto;
         }
 
-        /* PPAT: kolom diukur supaya pas A4 landscape */
-        table.ppat {
-            font-size: 10.5px;
-        }
-
+        /* PPAT: lebar kolom disetel agar pas A4 landscape */
         table.ppat col.no {
-            width: 30px;
+            width: 28px;
         }
 
         table.ppat col.nobul {
@@ -117,57 +118,56 @@ $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
         }
 
         table.ppat col.aktaNo {
-            width: 70px;
+            width: 64px;
         }
 
         table.ppat col.aktaTgl {
-            width: 70px;
+            width: 68px;
         }
 
         table.ppat col.bentuk {
-            width: 84px;
+            width: 72px;
         }
 
         table.ppat col.nama {
-            width: 120px;
+            width: 112px;
         }
 
         table.ppat col.jenis {
-            width: 66px;
+            width: 60px;
         }
 
         table.ppat col.nomor {
-            width: 78px;
+            width: 74px;
         }
 
         table.ppat col.letak {
-            width: 140px;
+            width: 136px;
         }
 
         table.ppat col.luas {
-            width: 55px;
+            width: 50px;
         }
 
         table.ppat col.nilai {
-            width: 90px;
+            width: 84px;
         }
 
         table.ppat col.tahun {
-            width: 54px;
+            width: 52px;
         }
 
         table.ppat col.ket {
-            width: 120px;
+            width: 108px;
         }
 
-        /* Header dua baris lebih rapi */
         .th-2line span {
             display: block;
         }
 
         .tight td {
-            padding-top: 3.5px;
-            padding-bottom: 3.5px;
+            padding-top: 3px;
+            padding-bottom: 3px;
         }
 
         .break {
@@ -178,7 +178,7 @@ $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
 
 <body>
 
-    <!-- ====== NOTARIS ====== -->
+    <!-- ===== NOTARIS ===== -->
     <h2>Laporan Bulanan — NOTARIS</h2>
     <div class="sub">Periode: <strong><?= $h($judulBulan) ?></strong></div>
 
@@ -198,17 +198,16 @@ $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
             </tr>
         </thead>
         <tbody>
-            <?php if (!empty($notaris)): ?>
-                <?php foreach ($notaris as $r): ?>
-                    <?php $p = (array) ($r['payload'] ?? []); ?>
+            <?php if (!empty($notaris)):
+                foreach ($notaris as $r):
+                    $p = (array) ($r['payload'] ?? []); ?>
                     <tr class="tight">
-                        <td class="center"><?= $h($r['nomor_bulanan'] ?? '') ?></td>
-                        <td class="center nowrap"><?= $h(($p['tanggal'] ?? $r['tanggal'] ?? '')) ?></td>
+                        <td class="center num"><?= $h($r['nomor_bulanan'] ?? '') ?></td>
+                        <td class="center date"><?= $h(($p['tanggal'] ?? $r['tanggal'] ?? '')) ?></td>
                         <td><?= $h($p['sifat'] ?? '') ?></td>
                         <td><?= $h($p['nama_penghadap'] ?? '') ?></td>
                     </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+                <?php endforeach; else: ?>
                 <tr>
                     <td colspan="4" class="center small">Tidak ada data.</td>
                 </tr>
@@ -216,7 +215,7 @@ $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
         </tbody>
     </table>
 
-    <!-- ====== PPAT (halaman baru) ====== -->
+    <!-- ===== PPAT (halaman baru) ===== -->
     <div class="break"></div>
     <h2 class="section-title">Laporan Bulanan — PPAT</h2>
     <div class="sub">Periode: <strong><?= $h($judulBulan) ?></strong></div>
@@ -277,33 +276,42 @@ $judulBulan = ($bln[(int) ($bulan ?? 0)] ?? $bulan) . ' ' . (string) $tahun;
             </tr>
         </thead>
         <tbody>
-            <?php if (!empty($ppat)): ?>
-                <?php foreach ($ppat as $r): ?>
-                    <?php $p = (array) ($r['payload'] ?? []); ?>
+            <?php if (!empty($ppat)):
+                foreach ($ppat as $r):
+                    $p = (array) ($r['payload'] ?? []); ?>
                     <tr class="tight">
                         <td class="center"><?= $h($r['row_no'] ?? '') ?></td>
-                        <td class="center"><?= $h($r['nomor_bulanan'] ?? '') ?></td>
-                        <td class="center"><?= $h($p['akta_no'] ?? '') ?></td>
-                        <td class="center nowrap"><?= $h($p['akta_tgl'] ?? '') ?></td>
+                        <td class="center num"><?= $h($r['nomor_bulanan'] ?? '') ?></td>
+
+                        <td class="center num"><?= $h($p['akta_no'] ?? '') ?></td>
+                        <td class="center date"><?= $h($p['akta_tgl'] ?? '') ?></td>
+
                         <td><?= $h($p['bentuk'] ?? '') ?></td>
                         <td><?= $h($p['pihak_pengalih'] ?? '') ?></td>
                         <td><?= $h($p['pihak_penerima'] ?? '') ?></td>
+
                         <td class="center"><?= $h($p['jenis_hak'] ?? '') ?></td>
-                        <td class="center"><?= $h($p['nomor_hak'] ?? '') ?></td>
+                        <td class="center num"><?= $h($p['nomor_hak'] ?? '') ?></td>
+
                         <td><?= $h($p['letak'] ?? '') ?></td>
-                        <td class="right"><?= $h($p['luas_tnh'] ?? '') ?></td>
-                        <td class="right"><?= $h($p['luas_bgn'] ?? '') ?></td>
-                        <td class="right"><?= $h($p['nilai_transaksi'] ?? '') ?></td>
-                        <td class="center"><?= $h($p['sspt_nop'] ?? '') ?></td>
-                        <td class="center"><?= $h($p['sspt_tahun'] ?? '') ?></td>
-                        <td class="right"><?= $h($p['njop'] ?? '') ?></td>
-                        <td class="right"><?= $h($p['sep_nilai'] ?? '') ?></td>
-                        <td class="center nowrap"><?= $h($p['sep_tgl'] ?? '') ?></td>
-                        <td class="right"><?= $h($p['bphtb_nilai'] ?? '') ?></td>
+
+                        <td class="right num"><?= $h($p['luas_tnh'] ?? '') ?></td>
+                        <td class="right num"><?= $h($p['luas_bgn'] ?? '') ?></td>
+
+                        <td class="right num"><?= $h($p['nilai_transaksi'] ?? '') ?></td>
+
+                        <td class="center num"><?= $h($p['sspt_nop'] ?? '') ?></td>
+                        <td class="center num"><?= $h($p['sspt_tahun'] ?? '') ?></td>
+
+                        <td class="right num"><?= $h($p['njop'] ?? '') ?></td>
+
+                        <td class="right num"><?= $h($p['sep_nilai'] ?? '') ?></td>
+                        <td class="center date"><?= $h($p['sep_tgl'] ?? '') ?></td>
+
+                        <td class="right num"><?= $h($p['bphtb_nilai'] ?? '') ?></td>
                         <td><?= $h($p['ket'] ?? '') ?></td>
                     </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+                <?php endforeach; else: ?>
                 <tr>
                     <td colspan="20" class="center small">Tidak ada data.</td>
                 </tr>
