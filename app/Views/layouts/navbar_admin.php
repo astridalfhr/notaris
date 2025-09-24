@@ -73,6 +73,8 @@ $shortName = trim(explode(' ', $displayName ?: ($displayEmail ?: 'Akun'))[0]);
                                 class="absolute left-0 top-full mt-0 w-56 bg-white border border-gray-200 rounded-lg shadow-md hidden z-50">
                                 <a href="<?= site_url('admin/homepage') ?>"
                                     class="block px-3 py-2 rounded-lg hover:bg-gray-50">Kelola Beranda</a>
+                                <a href="<?= site_url('admin/pekerjaan') ?>"
+                                    class="block px-3 py-2 rounded-lg hover:bg-gray-50">Kelola Layanan</a>
                                 <a href="<?= site_url('admin/company') ?>"
                                     class="block px-3 py-2 rounded-lg hover:bg-gray-50">Kelola Profile Perusahaan</a>
                                 <a href="<?= site_url('admin/employees') ?>"

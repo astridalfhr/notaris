@@ -48,9 +48,8 @@ class Dashboard extends BaseController
     public function index()
     {
         $data['menu'] = KerjaMenu::get();
-        if (!session('id')) {
+        if (!session('id'))
             return redirect()->to('/login');
-        }
 
         $employeeId = EmployeeResolver::ensureForCurrentUser();
         $db = db_connect();
@@ -97,9 +96,8 @@ class Dashboard extends BaseController
         $joinYear = '-';
         if (!empty($u['created_at']) && $u['created_at'] !== '0000-00-00 00:00:00') {
             $ts = strtotime((string) $u['created_at']);
-            if ($ts !== false) {
+            if ($ts !== false)
                 $joinYear = date('Y', $ts);
-            }
         }
 
         $emp = (new EmployeeModel())->asArray()->find($employeeId);
@@ -127,12 +125,10 @@ class Dashboard extends BaseController
         $jm = new JadwalModel();
 
         $row = $m->find($id);
-        if (!$row) {
+        if (!$row)
             return redirect()->to($this->roleDashboard())->with('error', 'Booking tidak ditemukan.');
-        }
-        if ((int) $row['karyawan_id'] !== (int) $employeeId) {
+        if ((int) $row['karyawan_id'] !== (int) $employeeId)
             return redirect()->to($this->roleDashboard())->with('error', 'Tidak berhak.');
-        }
 
         $m->update($id, ['status' => 'confirmed', 'updated_at' => date('Y-m-d H:i:s')]);
 
@@ -155,23 +151,19 @@ class Dashboard extends BaseController
         $jm = new JadwalModel();
 
         $row = $m->find($id);
-        if (!$row) {
+        if (!$row)
             return redirect()->to($this->roleDashboard())->with('error', 'Booking tidak ditemukan.');
-        }
-        if ((int) $row['karyawan_id'] !== (int) $employeeId) {
+        if ((int) $row['karyawan_id'] !== (int) $employeeId)
             return redirect()->to($this->roleDashboard())->with('error', 'Tidak berhak.');
-        }
 
         $m->update($id, ['status' => 'cancelled', 'updated_at' => date('Y-m-d H:i:s')]);
 
         if (!empty($row['jadwal_id'])) {
-            // Tidak dipakai ulang: tandai slot ditutup
-            $jm->update($row['jadwal_id'], ['status' => 'cancelled']);
-            // Kalau mau dipakai ulang, ganti 'cancelled' -> 'available'
+            $jm->update($row['jadwal_id'], ['status' => 'available']);
         }
 
         $back = $this->sanitizeLocalPath((string) $this->request->getPost('back')) ?: $this->roleDashboard();
-        return redirect()->to($back)->with('success', 'Booking ditolak & slot ditutup.');
+        return redirect()->to($back)->with('success', 'Booking ditolak & slot dikembalikan.');
     }
 
     /** List slot */
@@ -198,16 +190,14 @@ class Dashboard extends BaseController
 
             foreach ($rows as $r) {
                 $jid = (int) $r['jadwal_id'];
-                if (!isset($latest[$jid])) {
-                    $latest[$jid] = $r; // ambil yang paling baru
-                }
+                if (!isset($latest[$jid]))
+                    $latest[$jid] = $r;
             }
         }
 
         $slotsActive = [];
         $slotsAvailable = [];
         $slotsCompleted = [];
-        $slotsClosed = []; // NEW
 
         foreach ($list as $row) {
             $jid = (int) $row['id'];
@@ -215,32 +205,6 @@ class Dashboard extends BaseController
             $st = $last ? $this->normalizeStatus($last['status'] ?? '') : 'available';
             $lastT = $last['updated_at'] ?? ($last['created_at'] ?? null);
 
-            // PRIORITAS: status final di tabel slot
-            $slotStatus = strtolower((string) ($row['status'] ?? 'available'));
-            if (in_array($slotStatus, ['completed'], true)) {
-                $slotsCompleted[] = [
-                    'jadwal_id' => $jid,
-                    'tanggal' => $row['tanggal'] ?? null,
-                    'jam' => $row['jam'] ?? '-',
-                    'note' => null,
-                    'last_cancel_at' => null,
-                    'derived_status' => 'completed',
-                ];
-                continue;
-            }
-            if (in_array($slotStatus, ['cancelled', 'closed'], true)) {
-                $slotsClosed[] = [
-                    'jadwal_id' => $jid,
-                    'tanggal' => $row['tanggal'] ?? null,
-                    'jam' => $row['jam'] ?? '-',
-                    'note' => 'Ditutup',
-                    'last_cancel_at' => $lastT,
-                    'derived_status' => 'closed',
-                ];
-                continue;
-            }
-
-            // Belum final di tabel slot → ikut status booking terakhir
             $rec = [
                 'jadwal_id' => $jid,
                 'tanggal' => $row['tanggal'] ?? null,
@@ -249,7 +213,7 @@ class Dashboard extends BaseController
                 'last_cancel_at' => null,
             ];
 
-            if (in_array($st, ['pending', 'confirmed', 'booked'], true)) {
+            if (in_array($st, ['pending', 'confirmed'], true)) {
                 $rec['derived_status'] = 'booked';
                 $slotsActive[] = $rec;
             } elseif ($st === 'completed') {
@@ -258,7 +222,7 @@ class Dashboard extends BaseController
             } else {
                 $rec['derived_status'] = 'available';
                 if ($last && $st === 'cancelled') {
-                    $rec['note'] = 'Pernah dibooking & dibatalkan.';
+                    $rec['note'] = 'Pernah dibooking & dibatalkan; sekarang Available.';
                     $rec['last_cancel_at'] = $lastT;
                 }
                 $slotsAvailable[] = $rec;
@@ -269,7 +233,6 @@ class Dashboard extends BaseController
             'slotsActive' => $slotsActive,
             'slotsAvailable' => $slotsAvailable,
             'slotsCompleted' => $slotsCompleted,
-            'slotsClosed' => $slotsClosed, // NEW
         ]);
     }
 
@@ -284,9 +247,8 @@ class Dashboard extends BaseController
         $mulaiStr = trim((string) $this->request->getPost('mulai'));
         $akhirStr = trim((string) $this->request->getPost('sampai'));
 
-        if ($tanggal === '' || $mulaiStr === '' || $akhirStr === '') {
+        if ($tanggal === '' || $mulaiStr === '' || $akhirStr === '')
             return redirect()->back()->withInput()->with('error', 'Lengkapi tanggal & jam.');
-        }
 
         try {
             $mulai = new \DateTime($tanggal . ' ' . $mulaiStr);
@@ -295,21 +257,17 @@ class Dashboard extends BaseController
             return redirect()->back()->withInput()->with('error', 'Format jam tidak valid.');
         }
 
-        if ($akhir <= $mulai) {
+        if ($akhir <= $mulai)
             return redirect()->back()->withInput()->with('error', '"Sampai jam" harus > "Dari jam".');
-        }
 
         $jamStr = $mulai->format('H:i') . '–' . $akhir->format('H:i');
 
         $jm = new JadwalModel();
         $exists = $jm->where('karyawan_id', $employeeId)
-            ->where('tanggal', $tanggal)
-            ->where('jam', $jamStr)
-            ->first();
+            ->where('tanggal', $tanggal)->where('jam', $jamStr)->first();
 
-        if ($exists) {
+        if ($exists)
             return redirect()->to(site_url('admin/slot'))->with('warning', 'Slot sudah ada.');
-        }
 
         $jm->insert([
             'karyawan_id' => $employeeId,
@@ -334,65 +292,47 @@ class Dashboard extends BaseController
         $mBooking = new BookingModel();
 
         $slot = $jm->where('id', $id)->where('karyawan_id', $employeeId)->first();
-        if (!$slot) {
+        if (!$slot)
             return redirect()->back()->with('error', 'Slot tidak ditemukan.');
-        }
 
         $hasActive = $mBooking->where('jadwal_id', $id)
-            ->whereIn('status', ['pending', 'confirmed', 'booked'])
-            ->first();
+            ->whereIn('status', ['pending', 'confirmed'])->first();
 
-        if ($hasActive) {
+        if ($hasActive)
             return redirect()->back()->with('error', 'Slot masih dibooking, tidak bisa dihapus.');
-        }
 
         $jm->delete($id);
         return redirect()->back()->with('success', 'Slot dihapus.');
     }
 
-    /** Tandai slot selesai (tanpa dipakai ulang) */
+    /** Tandai slot selesai */
     public function slotComplete($jadwalId = null)
     {
-        if (!session('id')) {
+        if (!session('id'))
             return redirect()->to('/login');
-        }
 
         $jadwalId = (int) $jadwalId;
         $employeeId = EmployeeResolver::ensureForCurrentUser();
         $jm = new JadwalModel();
 
-        // pastikan slot milik karyawan
         $slot = $jm->where('id', $jadwalId)->where('karyawan_id', $employeeId)->first();
-        if (!$slot) {
+        if (!$slot)
             return redirect()->back()->with('error', 'Slot tidak ditemukan.');
-        }
 
         $db = db_connect();
+        $active = $db->table('booking')
+            ->where('jadwal_id', $jadwalId)
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->orderBy('id', 'DESC')->get()->getRowArray();
 
-        // booking terakhir untuk slot ini
-        $last = $db->query(
-            'SELECT id, status FROM booking WHERE jadwal_id = ? ORDER BY id DESC LIMIT 1',
-            [$jadwalId]
-        )->getRowArray();
-
-        if ($last) {
-            $raw = strtolower((string) ($last['status'] ?? ''));
-            // status aktif yang layak di-complete (termasuk warisan)
-            $activeLike = in_array($raw, ['pending', 'confirmed', 'booked', 'approve', 'approved', 'confirm'], true);
-            if ($activeLike) {
-                $db->query(
-                    'UPDATE booking SET status = "completed", updated_at = NOW() WHERE id = ?',
-                    [(int) $last['id']]
-                );
-            }
+        if ($active) {
+            $db->table('booking')->where('id', $active['id'])->update([
+                'status' => 'completed',
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
         }
 
-        // KUNCI slot: tandai selesai, jangan dibuat available lagi
-        $jm->update($jadwalId, [
-            'status' => 'completed',
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
-
+        $jm->update($jadwalId, ['status' => 'available']);
         return redirect()->back()->with('success', 'Slot ditandai selesai.');
     }
 
@@ -406,18 +346,15 @@ class Dashboard extends BaseController
 
         $jm = new JadwalModel();
         $slot = $jm->where('id', $jadwalId)->where('karyawan_id', $myEmployeeId)->first();
-        if (!$slot) {
+        if (!$slot)
             return redirect()->back()->with('error', 'Slot tidak ditemukan.');
-        }
 
         $db = db_connect();
         $b = $db->table('booking b')
             ->select('b.*, u.nama AS user_nama, u.email AS user_email')
             ->join('users u', 'u.id=b.user_id', 'left')
             ->where('b.jadwal_id', $jadwalId)
-            ->orderBy('b.id', 'DESC')
-            ->get()
-            ->getRowArray();
+            ->orderBy('b.id', 'DESC')->get()->getRowArray();
 
         $emp = (new EmployeeModel())->asArray()->find((int) $slot['karyawan_id']);
 

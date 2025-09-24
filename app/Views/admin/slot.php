@@ -2,30 +2,24 @@
 <?= $this->section('content') ?>
 
 <?php
-// Data dari controller
+// Data dari controller (tiga bucket)
 $slotsActive = $slotsActive ?? [];
 $slotsAvailable = $slotsAvailable ?? [];
 $slotsCompleted = $slotsCompleted ?? [];
-$slotsClosed = $slotsClosed ?? []; // NEW
 
-// Helper kecil untuk badge dengan guard
-if (!function_exists('badge')) {
-    function badge($derived)
-    {
-        $d = strtolower((string) $derived);
-        return match ($d) {
-            'booked' => ['Booked', 'badge-booked'],
-            'completed' => ['Completed', 'badge-completed'],
-            'cancelled', 'closed' => ['Closed', 'badge-closed'],
-            default => ['Available', 'badge-available'],
-        };
-    }
+// Helper kecil untuk badge
+function badge($derived)
+{
+    $d = strtolower((string) $derived);
+    return match ($d) {
+        'booked' => ['Booked', 'badge-booked'],
+        'completed' => ['Completed', 'badge-completed'],
+        default => ['Available', 'badge-available'],
+    };
 }
-if (!function_exists('fmt_date')) {
-    function fmt_date(?string $date): string
-    {
-        return $date ? date('d M Y', strtotime($date)) : '-';
-    }
+function fmt_date(?string $date): string
+{
+    return $date ? date('d M Y', strtotime($date)) : '-';
 }
 ?>
 
@@ -42,7 +36,6 @@ if (!function_exists('fmt_date')) {
             </a>
         </div>
     </header>
-
     <!-- Form Tambah Slot -->
     <section class="slot-card">
         <form action="<?= site_url('admin/slot/store') ?>" method="post" id="slotForm" class="slot-form">
@@ -101,17 +94,17 @@ if (!function_exists('fmt_date')) {
                         foreach ($slotsActive as $s):
                             [$txt, $cls] = badge('booked'); ?>
                             <tr>
-                                <td><?= (int) $i++ ?></td>
-                                <td><?= esc(fmt_date($s['tanggal'] ?? null)) ?></td>
-                                <td><?= esc($s['jam'] ?? '-') ?></td>
-                                <td><span class="badge <?= esc($cls) ?>"><?= esc($txt) ?></span></td>
+                                <td><?= $i++ ?></td>
+                                <td><?= esc(fmt_date($s['tanggal'])) ?></td>
+                                <td><?= esc($s['jam']) ?></td>
+                                <td><span class="badge <?= $cls ?>"><?= $txt ?></span></td>
                                 <td>
                                     <div class="table-actions">
-                                        <a href="<?= site_url('admin/slot_detail/' . (int) ($s['jadwal_id'] ?? 0)) ?>"
+                                        <a href="<?= site_url('admin/slot_detail/' . (int) $s['jadwal_id']) ?>"
                                             class="btn btn--gray">
                                             <i class="fa-solid fa-circle-info"></i> <span>Detail</span>
                                         </a>
-                                        <form action="<?= site_url('admin/slot/complete/' . (int) ($s['jadwal_id'] ?? 0)) ?>"
+                                        <form action="<?= site_url('admin/slot/complete/' . (int) $s['jadwal_id']) ?>"
                                             method="post" onsubmit="return confirm('Tandai booking aktif sebagai selesai?');"
                                             class="inline">
                                             <?= csrf_field() ?>
@@ -154,28 +147,26 @@ if (!function_exists('fmt_date')) {
                         foreach ($slotsAvailable as $s):
                             [$txt, $cls] = badge('available'); ?>
                             <tr>
-                                <td><?= (int) $i++ ?></td>
-                                <td><?= esc(fmt_date($s['tanggal'] ?? null)) ?></td>
+                                <td><?= $i++ ?></td>
+                                <td><?= esc(fmt_date($s['tanggal'])) ?></td>
                                 <td>
-                                    <?= esc($s['jam'] ?? '-') ?>
+                                    <?= esc($s['jam']) ?>
                                     <?php if (!empty($s['note'])): ?>
                                         <div class="cell-note">
                                             <i class="fa-solid fa-circle-info"></i>
                                             <span><?= esc($s['note']) ?></span>
                                             <?php if (!empty($s['last_cancel_at'])): ?>
-                                                <span class="muted">
-                                                    (dibatalkan:
-                                                    <?= esc(date('d M Y H:i', strtotime((string) $s['last_cancel_at']))) ?>)
-                                                </span>
+                                                <span class="muted"> (dibatalkan:
+                                                    <?= esc(date('d M Y H:i', strtotime($s['last_cancel_at']))) ?>)</span>
                                             <?php endif; ?>
                                         </div>
                                     <?php endif; ?>
                                 </td>
-                                <td><span class="badge <?= esc($cls) ?>"><?= esc($txt) ?></span></td>
+                                <td><span class="badge <?= $cls ?>"><?= $txt ?></span></td>
                                 <td>
                                     <div class="table-actions">
-                                        <form action="<?= site_url('admin/slot/delete/' . (int) ($s['jadwal_id'] ?? 0)) ?>"
-                                            method="post" onsubmit="return confirm('Hapus slot ini?');" class="inline">
+                                        <form action="<?= site_url('admin/slot/delete/' . (int) $s['jadwal_id']) ?>" method="post"
+                                            onsubmit="return confirm('Hapus slot ini?');" class="inline">
                                             <?= csrf_field() ?>
                                             <button type="submit" class="btn btn--danger">
                                                 <i class="fa-solid fa-trash"></i> <span>Hapus</span>
@@ -216,13 +207,12 @@ if (!function_exists('fmt_date')) {
                         foreach ($slotsCompleted as $s):
                             [$txt, $cls] = badge('completed'); ?>
                             <tr>
-                                <td><?= (int) $i++ ?></td>
-                                <td><?= esc(fmt_date($s['tanggal'] ?? null)) ?></td>
-                                <td><?= esc($s['jam'] ?? '-') ?></td>
-                                <td><span class="badge <?= esc($cls) ?>"><?= esc($txt) ?></span></td>
+                                <td><?= $i++ ?></td>
+                                <td><?= esc(fmt_date($s['tanggal'])) ?></td>
+                                <td><?= esc($s['jam']) ?></td>
+                                <td><span class="badge <?= $cls ?>"><?= $txt ?></span></td>
                                 <td>
-                                    <a href="<?= site_url('admin/slot_detail/' . (int) ($s['jadwal_id'] ?? 0)) ?>"
-                                        class="btn btn--gray">
+                                    <a href="<?= site_url('admin/slot_detail/' . (int) $s['jadwal_id']) ?>" class="btn btn--gray">
                                         <i class="fa-solid fa-circle-info"></i> <span>Detail</span>
                                     </a>
                                 </td>
@@ -230,63 +220,6 @@ if (!function_exists('fmt_date')) {
                         <?php endforeach; else: ?>
                         <tr>
                             <td colspan="5" class="empty">Belum ada rekapan yang selesai.</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- ======= CLOSED / DITUTUP ======= -->
-    <section class="slot-card">
-        <div class="slot-card-head">
-            <h3>List Jadwal Ditutup</h3>
-        </div>
-        <div class="table-wrap">
-            <table class="slot-table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Jam</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($slotsClosed):
-                        $i = 1;
-                        foreach ($slotsClosed as $s):
-                            [$txt, $cls] = badge('closed'); ?>
-                            <tr>
-                                <td><?= (int) $i++ ?></td>
-                                <td><?= esc(fmt_date($s['tanggal'] ?? null)) ?></td>
-                                <td>
-                                    <?= esc($s['jam'] ?? '-') ?>
-                                    <?php if (!empty($s['note'])): ?>
-                                        <div class="cell-note">
-                                            <i class="fa-solid fa-circle-info"></i>
-                                            <span><?= esc($s['note']) ?></span>
-                                            <?php if (!empty($s['last_cancel_at'])): ?>
-                                                <span class="muted">
-                                                    (dibatalkan:
-                                                    <?= esc(date('d M Y H:i', strtotime((string) $s['last_cancel_at']))) ?>)
-                                                </span>
-                                            <?php endif; ?>
-                                        </div>
-                                    <?php endif; ?>
-                                </td>
-                                <td><span class="badge <?= esc($cls) ?>"><?= esc($txt) ?></span></td>
-                                <td>
-                                    <a href="<?= site_url('admin/slot_detail/' . (int) ($s['jadwal_id'] ?? 0)) ?>"
-                                        class="btn btn--gray">
-                                        <i class="fa-solid fa-circle-info"></i> <span>Detail</span>
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; else: ?>
-                        <tr>
-                            <td colspan="5" class="empty">Tidak ada slot yang ditutup.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

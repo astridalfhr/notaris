@@ -6,6 +6,9 @@ use App\Controllers\BaseController;
 use App\Models\SiteSettingsModel;
 use App\Models\SiteNewsModel;
 
+use App\Models\PekerjaanModel;
+
+
 class Home extends BaseController
 {
     private int $newsPerPage = 6;
@@ -34,114 +37,50 @@ class Home extends BaseController
      * Katalog layanan dikelompokkan + Font Awesome icon (free)
      * @return array{ppat: array<int,array>, notaris: array<int,array>}
      */
+
     private function servicesByCategory(): array
     {
-        // Deskripsi singkat (opsional)
-        $desc = [
-            'AKTA JUAL BELI' => 'Pembuatan akta jual beli properti.',
-            'PENDIRIAN PT' => 'Pendirian Perseroan Terbatas beserta dokumen legal.',
-            'AKTA HIBAH' => 'Akta hibah untuk pengalihan hak milik.',
-            'SKMHT' => 'Surat Kuasa Membebankan Hak Tanggungan.',
-            'ROYA' => 'Penghapusan Hak Tanggungan (roya).',
-            'PENGECEKAN SERTIPIKAT' => 'Cek keabsahan/riwayat sertipikat.',
-            'LAPORAN BULANAN' => 'Rekap aktivitas bulanan.',
-        ];
+        $M = new PekerjaanModel();
 
-        $ppatList = [
-            'CEK LOKASI',
-            'CEK KAWASAN',
-            'VALIDASI',
-            'ALIH WILAYAH',
-            'PEMULIHAN DATA',
-            'ROYA',
-            'PENGECEKAN SERTIPIKAT',
-            'AKTA JUAL BELI',
-            'AKTA HIBAH',
-            'AKTA PEMBAGIAN HAK BERSAMA',
-            'TURUN WARIS',
-            'PEMISAHAN',
-            'PENINGKATAN HAK',
-            'PELEPASAN HAK',
-            'TURUN HAK',
-            'UBAH LAHAN PERTANIAN JADI LAHAN PEKARANGAN',
-            'LAPORAN BULANAN'
-        ];
-        $notarisList = [
-            'SKMHT',
-            'PENDIRIAN PT',
-            'PERUBAHAN PT',
-            'PENDIRIAN YAYASAN',
-            'PERUBAHAN YAYASAN',
-            'PENDIRIAN PERKUMPULAN',
-            'PERUBAHAN PERKUMPULAN',
-            'PENDIRIAN PERSEROAN KOMANDITER',
-            'PERUBAHAN PERSEROAN KOMANDITER',
-            'PENDIRIAN KOPERASI',
-            'PERUBAHAN KOPERASI',
-            'PERJANJIAN JUAL BELI',
-            'KUASA UNTUK MENJUAL',
-            'PERJANJIAN - PERJANJIAN'
-        ];
+        // cek ada data aktif?
+        $has = $M->where('is_active', 1)->countAllResults(false) > 0;
+        if ($has) {
+            $map = function (array $rows, string $catLabel) {
+                $out = [];
+                foreach ($rows as $r) {
+                    $out[] = [
+                        'name' => $r['title'],
+                        'slug' => $r['slug'],
+                        'category' => $catLabel,
+                        'desc' => $r['excerpt'] ?: 'Klik untuk melihat ketersediaan jadwal.',
+                        'icon' => $r['icon'] ?: 'fa-solid fa-file-lines',
+                        'url' => $r['url'] ?? null,
+                    ];
+                }
+                return $out;
+            };
 
-        // === Font Awesome Free icon classes ===
-        $iconMap = [
-            // PPAT
-            'CEK LOKASI' => 'fa-location-dot',
-            'CEK KAWASAN' => 'fa-map',
-            'VALIDASI' => 'fa-circle-check',
-            'ALIH WILAYAH' => 'fa-arrows-left-right',
-            'PEMULIHAN DATA' => 'fa-database',
-            'ROYA' => 'fa-shield-halved',
-            'PENGECEKAN SERTIPIKAT' => 'fa-magnifying-glass',
-            'AKTA JUAL BELI' => 'fa-file-pen',
-            'AKTA HIBAH' => 'fa-gift',
-            'AKTA PEMBAGIAN HAK BERSAMA' => 'fa-layer-group',
-            'TURUN WARIS' => 'fa-user-group',
-            'PEMISAHAN' => 'fa-scissors',
-            'PENINGKATAN HAK' => 'fa-arrow-up',
-            'PELEPASAN HAK' => 'fa-handshake-angle',
-            'TURUN HAK' => 'fa-arrow-down',
-            'UBAH LAHAN PERTANIAN JADI LAHAN PEKARANGAN' => 'fa-seedling',
-            'LAPORAN BULANAN' => 'fa-calendar-days',
+            $ppatRows = $M->where('category', 'PPAT')
+                ->where('is_active', 1)
+                ->orderBy('sort_order', 'ASC')
+                ->orderBy('id', 'ASC')
+                ->findAll(); // semua; kalau mau batasi top-N -> findAll($limit)
 
-            // Notaris
-            'SKMHT' => 'fa-stamp',
-            'PENDIRIAN PT' => 'fa-building',
-            'PERUBAHAN PT' => 'fa-pen-to-square',
-            'PENDIRIAN YAYASAN' => 'fa-hand-holding-heart', 
-            'PERUBAHAN YAYASAN' => 'fa-pen-to-square',
-            'PENDIRIAN PERKUMPULAN' => 'fa-users',
-            'PERUBAHAN PERKUMPULAN' => 'fa-pen-to-square',
-            'PENDIRIAN PERSEROAN KOMANDITER' => 'fa-briefcase',
-            'PERUBAHAN PERSEROAN KOMANDITER' => 'fa-pen-to-square',
-            'PENDIRIAN KOPERASI' => 'fa-store',
-            'PERUBAHAN KOPERASI' => 'fa-pen-to-square',
-            'PERJANJIAN JUAL BELI' => 'fa-handshake',
-            'KUASA UNTUK MENJUAL' => 'fa-file-pen',
-            'PERJANJIAN – PERJANJIAN' => 'fa-file-contract',
-        ];
+            // reset builder sebelum query lain
+            $M->resetQuery();
 
-        $build = function (array $names, string $cat) use ($desc, $iconMap) {
-            $out = [];
-            foreach ($names as $n) {
-                $slug = $this->slugify($n);
-                $out[] = [
-                    'name' => $n,
-                    'slug' => $slug,
-                    'category' => $cat,
-                    'desc' => $desc[$n] ?? 'Klik untuk melihat ketersediaan jadwal.',
-                    'icon' => $iconMap[$n] ?? 'fa-file-lines', // fallback aman
-                ];
-            }
-            return $out;
-        };
+            $notRows = $M->where('category', 'NOTARIS')
+                ->where('is_active', 1)
+                ->orderBy('sort_order', 'ASC')
+                ->orderBy('id', 'ASC')
+                ->findAll();
 
-        return [
-            'ppat' => $build($ppatList, 'PPAT'),
-            'notaris' => $build($notarisList, 'Notaris'),
-        ];
+            return [
+                'ppat' => $map($ppatRows, 'PPAT'),
+                'notaris' => $map($notRows, 'Notaris'),
+            ];
+        }
     }
-
     public function index()
     {
         $settings = (new SiteSettingsModel())

@@ -5,10 +5,14 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\EmployeeModel;
 use App\Models\UserModel;
+use App\Models\LaporanKerjaModel;
+use App\Models\LaporanLampiranModel;
 use CodeIgniter\I18n\Time;
 
 class Layanan extends BaseController
 {
+    /* ======================== UTIL KECIL ======================== */
+
     private function slugify(string $s): string
     {
         $s = strtolower(trim($s));
@@ -121,9 +125,9 @@ class Layanan extends BaseController
                     $qb->where('jabatan', $jab);
                 $exists = (bool) $qb->first();
             }
-            if (!$exists && $has('nama') && $uid > 0) {
+            if (!$exists && $has('nama') && $uid > 0)
                 $exists = (bool) $empM->where('nama', 'Admin #' . $uid)->first();
-            }
+
             if ($exists)
                 continue;
 
@@ -168,6 +172,26 @@ class Layanan extends BaseController
         return false;
     }
 
+    private function requireAdminJson()
+    {
+        if (!$this->isAdmin()) {
+            return $this->response->setStatusCode(403)->setJSON(['ok' => false, 'error' => 'FORBIDDEN']);
+        }
+        return null;
+    }
+
+    private function jsonOk(array $data = [])
+    {
+        return $this->response->setJSON(['ok' => true] + $data);
+    }
+
+    private function jsonErr(string $msg, int $code = 400)
+    {
+        return $this->response->setStatusCode($code)->setJSON(['ok' => false, 'error' => $msg]);
+    }
+
+    /* ======================== PAGE: LAYANAN ======================== */
+
     public function index()
     {
         $this->backfillAdminsIfMissing();
@@ -206,16 +230,14 @@ class Layanan extends BaseController
 
         $isAdmin = $this->isAdmin();
 
-        // ===== Jadwal Hari Ini: isi untuk admin & karyawan =====
+        // ===== Jadwal Hari Ini untuk admin/karyawan =====
         $bookingsToday = [];
         $counts = ['confirmed' => 0, 'pending' => 0, 'completed' => 0, 'cancelled' => 0];
 
-        // Resolve employee id untuk user saat ini, entah admin atau karyawan
         $employeeId = null;
         try {
             $employeeId = \App\Libraries\EmployeeResolver::ensureForCurrentUser();
         } catch (\Throwable $e) {
-            $employeeId = null;
         }
 
         if ($employeeId) {
@@ -224,13 +246,9 @@ class Layanan extends BaseController
             $endTs = Time::tomorrow($tz)->toDateTimeString();
 
             $bookingsToday = $db->table('booking b')
-                ->select('
-                    b.id AS booking_id,
-                    b.id, b.status, b.created_at,
-                    u.nama AS user_nama, u.email AS user_email,
-                    kj.id AS jadwal_id,
-                    kj.tanggal, kj.jam
-                ')
+                ->select('b.id AS booking_id, b.id, b.status, b.created_at,
+                          u.nama AS user_nama, u.email AS user_email,
+                          kj.id AS jadwal_id, kj.tanggal, kj.jam')
                 ->join('users u', 'u.id = b.user_id', 'left')
                 ->join('konsultasi_jadwal kj', 'kj.id = b.jadwal_id', 'left')
                 ->groupStart()
@@ -244,8 +262,7 @@ class Layanan extends BaseController
                 ->where('kj.tanggal <', $endTs)
                 ->groupEnd()
                 ->groupEnd()
-                ->orderBy('kj.jam', 'ASC')
-                ->orderBy('b.created_at', 'ASC')
+                ->orderBy('kj.jam', 'ASC')->orderBy('b.created_at', 'ASC')
                 ->get()->getResultArray();
 
             foreach ($bookingsToday as $r) {
@@ -267,7 +284,6 @@ class Layanan extends BaseController
                     $counts['cancelled']++;
             }
         }
-        // ======================================
 
         return view('layanan', [
             'employees' => $employees,
@@ -276,10 +292,233 @@ class Layanan extends BaseController
             'activeService' => $activeService,
             'catalog' => $catalog,
             'isAdmin' => $isAdmin,
-
-            // penting: kirim data ke view
             'bookingsToday' => $bookingsToday,
             'counts' => $counts,
         ]);
+    }
+
+    /* =================== API: LAPORAN NOTARIS & PPAT =================== */
+
+    /** GET /admin/laporan/feed?bulan=9&tahun=2025
+     *  return: { ok, notaris:[], ppat:[] }
+     */
+    public function laporanFeed()
+    {
+        if ($x = $this->requireAdminJson())
+            return $x;
+
+        $bulan = (int) ($this->request->getGet('bulan') ?? date('n'));
+        $tahun = (int) ($this->request->getGet('tahun') ?? date('Y'));
+
+        $lapM = new LaporanKerjaModel();
+        $rowsNot = $lapM->getMonthly('NOTARIS', $bulan, $tahun);
+        $rowsPpat = $lapM->getMonthly('PPAT', $bulan, $tahun);
+
+        $map = function (array $rows): array {
+            $i = 1;
+            $out = [];
+            foreach ($rows as $r) {
+                $payload = json_decode((string) ($r['data_json'] ?? '{}'), true) ?: [];
+                $out[] = [
+                    'id' => (int) $r['id'],
+                    'row_no' => $i++,
+                    'nomor_bulanan' => (int) ($r['nomor_bulanan'] ?? 0),
+                    'tanggal' => (string) ($r['tanggal'] ?? ''),
+                    'payload' => $payload,
+                    'created_at' => (string) ($r['created_at'] ?? ''),
+                    'created_by' => (int) ($r['created_by'] ?? 0),
+                ];
+            }
+            return $out;
+        };
+
+        return $this->jsonOk([
+            'notaris' => $map($rowsNot),
+            'ppat' => $map($rowsPpat),
+        ]);
+    }
+
+    /** POST /admin/laporan/upload
+     *  Body: kat=NOTARIS|PPAT, bulan,tahun,... + lampiran[]
+     */
+    public function laporanUpload()
+    {
+        if ($x = $this->requireAdminJson())
+            return $x;
+
+        $req = $this->request;
+        $kat = strtoupper((string) $req->getPost('kat'));
+        $bulan = (int) ($req->getPost('bulan') ?? date('n'));
+        $tahun = (int) ($req->getPost('tahun') ?? date('Y'));
+        $userId = (int) (session('id') ?? session('user_id') ?? 0);
+
+        if (!in_array($kat, ['NOTARIS', 'PPAT'], true)) {
+            return $this->jsonErr('Kategori tidak valid', 422);
+        }
+
+        $lapM = new LaporanKerjaModel();
+        $lampM = new LaporanLampiranModel();
+
+        try {
+            if ($kat === 'NOTARIS') {
+                $payload = [
+                    'bulan' => $bulan,
+                    'tahun' => $tahun,
+                    'tanggal' => $req->getPost('tanggal'),
+                    'sifat' => $req->getPost('sifat'),
+                    'nama_penghadap' => $req->getPost('nama_penghadap'),
+                    'kuasa' => $req->getPost('kuasa'),
+                ];
+                $lapId = $lapM->createNotaris($payload, $userId, $payload['tanggal'] ?? null);
+            } else {
+                // PPAT sesuai form baru
+                $payload = [
+                    'bulan' => $bulan,
+                    'tahun' => $tahun,
+                    'akta_no' => $req->getPost('akta_no'),
+                    'akta_tgl' => $req->getPost('akta_tgl'),
+                    'bentuk' => $req->getPost('bentuk'),
+                    'pihak_pengalih' => $req->getPost('pihak_pengalih'),
+                    'pihak_penerima' => $req->getPost('pihak_penerima'),
+                    'jenis_hak' => $req->getPost('jenis_hak'),
+                    'nomor_hak' => $req->getPost('nomor_hak'),
+                    'letak' => $req->getPost('letak'),
+                    'luas_tnh' => $req->getPost('luas_tnh'),
+                    'luas_bgn' => $req->getPost('luas_bgn'),
+                    'nilai_transaksi' => $req->getPost('nilai_transaksi'),
+                    'sspt_nop' => $req->getPost('sspt_nop'),
+                    'sspt_tahun' => $req->getPost('sspt_tahun'),
+                    'njop' => $req->getPost('njop'),
+                    'sep_nilai' => $req->getPost('sep_nilai'),
+                    'sep_tgl' => $req->getPost('sep_tgl'),
+                    'bphtb_nilai' => $req->getPost('bphtb_nilai'),
+                    'ket' => $req->getPost('ket'),
+                ];
+                $lapId = $lapM->createPPAT($payload, $userId);
+            }
+
+            // handle lampiran (multi)
+            $files = $this->request->getFiles();
+            $savedNames = [];
+            if (isset($files['lampiran'])) {
+                $targetDir = WRITEPATH . 'uploads/laporan/';
+                if (!is_dir($targetDir))
+                    @mkdir($targetDir, 0775, true);
+
+                foreach ($files['lampiran'] as $file) {
+                    if (!$file->isValid())
+                        continue;
+                    $newName = $file->getRandomName();
+                    $file->move($targetDir, $newName);
+                    $savedNames[] = $newName;
+                }
+            }
+            if (!empty($savedNames)) {
+                $lampM->addMany($lapId, $savedNames);
+            }
+
+            return $this->jsonOk(['id' => $lapId]);
+        } catch (\Throwable $e) {
+            return $this->jsonErr('Gagal menyimpan: ' . $e->getMessage(), 500);
+        }
+    }
+
+    /** DELETE /admin/laporan/delete/{id} */
+    public function laporanDelete($id = null)
+    {
+        if ($x = $this->requireAdminJson())
+            return $x;
+
+        $id = (int) $id;
+        if ($id <= 0)
+            return $this->jsonErr('ID invalid', 422);
+
+        $lapM = new LaporanKerjaModel();
+        try {
+            $ok = $lapM->deleteWithCascade($id);
+            return $this->jsonOk(['deleted' => (bool) $ok]);
+        } catch (\Throwable $e) {
+            return $this->jsonErr('Gagal menghapus: ' . $e->getMessage(), 500);
+        }
+    }
+
+    /** GET /admin/laporan/export?bulan=9&tahun=2025&kat=PPAT|NOTARIS
+     *  Export PDF sederhana (gunakan Dompdf).
+     */
+    public function laporanExport()
+    {
+        if (!$this->isAdmin())
+            return redirect()->back()->with('error', 'FORBIDDEN');
+
+        $bulan = (int) ($this->request->getGet('bulan') ?? date('n'));
+        $tahun = (int) ($this->request->getGet('tahun') ?? date('Y'));
+        $kat = strtoupper((string) ($this->request->getGet('kat') ?? '')); // opsional, kalau kosong export dua-duanya
+
+        $lapM = new LaporanKerjaModel();
+        $data = [
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+            'notaris' => $lapM->getMonthly('NOTARIS', $bulan, $tahun),
+            'ppat' => $lapM->getMonthly('PPAT', $bulan, $tahun),
+        ];
+
+        // siapkan payload terparse
+        foreach (['notaris', 'ppat'] as $key) {
+            $i = 1;
+            foreach ($data[$key] as &$r) {
+                $r['row_no'] = $i++;
+                $r['payload'] = json_decode((string) ($r['data_json'] ?? '{}'), true) ?: [];
+            }
+        }
+
+        // pilih view PDF
+        $htmlView = null;
+        if ($kat === 'NOTARIS') {
+            $htmlView = view('pdf/laporan_notaris', $data);
+            $filename = "laporan_notaris_{$tahun}-" . str_pad((string) $bulan, 2, '0', STR_PAD_LEFT) . ".pdf";
+        } elseif ($kat === 'PPAT') {
+            $htmlView = view('pdf/laporan_ppat', $data);
+            $filename = "laporan_ppat_{$tahun}-" . str_pad((string) $bulan, 2, '0', STR_PAD_LEFT) . ".pdf";
+        } else {
+            // kalau gak pilih, export PPAT saja biar cepat; sesuaikan kalau mau gabungan
+            $htmlView = view('pdf/laporan_ppat', $data);
+            $filename = "laporan_ppat_{$tahun}-" . str_pad((string) $bulan, 2, '0', STR_PAD_LEFT) . ".pdf";
+        }
+
+        // Dompdf
+        $dompdf = new \Dompdf\Dompdf(['isRemoteEnabled' => true]);
+        $dompdf->loadHtml($htmlView);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        return $this->response
+            ->setHeader('Content-Type', 'application/pdf')
+            ->setHeader('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->setBody($dompdf->output());
+    }
+
+    public function lampiranDelete($lampiranId = null)
+    {
+        if ($x = $this->requireAdminJson())
+            return $x;
+
+        $id = (int) $lampiranId;
+        if ($id <= 0)
+            return $this->jsonErr('ID invalid', 422);
+
+        $lampM = new LaporanLampiranModel();
+        $row = $lampM->find($id);
+        if (!$row)
+            return $this->jsonErr('Not found', 404);
+
+        // hapus file fisik (jika ada)
+        $path = WRITEPATH . 'uploads/laporan/' . $row['file_name'];
+        if (is_file($path))
+            @unlink($path);
+
+        // hapus di DB
+        $lampM->delete($id);
+
+        return $this->jsonOk(['deleted' => true]);
     }
 }
