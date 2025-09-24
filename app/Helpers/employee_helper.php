@@ -22,32 +22,36 @@ if (!function_exists('specs_to_string')) {
     if (!function_exists('employee_photo_url')) {
         function employee_photo_url(array $emp): string
         {
-            // 1) lokal file
+            // 1) file lokal
             $local = trim((string) ($emp['foto'] ?? ''));
-            if ($local !== '') {
-                // rawurlencode untuk nama file yang ada spasi
+            if ($local !== '')
                 return base_url('images/karyawan/' . rawurlencode($local));
-            }
 
-            // 2) url eksternal (google oauth / disimpan di DB)
-            foreach (['foto_url', 'google_photo'] as $k) {
+            // 2) url yang sudah disimpan (google_picture/foto_url)
+            foreach (['foto_url', 'google_photo', 'google_picture', 'avatar'] as $k) {
                 $u = trim((string) ($emp[$k] ?? ''));
                 if ($u !== '')
                     return $u;
             }
-            $sessAvatar = trim((string) (session('avatar') ?? session('google_picture') ?? ''));
-            if ($sessAvatar !== '')
-                return $sessAvatar;
+            $sess = trim((string) (session('avatar') ?? session('google_picture') ?? ''));
+            if ($sess !== '')
+                return $sess;
 
-            // 3) gravatar dari email (identicon)
-            $email = strtolower(trim((string) ($emp['email'] ?? '')));
-            if ($email !== '') {
-                $hash = md5($email);
-                return "https://www.gravatar.com/avatar/{$hash}?s=200&d=identicon";
+            // 3) UI Avatars dari nama/email
+            $name = trim((string) ($emp['nama'] ?? ($emp['email'] ?? 'User')));
+            if ($name !== '') {
+                $qs = http_build_query(['name' => $name, 'size' => 200, 'background' => 'random']);
+                return 'https://ui-avatars.com/api/?' . $qs;
             }
 
-            // 4) placeholder
+            // 4) fallback ke gravatar identicon
+            $email = strtolower(trim((string) ($emp['email'] ?? '')));
+            if ($email !== '')
+                return 'https://www.gravatar.com/avatar/' . md5($email) . '?s=200&d=identicon';
+
+            // 5) placeholder
             return 'https://via.placeholder.com/200?text=IMG';
         }
     }
+
 }

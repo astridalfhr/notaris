@@ -207,6 +207,7 @@ class Layanan extends BaseController
         $catalog = $this->servicesCatalog();
         $activeService = $serviceSlug && isset($catalog[$serviceSlug]) ? $catalog[$serviceSlug] : null;
 
+        // ================= employees =================
         $empM = new EmployeeModel();
         $employees = $empM->asArray()->orderBy('nama', 'ASC')->findAll();
 
@@ -228,6 +229,53 @@ class Layanan extends BaseController
             }));
         }
 
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        // MERGE AVATAR GOOGLE/USER KE DATA KARYAWAN BERDASARKAN EMAIL
+        // kolom users yang mungkin: google_picture, avatar, avatar_url, foto_url
+        if (!empty($employees)) {
+            $userM = new UserModel();
+
+            $emails = array_values(array_unique(array_filter(array_map(
+                fn($e) => strtolower(trim((string) ($e['email'] ?? ''))),
+                $employees
+            ))));
+
+            if (!empty($emails)) {
+                // ambil kolom yang mungkin ada (select aman)
+                $uRows = $userM->asArray()
+                    ->select('LOWER(email) AS email, 
+                          google_picture, avatar, avatar_url, foto_url')
+                    ->whereIn('email', $emails)
+                    ->findAll();
+
+                $avatarMap = [];
+                foreach ($uRows as $u) {
+                    $pic = '';
+                    foreach (['google_picture', 'avatar', 'avatar_url', 'foto_url'] as $k) {
+                        if (!empty($u[$k])) {
+                            $pic = trim((string) $u[$k]);
+                            break;
+                        }
+                    }
+                    if (!empty($u['email']) && $pic !== '') {
+                        $avatarMap[strtolower($u['email'])] = $pic;
+                    }
+                }
+
+                // isi ke employees hanya jika belum ada foto lokal/URL
+                foreach ($employees as &$e) {
+                    $em = strtolower(trim((string) ($e['email'] ?? '')));
+                    $hasLocal = !empty($e['foto']);
+                    $hasUrl = !empty($e['foto_url']);
+                    if (!$hasLocal && !$hasUrl && $em !== '' && isset($avatarMap[$em])) {
+                        $e['foto_url'] = $avatarMap[$em];
+                    }
+                }
+                unset($e);
+            }
+        }
+        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
         $isAdmin = $this->isAdmin();
 
         // ===== Jadwal Hari Ini untuk admin/karyawan =====
@@ -247,8 +295,8 @@ class Layanan extends BaseController
 
             $bookingsToday = $db->table('booking b')
                 ->select('b.id AS booking_id, b.id, b.status, b.created_at,
-                          u.nama AS user_nama, u.email AS user_email,
-                          kj.id AS jadwal_id, kj.tanggal, kj.jam')
+                      u.nama AS user_nama, u.email AS user_email,
+                      kj.id AS jadwal_id, kj.tanggal, kj.jam')
                 ->join('users u', 'u.id = b.user_id', 'left')
                 ->join('konsultasi_jadwal kj', 'kj.id = b.jadwal_id', 'left')
                 ->groupStart()
